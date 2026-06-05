@@ -17,9 +17,8 @@ public class Cliente extends Usuario {
         this.endereco = endereco;
     }
 
-    @Override
-    public String getTipoUsuario() {
-        return "CLIENTE";
+    public String getTipoUsuario(){
+        return "Cliente";
     }
 
     @Override

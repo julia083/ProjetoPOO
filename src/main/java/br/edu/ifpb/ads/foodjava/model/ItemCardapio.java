@@ -4,7 +4,7 @@ import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 
 public class ItemCardapio implements Validavel {
-    private String id;
+
     private String nome;
     private String descricao;
     private double preco;
@@ -15,9 +15,8 @@ public class ItemCardapio implements Validavel {
     public ItemCardapio() {
     }
 
-    public ItemCardapio(String id, String nome, String descricao, double preco, Categoria categoria,
+    public ItemCardapio(String nome, String descricao, double preco, Categoria categoria,
                         boolean disponivel, String imagemPath) {
-        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         setPreco(preco);
@@ -37,14 +36,6 @@ public class ItemCardapio implements Validavel {
 
     public void desativar() {
         this.disponivel = false;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNome() {

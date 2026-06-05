@@ -5,7 +5,6 @@ import br.edu.ifpb.ads.foodjava.interfaces.Autenticavel;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 
 public abstract class Usuario implements Autenticavel, Validavel {
-    private String id;
     private String nome;
     private String email;
     private String senha;
@@ -14,8 +13,7 @@ public abstract class Usuario implements Autenticavel, Validavel {
     protected Usuario() {
     }
 
-    protected Usuario(String id, String nome, String email, String senha, String telefone) {
-        this.id = id;
+    protected Usuario( String nome, String email, String senha, String telefone) {
         this.nome = nome;
         this.email = email;
         setSenha(senha);
@@ -45,14 +43,6 @@ public abstract class Usuario implements Autenticavel, Validavel {
 
     protected boolean senhaValida(String senha) {
         return senha != null && senha.length() >= 8 && senha.chars().anyMatch(Character::isDigit);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNome() {
