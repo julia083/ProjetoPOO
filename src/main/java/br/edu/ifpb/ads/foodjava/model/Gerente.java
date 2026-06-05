@@ -1,14 +1,18 @@
 package br.edu.ifpb.ads.foodjava.model;
 
 public class Gerente extends Usuario {
-    private String cargo;
+
+    private String cpf;
 
     public Gerente() {
+        super();
     }
 
-    public Gerente(String id, String nome, String email, String senha, String telefone, String cargo) {
+    public Gerente(String id, String nome, String email, String senha,
+                   String telefone, String cpf) {
+
         super(id, nome, email, senha, telefone);
-        this.cargo = cargo;
+        this.cpf = cpf;
     }
 
     @Override
@@ -16,11 +20,14 @@ public class Gerente extends Usuario {
         return "GERENTE";
     }
 
-    public String getCargo() {
-        return cargo;
+    @Override
+    public boolean validar() {
+        return super.validar()
+                && textoPreenchido(cpf);
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public String getCpf() {
+        return cpf;
     }
+
 }
