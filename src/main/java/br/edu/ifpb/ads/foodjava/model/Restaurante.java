@@ -1,5 +1,7 @@
 package br.edu.ifpb.ads.foodjava.model;
 
+import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

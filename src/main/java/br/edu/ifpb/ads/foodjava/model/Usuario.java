@@ -1,6 +1,8 @@
 package br.edu.ifpb.ads.foodjava.model;
 
 import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
+import br.edu.ifpb.ads.foodjava.interfaces.Autenticavel;
+import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 
 public abstract class Usuario implements Autenticavel, Validavel {
     private String id;

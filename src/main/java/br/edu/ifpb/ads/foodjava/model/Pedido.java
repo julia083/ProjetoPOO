@@ -3,6 +3,7 @@ package br.edu.ifpb.ads.foodjava.model;
 import br.edu.ifpb.ads.foodjava.exception.CancelamentoNaoPermitidoException;
 import br.edu.ifpb.ads.foodjava.exception.CarrinhoVazioException;
 import br.edu.ifpb.ads.foodjava.exception.StatusInvalidoException;
+import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

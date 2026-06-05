@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.foodjava.model;
 
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
+import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 
 public class ItemCardapio implements Validavel {
     private String id;
