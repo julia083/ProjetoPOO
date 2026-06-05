@@ -1,0 +1,33 @@
+{
+  "cardapio": [
+    {
+      "nome": "Caldo de Feijao",
+      "descricao": "Caldo temperado com linguica e couve",
+      "preco": 12.50,
+      "categoria": "ENTRADA",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/caldo_feijao.jpg"
+    },
+    {
+      "nome": "Baiao de Dois",
+      "descricao": "Arroz com feijao-verde, queijo e carne-seca",
+      "preco": 38.90,
+      "categoria": "PRATO_PRINCIPAL",
+      "disponivel": true
+    },
+    {
+      "nome": "Mungunza",
+      "descricao": "Sobremesa tipica nordestina com milho e coco",
+      "preco": 10.00,
+      "categoria": "SOBREMESA",
+      "disponivel": true
+    },
+    {
+      "nome": "Suco de Umbu",
+      "descricao": "Suco natural de umbu gelado (500ml)",
+      "preco": 8.00,
+      "categoria": "BEBIDAS",
+      "disponivel": false
+    }
+  ]
+}
