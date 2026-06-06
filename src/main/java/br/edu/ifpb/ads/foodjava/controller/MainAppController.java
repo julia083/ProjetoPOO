@@ -1,9 +1,9 @@
-package br.edu.ifpb.ads.foodjava;
+package br.edu.ifpb.ads.foodjava.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class MainAppController {
     @FXML
     private Label welcomeText;
 
