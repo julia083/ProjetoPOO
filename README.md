@@ -55,7 +55,10 @@ O projeto foi desenvolvido aplicando conceitos de Programação Orientada a Obje
 ## Estrutura do Projeto
 
 ```text
-src
+FoodJava
+├── data
+│
+├──src
 ├── main
 │   ├── java
 │   │   └── br.edu.ifpb.ads.foodjava
@@ -69,7 +72,6 @@ src
 │       ├── fxml
 │       ├── css
 │       ├── images
-│       ├── data
 │       └── uploads
 ```
 
