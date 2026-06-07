@@ -1,12 +1,11 @@
-# JAVA FOOD
 # FoodJava
 
 Sistema de gerenciamento de restaurante desenvolvido em Java como projeto final da disciplina de Programação Orientada a Objetos.
 
 ## Integrantes
 
-* Julia Sousa de Lima - 202525020037
-* Joel Ferreira Meneses - 202525020030
+- Julia Sousa de Lima - 202525020037
+- Joel Ferreira Meneses - 202525020030
 
 ## Descrição
 
@@ -14,75 +13,91 @@ O FoodJava é uma aplicação desktop desenvolvida em JavaFX para auxiliar no ge
 
 O projeto foi desenvolvido aplicando conceitos de Programação Orientada a Objetos, persistência de dados em JSON e arquitetura MVC.
 
-## Objetivos
-
-* Aplicar os conceitos de Programação Orientada a Objetos.
-* Desenvolver uma aplicação utilizando JavaFX.
-* Implementar persistência de dados com JSON.
-* Utilizar boas práticas de organização e estruturação de código.
-
 ## Funcionalidades
 
 ### Cliente
 
-* Cadastro de usuário.
-* Login no sistema.
-* Visualização do cardápio.
-* Realização de pedidos.
-* Consulta do histórico de pedidos.
-* Acompanhamento do status dos pedidos.
+- Cadastro de usuário.
+- Login no sistema.
+- Visualização do cardápio.
+- Realização de pedidos.
+- Consulta do histórico de pedidos.
+- Acompanhamento do status dos pedidos.
 
 ### Gerente
 
-* Login administrativo.
-* Gerenciamento do cardápio.
-* Cadastro de novos itens.
-* Edição e remoção de itens existentes.
-* Controle da disponibilidade dos produtos.
-* Gerenciamento dos pedidos recebidos.
-* Atualização do status dos pedidos.
+- Login administrativo.
+- Gerenciamento do cardápio.
+- Cadastro de novos itens.
+- Edição e remoção de itens existentes.
+- Controle da disponibilidade dos produtos.
+- Gerenciamento dos pedidos recebidos.
+- Atualização do status dos pedidos.
 
 ## Tecnologias Utilizadas
 
-* Java 17
-* JavaFX
-* Maven
-* Gson
-* JSON
-* Git
-* GitHub
+- Java 17
+- JavaFX
+- Maven
+- Gson
+- JSON
+- Git
+- GitHub
 
 ## Estrutura do Projeto
 
 ```text
 FoodJava
 ├── data
-│
-├──src
-├── main
-│   ├── java
-│   │   └── br.edu.ifpb.ads.foodjava
-│   │       ├── controller
-│   │       ├── model
-│   │       ├── repository
-│   │       ├── exception
-│   │       ├── interfaces
-│   │       └── util
-│   └── resources
-│       ├── fxml
-│       ├── css
-│       ├── images
-│       └── uploads
+├── src
+│   └── main
+│       ├── java
+│       │   └── br.edu.ifpb.ads.foodjava
+│       │       ├── controller
+│       │       ├── model
+│       │       ├── repository
+│       │       ├── exception
+│       │       ├── interfaces
+│       │       └── util
+│       │
+│       └── resources
+│           ├── fxml
+│           ├── css
+│           ├── images
+│           └── uploads
 ```
+
+## Arquitetura
+
+O projeto segue o padrão MVC (Model-View-Controller):
+
+- **Model:** entidades e regras de negócio.
+- **View:** interfaces gráficas desenvolvidas em JavaFX (arquivos FXML).
+- **Controller:** controle das interações entre usuário e sistema.
+
+Além disso, o projeto utiliza uma camada de **Repository** para persistência de dados em arquivos JSON.
+
+## Persistência de Dados
+
+Os dados da aplicação são armazenados em arquivos JSON localizados na pasta `data`.
+
+Arquivos utilizados:
+
+- clientes.json
+- gerentes.json
+- pedidos.json
+- cardapio.json
+- restaurante.json
 
 ## Conceitos de POO Aplicados
 
-* Encapsulamento
-* Herança
-* Polimorfismo
-* Abstração
-* Interfaces
-* Tratamento de exceções personalizadas
+- Encapsulamento
+- Herança
+- Polimorfismo
+- Abstração
+- Interfaces
+- Classes abstratas
+- Tratamento de exceções personalizadas
 
 ## Execução do Projeto
 
@@ -109,10 +124,6 @@ ou
 ```bash
 mvn javafx:run
 ```
-
-## Persistência de Dados
-
-Os dados da aplicação são armazenados em arquivos JSON, permitindo a manutenção das informações entre diferentes execuções do sistema.
 
 ## Licença
 
