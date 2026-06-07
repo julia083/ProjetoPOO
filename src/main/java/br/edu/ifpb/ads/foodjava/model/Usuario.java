@@ -14,6 +14,7 @@ public abstract class Usuario implements Autenticavel, Validavel {
     }
 
     protected Usuario( String id,String nome, String email, String senha, String telefone) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         setSenha(senha);
