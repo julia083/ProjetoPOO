@@ -36,7 +36,7 @@ O projeto foi desenvolvido aplicando conceitos de Programação Orientada a Obje
 
 ## Tecnologias Utilizadas
 
-- Java 17
+- Java 21
 - JavaFX
 - Maven
 - Gson
