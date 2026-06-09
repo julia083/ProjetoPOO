@@ -7,7 +7,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ConfiguracaoRestauranteController {
-
     @FXML
     private TextField categoriaCulinaria;
 
@@ -30,15 +29,10 @@ public class ConfiguracaoRestauranteController {
     private TextField nomeGerente;
 
     @FXML
-    private Button salvarResteuranteBotton;
+    private Button salvarRestauranteBotton;
 
     @FXML
     private PasswordField senhaGerente;
-
-    @FXML
-    void salvarCtagoriaCulinaria(ActionEvent event) {
-
-    }
 
     @FXML
     void salvarORestaurante(ActionEvent event) {
