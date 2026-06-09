@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="450.0" style="-fx-background-color: #34D399;" HBox.hgrow="ALWAYS" />
+      <AnchorPane prefHeight="200.0" prefWidth="450.0" style="-fx-background-color: #D1FAE5;" HBox.hgrow="ALWAYS">
+         <children>
+            <Label alignment="TOP_CENTER" layoutX="134.0" layoutY="132.0" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font size="45.0" />
+               </font>
+            </Label>
+            <TextField layoutX="140.0" layoutY="288.0" text="Email">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </TextField>
+            <PasswordField layoutX="175.0" layoutY="343.0" text="senha" />
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>
