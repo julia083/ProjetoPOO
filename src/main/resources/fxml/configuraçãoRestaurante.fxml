@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="186.0" layoutY="48.0" text=" CONFIGURAÇÃO DO RESTAURANTE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <textFill>
+            <RadialGradient centerX="0.44690266330685235" centerY="0.7159090836842855" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.6000000238418579" green="0.2888889014720917" blue="0.2888889014720917" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.49473685026168823" green="0.30783626437187195" blue="0.30783626437187195" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="69.0" layoutY="99.0" text="Informações do Restaurante:" textFill="#840606" />
+      <Label layoutX="379.0" layoutY="99.0" text="Informações do Gerente:" textFill="#840606" />
+      <Label layoutX="28.0" layoutY="172.0" prefHeight="18.0" prefWidth="115.0" text="CNPJ do restaurante: " />
+      <Label layoutX="28.0" layoutY="205.0" text="Endereço:" />
+      <Accordion layoutX="98.0" layoutY="184.0" />
+      <Label layoutX="28.0" layoutY="237.0" text="Categoria Culinária:" />
+      <Label layoutX="28.0" layoutY="141.0" text="Nome Fantasia:" />
+      <TextField fx:id="nomeFantasia" layoutX="119.0" layoutY="136.0" prefHeight="26.0" prefWidth="169.0" />
+      <TextField fx:id="cnpjRestaurante" layoutX="146.0" layoutY="168.0" prefHeight="26.0" prefWidth="143.0" />
+      <TextField fx:id="enderecoRestaurante" layoutX="88.0" layoutY="200.0" prefHeight="26.0" prefWidth="200.0" />
+      <TextField fx:id="categoriaCulinaria" layoutX="143.0" layoutY="232.0" onAction="#salvarCtagoriaCulinaria" prefHeight="26.0" prefWidth="143.0" />
+      <Label layoutX="307.0" layoutY="172.0" text="CPF do Gerente:" />
+      <Label layoutX="307.0" layoutY="140.0" text="Nome do Gerente:" />
+      <Label layoutX="309.0" layoutY="237.0" text="Senha:" />
+      <Label layoutX="309.0" layoutY="204.0" text="Email:" />
+      <TextField fx:id="nomeGerente" layoutX="415.0" layoutY="136.0" prefHeight="26.0" prefWidth="169.0" />
+      <TextField fx:id="cpfGerente" layoutX="399.0" layoutY="167.0" prefHeight="26.0" prefWidth="188.0" />
+      <TextField fx:id="emailGerente" layoutX="343.0" layoutY="199.0" prefHeight="26.0" prefWidth="242.0" />
+      <PasswordField fx:id="senhaGerente" layoutX="349.0" layoutY="232.0" prefHeight="26.0" prefWidth="236.0" />
+      <Button fx:id="salvarResteuranteBotton" layoutX="517.0" layoutY="345.0" mnemonicParsing="false" onAction="#salvarORestaurante" text="Salvar" textFill="#029433" />
+   </children>
+</AnchorPane>
