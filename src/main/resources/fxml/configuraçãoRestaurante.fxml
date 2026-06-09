@@ -36,23 +36,23 @@
       </Label>
       <Label layoutX="69.0" layoutY="99.0" text="Informações do Restaurante:" textFill="#840606" />
       <Label layoutX="379.0" layoutY="99.0" text="Informações do Gerente:" textFill="#840606" />
-      <Label layoutX="28.0" layoutY="172.0" prefHeight="18.0" prefWidth="115.0" text="CNPJ do restaurante: " />
-      <Label layoutX="28.0" layoutY="205.0" text="Endereço:" />
+      <Label layoutX="28.0" layoutY="190.0" prefHeight="18.0" prefWidth="115.0" text="CNPJ do restaurante: " />
+      <Label layoutX="28.0" layoutY="237.0" text="Endereço:" />
       <Accordion layoutX="98.0" layoutY="184.0" />
-      <Label layoutX="28.0" layoutY="237.0" text="Categoria Culinária:" />
-      <Label layoutX="28.0" layoutY="141.0" text="Nome Fantasia:" />
-      <TextField fx:id="nomeFantasia" layoutX="119.0" layoutY="136.0" prefHeight="26.0" prefWidth="169.0" />
-      <TextField fx:id="cnpjRestaurante" layoutX="146.0" layoutY="168.0" prefHeight="26.0" prefWidth="143.0" />
-      <TextField fx:id="enderecoRestaurante" layoutX="88.0" layoutY="200.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="categoriaCulinaria" layoutX="143.0" layoutY="232.0" prefHeight="26.0" prefWidth="143.0" />
-      <Label layoutX="307.0" layoutY="172.0" text="CPF do Gerente:" />
+      <Label layoutX="28.0" layoutY="282.0" text="Categoria Culinária:" />
+      <Label layoutX="28.0" layoutY="140.0" text="Nome Fantasia:" />
+      <TextField fx:id="nomeFantasia" layoutX="116.0" layoutY="135.0" prefHeight="26.0" prefWidth="169.0" />
+      <TextField fx:id="cnpjRestaurante" layoutX="146.0" layoutY="186.0" prefHeight="26.0" prefWidth="143.0" />
+      <TextField fx:id="enderecoRestaurante" layoutX="86.0" layoutY="232.0" prefHeight="26.0" prefWidth="200.0" />
+      <TextField fx:id="categoriaCulinaria" layoutX="146.0" layoutY="278.0" prefHeight="26.0" prefWidth="143.0" />
+      <Label layoutX="307.0" layoutY="190.0" text="CPF do Gerente:" />
       <Label layoutX="307.0" layoutY="140.0" text="Nome do Gerente:" />
-      <Label layoutX="309.0" layoutY="237.0" text="Senha:" />
-      <Label layoutX="309.0" layoutY="204.0" text="Email:" />
+      <Label layoutX="307.0" layoutY="281.0" text="Senha:" />
+      <Label layoutX="309.0" layoutY="237.0" text="Email:" />
       <TextField fx:id="nomeGerente" layoutX="415.0" layoutY="136.0" prefHeight="26.0" prefWidth="169.0" />
-      <TextField fx:id="cpfGerente" layoutX="399.0" layoutY="167.0" prefHeight="26.0" prefWidth="188.0" />
-      <TextField fx:id="emailGerente" layoutX="343.0" layoutY="199.0" prefHeight="26.0" prefWidth="242.0" />
-      <PasswordField fx:id="senhaGerente" layoutX="349.0" layoutY="232.0" prefHeight="26.0" prefWidth="236.0" />
+      <TextField fx:id="cpfGerente" layoutX="398.0" layoutY="185.0" prefHeight="26.0" prefWidth="188.0" />
+      <TextField fx:id="emailGerente" layoutX="350.0" layoutY="232.0" prefHeight="26.0" prefWidth="236.0" />
+      <PasswordField fx:id="senhaGerente" layoutX="350.0" layoutY="277.0" prefHeight="26.0" prefWidth="236.0" />
       <Button fx:id="salvarRestauranteBotton" layoutX="517.0" layoutY="345.0" mnemonicParsing="false" onAction="salvarORestaurante" text="Salvar" textFill="#029433" />
    </children>
 </AnchorPane>
