@@ -5,14 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
    <children>
-      <Label layoutX="68.0" layoutY="158.0" text="Nenhum restaurante configurado, pronto para configurar?">
+      <Label layoutX="218.0" layoutY="234.0" text="Nenhum restaurante configurado, pronto para configurar?">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="configurarRestauranteBotton" layoutX="230.0" layoutY="200.0" mnemonicParsing="false" onAction="#configurarORestaurante" text="Configurar Restaurante" textFill="#3fa63d" />
+      <Button fx:id="configurarRestauranteBotton" layoutX="380.0" layoutY="287.0" mnemonicParsing="false" onAction="#configurarORestaurante" text="Configurar Restaurante" textFill="#3fa63d" />
    </children>
 </AnchorPane>

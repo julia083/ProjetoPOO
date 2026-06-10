@@ -11,11 +11,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane
-fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoRestauranteController"
-   maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoRestauranteController">
    <children>
-      <Label layoutX="186.0" layoutY="48.0" text=" CONFIGURAÇÃO DO RESTAURANTE">
+      <Label layoutX="326.0" layoutY="54.0" text=" CONFIGURAÇÃO DO RESTAURANTE">
          <font>
             <Font size="14.0" />
          </font>
@@ -29,32 +27,41 @@ fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.Configura
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.49473685026168823" green="0.30783626437187195" blue="0.30783626437187195" />
+                        <Color red="0.6105263233184814" green="0.11471864581108093" blue="0.03844054415822029" />
                      </color>
                   </Stop>
                </stops>
             </RadialGradient>
          </textFill>
       </Label>
-      <Label layoutX="69.0" layoutY="99.0" text="Informações do Restaurante:" textFill="#840606" />
-      <Label layoutX="379.0" layoutY="99.0" text="Informações do Gerente:" textFill="#840606" />
-      <Label layoutX="28.0" layoutY="190.0" prefHeight="18.0" prefWidth="115.0" text="CNPJ do restaurante: " />
-      <Label layoutX="28.0" layoutY="237.0" text="Endereço:" />
+      <Label layoutX="86.0" layoutY="99.0" text="Informações do Restaurante:" textFill="#840606" />
+      <Label layoutX="620.0" layoutY="175.0" text="Informações do Gerente:" textFill="#840606" />
+      <Label layoutX="35.0" layoutY="177.0" prefHeight="18.0" prefWidth="120.0" text="CNPJ do restaurante: " />
       <Accordion layoutX="98.0" layoutY="184.0" />
-      <Label layoutX="28.0" layoutY="282.0" text="Categoria Culinária:" />
-      <Label layoutX="28.0" layoutY="140.0" text="Nome Fantasia:" />
-      <TextField fx:id="nomeFantasia" layoutX="116.0" layoutY="135.0" prefHeight="26.0" prefWidth="169.0" />
-      <TextField fx:id="cnpjRestaurante" layoutX="146.0" layoutY="186.0" prefHeight="26.0" prefWidth="143.0" />
-      <TextField fx:id="enderecoRestaurante" layoutX="86.0" layoutY="232.0" prefHeight="26.0" prefWidth="200.0" />
-      <TextField fx:id="categoriaCulinaria" layoutX="146.0" layoutY="278.0" prefHeight="26.0" prefWidth="143.0" />
-      <Label layoutX="307.0" layoutY="190.0" text="CPF do Gerente:" />
-      <Label layoutX="307.0" layoutY="140.0" text="Nome do Gerente:" />
-      <Label layoutX="307.0" layoutY="281.0" text="Senha:" />
-      <Label layoutX="309.0" layoutY="237.0" text="Email:" />
-      <TextField fx:id="nomeGerente" layoutX="415.0" layoutY="136.0" prefHeight="26.0" prefWidth="169.0" />
-      <TextField fx:id="cpfGerente" layoutX="398.0" layoutY="185.0" prefHeight="26.0" prefWidth="188.0" />
-      <TextField fx:id="emailGerente" layoutX="350.0" layoutY="232.0" prefHeight="26.0" prefWidth="236.0" />
-      <PasswordField fx:id="senhaGerente" layoutX="350.0" layoutY="277.0" prefHeight="26.0" prefWidth="236.0" />
-      <Button fx:id="salvarRestauranteBotton" layoutX="517.0" layoutY="345.0" mnemonicParsing="false" onAction="#salvarORestaurante" text="Salvar" textFill="#029433" />
+      <Label layoutX="34.0" layoutY="220.0" text="Categoria Culinária:" />
+      <Label layoutX="35.0" layoutY="139.0" prefHeight="18.0" prefWidth="86.0" text="Nome Fantasia:" />
+      <TextField fx:id="nomeFantasia" layoutX="126.0" layoutY="135.0" prefHeight="26.0" prefWidth="314.0" />
+      <TextField fx:id="cnpjRestaurante" layoutX="154.0" layoutY="173.0" prefHeight="26.0" prefWidth="285.0" />
+      <TextField fx:id="categoriaCulinaria" layoutX="145.0" layoutY="215.0" prefHeight="26.0" prefWidth="292.0" />
+      <Label layoutX="477.0" layoutY="260.0" text="CPF do Gerente:" />
+      <Label layoutX="477.0" layoutY="214.0" text="Nome do Gerente:" />
+      <Label layoutX="477.0" layoutY="338.0" text="Senha:" />
+      <Label layoutX="477.0" layoutY="300.0" text="Email:" />
+      <TextField fx:id="nomeGerente" layoutX="579.0" layoutY="210.0" prefHeight="26.0" prefWidth="276.0" />
+      <TextField fx:id="cpfGerente" layoutX="569.0" layoutY="256.0" prefHeight="26.0" prefWidth="286.0" />
+      <TextField fx:id="emailGerente" layoutX="517.0" layoutY="296.0" prefHeight="26.0" prefWidth="337.0" />
+      <PasswordField fx:id="senhaGerente" layoutX="520.0" layoutY="334.0" prefHeight="26.0" prefWidth="338.0" />
+      <Button fx:id="salvarRestauranteBotton" layoutX="804.0" layoutY="539.0" mnemonicParsing="false" onAction="#salvarORestaurante" text="Salvar" textFill="#029433" />
+      <Button fx:id="escolherLogo" layoutX="202.0" layoutY="539.0" mnemonicParsing="false" onAction="#selecionarLogo" text="Escolher Arquivo" textFill="#1406b1" />
+      <Label layoutX="69.0" layoutY="543.0" text="Logo do Restaurante:" />
+      <Label layoutX="85.0" layoutY="318.0" text="Localização do Restaurante:" textFill="#840606" />
+      <Label layoutX="39.0" layoutY="354.0" text="Bairro:" />
+      <Label layoutX="38.0" layoutY="391.0" text="Rua:" />
+      <Label layoutX="38.0" layoutY="423.0" text="Número:" />
+      <TextField fx:id="bairroRestaurante" layoutX="83.0" layoutY="350.0" prefHeight="26.0" prefWidth="354.0" />
+      <TextField fx:id="ruaRestaurante" layoutX="67.0" layoutY="387.0" prefHeight="26.0" prefWidth="370.0" />
+      <TextField fx:id="numeroRestaurante" layoutX="90.0" layoutY="419.0" prefHeight="26.0" prefWidth="48.0" />
+      <Label layoutX="34.0" layoutY="260.0" text="Telefone do Restaurante:" />
+      <TextField fx:id="telefoneRestaurante" layoutX="171.0" layoutY="257.0" prefHeight="26.0" prefWidth="266.0" />
    </children>
 </AnchorPane>
