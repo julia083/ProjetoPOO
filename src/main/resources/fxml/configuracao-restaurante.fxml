@@ -11,7 +11,9 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane
+fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoRestauranteController"
+   maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="186.0" layoutY="48.0" text=" CONFIGURAÇÃO DO RESTAURANTE">
          <font>
@@ -53,6 +55,6 @@
       <TextField fx:id="cpfGerente" layoutX="398.0" layoutY="185.0" prefHeight="26.0" prefWidth="188.0" />
       <TextField fx:id="emailGerente" layoutX="350.0" layoutY="232.0" prefHeight="26.0" prefWidth="236.0" />
       <PasswordField fx:id="senhaGerente" layoutX="350.0" layoutY="277.0" prefHeight="26.0" prefWidth="236.0" />
-      <Button fx:id="salvarRestauranteBotton" layoutX="517.0" layoutY="345.0" mnemonicParsing="false" onAction="salvarORestaurante" text="Salvar" textFill="#029433" />
+      <Button fx:id="salvarRestauranteBotton" layoutX="517.0" layoutY="345.0" mnemonicParsing="false" onAction="#salvarORestaurante" text="Salvar" textFill="#029433" />
    </children>
 </AnchorPane>
