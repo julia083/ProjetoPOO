@@ -12,11 +12,11 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoRestauranteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoRestauranteController">
    <children>
-      <Label layoutX="326.0" layoutY="54.0" text=" CONFIGURAÇÃO DO RESTAURANTE">
+      <Label layoutX="304.0" layoutY="54.0" text=" CONFIGURAÇÃO DO RESTAURANTE" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Times New Roman Bold" size="16.0" />
          </font>
          <textFill>
             <RadialGradient centerX="0.44690266330685235" centerY="0.7159090836842855" radius="0.5">
@@ -28,15 +28,15 @@
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color red="0.6105263233184814" green="0.11471864581108093" blue="0.03844054415822029" />
+                        <Color red="0.34736841917037964" green="0.07689278572797775" blue="0.04116959124803543" />
                      </color>
                   </Stop>
                </stops>
             </RadialGradient>
          </textFill>
       </Label>
-      <Label layoutX="86.0" layoutY="99.0" text="Informações do Restaurante:" textFill="#840606" />
-      <Label layoutX="620.0" layoutY="175.0" text="Informações do Gerente:" textFill="#840606" />
+      <Label layoutX="86.0" layoutY="99.0" text="Informações do Restaurante:" textFill="#7e2a2a" />
+      <Label layoutX="620.0" layoutY="175.0" text="Informações do Gerente:" textFill="#7e2a2a" />
       <Label layoutX="35.0" layoutY="177.0" prefHeight="18.0" prefWidth="120.0" text="CNPJ do restaurante: " />
       <Accordion layoutX="98.0" layoutY="184.0" />
       <Label layoutX="34.0" layoutY="220.0" text="Categoria Culinária:" />
@@ -61,7 +61,7 @@
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Label layoutX="69.0" layoutY="543.0" text="Logo do Restaurante:" />
-      <Label layoutX="85.0" layoutY="318.0" text="Localização do Restaurante:" textFill="#840606" />
+      <Label layoutX="85.0" layoutY="318.0" text="Localização do Restaurante:" textFill="#7e2a2a" />
       <Label layoutX="39.0" layoutY="354.0" text="Bairro:" />
       <Label layoutX="38.0" layoutY="391.0" text="Rua:" />
       <Label layoutX="38.0" layoutY="423.0" text="Número:" />
