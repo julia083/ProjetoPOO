@@ -16,19 +16,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
    <bottom>
       <HBox prefHeight="63.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="63.0" prefWidth="120.0" />
-            <Button fx:id="verDetalhesBottom" mnemonicParsing="false" onAction="#verDetalhes" prefHeight="26.0" prefWidth="100.0" text="Ver Detalhes" />
+            <Button fx:id="verDetalhesBottom" mnemonicParsing="false" onAction="#verDetalhes" prefHeight="26.0" prefWidth="100.0" text="Ver Detalhes" textFill="#8c5625" />
             <Region prefHeight="63.0" prefWidth="71.0" />
-            <Button fx:id="confirmarPedidoBottom" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="26.0" prefWidth="139.0" text="Confirmar Pedido" />
+            <Button fx:id="confirmarPedidoBottom" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="26.0" prefWidth="139.0" text="Confirmar Pedido" textFill="#38814f" />
             <Region prefHeight="63.0" prefWidth="47.0" />
-            <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="26.0" prefWidth="143.0" text="Cancelar Pedido" />
+            <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="26.0" prefWidth="143.0" text="Cancelar Pedido" textFill="#ac5b5b" />
             <Region prefHeight="63.0" prefWidth="64.0" />
-            <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" text="Avançar Status" />
+            <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" text="Avançar Status" textFill="#2945a1" />
             <Region prefHeight="63.0" prefWidth="120.0" />
          </children>
       </HBox>
@@ -45,7 +44,7 @@
                      </font>
                   </Label>
                   <Region prefHeight="67.0" prefWidth="468.0" />
-                  <Button fx:id="sairBottom" mnemonicParsing="false" onAction="#voltarTelaLogin" prefHeight="41.0" prefWidth="57.0" text="Sair" textFill="#8e0606">
+                  <Button fx:id="sairBottom" mnemonicParsing="false" onAction="#voltarTelaLogin" prefHeight="22.0" prefWidth="58.0" text="Sair" textFill="#8e0606">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
