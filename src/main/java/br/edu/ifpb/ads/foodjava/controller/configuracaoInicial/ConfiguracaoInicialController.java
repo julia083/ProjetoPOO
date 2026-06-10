@@ -19,7 +19,7 @@ public class ConfiguracaoInicialController {
     void configurarORestaurante(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/fxml/configuracaoRestaurante.fxml"));
+                getClass().getResource("/fxml/configuracao-restaurante.fxml"));
 
         Parent root = loader.load();
 
