@@ -1,30 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox prefHeight="200.0" prefWidth="450.0" style="-fx-background-color: #34D399;" HBox.hgrow="ALWAYS" />
-      <AnchorPane prefHeight="200.0" prefWidth="450.0" style="-fx-background-color: #D1FAE5;" HBox.hgrow="ALWAYS">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: #D1FAE5;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifpb.ads.foodjava.controller.autenticacao.LoginController">
+   <left>
+      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="330.0" spacing="18.0"
+            style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="36.0" left="38.0" right="38.0" top="36.0" />
+         </padding>
          <children>
-            <Label alignment="TOP_CENTER" layoutX="134.0" layoutY="132.0" text="Login" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label text="FoodJava" textFill="WHITE">
                <font>
-                  <Font size="45.0" />
+                  <Font name="Times New Roman Bold" size="40.0" />
                </font>
             </Label>
-            <TextField layoutX="140.0" layoutY="288.0" text="Email">
+            <Separator prefWidth="170.0" />
+            <Label alignment="CENTER" text="Sistema de pedidos para restaurantes"
+                   textAlignment="CENTER" textFill="#0F5132" wrapText="true">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Times New Roman" size="18.0" />
                </font>
-            </TextField>
-            <PasswordField layoutX="175.0" layoutY="343.0" text="senha" />
+            </Label>
          </children>
-      </AnchorPane>
-   </children>
-</HBox>
+      </VBox>
+   </left>
+   <center>
+      <VBox alignment="CENTER" spacing="16.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="56.0" left="90.0" right="90.0" top="56.0" />
+         </padding>
+         <children>
+            <Label text="Login" textFill="#962828">
+               <font>
+                  <Font name="Times New Roman Bold" size="34.0" />
+               </font>
+            </Label>
+            <Label text="Entre com seu email e senha" textFill="#4B5563">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Region prefHeight="12.0" />
+            <VBox maxWidth="360.0" spacing="7.0">
+               <children>
+                  <Label text="Email" />
+                  <TextField fx:id="emailField" prefHeight="34.0" promptText="email@exemplo.com" />
+               </children>
+            </VBox>
+            <VBox maxWidth="360.0" spacing="7.0">
+               <children>
+                  <Label text="Senha" />
+                  <PasswordField fx:id="senhaField" prefHeight="34.0" promptText="Digite sua senha" />
+               </children>
+            </VBox>
+            <!-- Quando criar o metodo no LoginController, adicionar no botao: onAction="#entrar" -->
+            <Button fx:id="entrarButton" maxWidth="360.0" mnemonicParsing="false" prefHeight="36.0"
+                    style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold;"
+                    text="Entrar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <HBox alignment="CENTER" maxWidth="360.0" spacing="4.0">
+               <children>
+                  <Label text="Ainda nao tem conta?" textFill="#4B5563" />
+                  <!-- Quando criar o metodo no LoginController, adicionar no link: onAction="#abrirCadastroCliente" -->
+                  <Hyperlink fx:id="cadastroClienteLink" text="Cadastrar cliente" textFill="#0D6609" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

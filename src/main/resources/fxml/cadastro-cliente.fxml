@@ -1,14 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.CadastroCliente"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: #D1FAE5;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifpb.ads.foodjava.controller.autenticacao.CadastroClienteController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="78.0" spacing="18.0"
+            style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="38.0" right="38.0" />
+         </padding>
+         <children>
+            <Label text="FoodJava" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="30.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <!-- Quando criar o metodo no CadastroClienteController, adicionar no botao: onAction="#voltarLogin" -->
+            <Button fx:id="voltarLoginButton" mnemonicParsing="false"
+                    style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;"
+                    text="Voltar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" spacing="22.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="42.0" left="82.0" right="82.0" top="42.0" />
+         </padding>
+         <children>
+            <VBox alignment="CENTER" spacing="8.0">
+               <children>
+                  <Label text="Cadastro de Cliente" textFill="#962828">
+                     <font>
+                        <Font name="Times New Roman Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="Preencha seus dados para criar uma conta" textFill="#4B5563">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <GridPane hgap="20.0" maxWidth="720.0" vgap="12.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="64.0" />
+                  <RowConstraints minHeight="64.0" />
+                  <RowConstraints minHeight="64.0" />
+               </rowConstraints>
+               <children>
+                  <VBox spacing="7.0">
+                     <children>
+                        <Label text="Nome completo" />
+                        <TextField fx:id="nomeField" prefHeight="34.0" promptText="Nome do cliente" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="7.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="CPF" />
+                        <TextField fx:id="cpfField" prefHeight="34.0" promptText="000.000.000-00" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="7.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Email" />
+                        <TextField fx:id="emailField" prefHeight="34.0" promptText="email@exemplo.com" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Telefone" />
+                        <TextField fx:id="telefoneField" prefHeight="34.0" promptText="(00) 00000-0000" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="7.0" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="Senha" />
+                        <PasswordField fx:id="senhaField" prefHeight="34.0" promptText="Minimo 8 caracteres e 1 numero" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="7.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="Endereco" />
+                        <TextField fx:id="enderecoField" prefHeight="34.0" promptText="Rua, numero e bairro" />
+                     </children>
+                  </VBox>
+               </children>
+            </GridPane>
+            <HBox alignment="CENTER_RIGHT" maxWidth="720.0" spacing="12.0">
+               <children>
+                  <!-- Quando criar o metodo no CadastroClienteController, adicionar no botao: onAction="#limparFormulario" -->
+                  <Button fx:id="limparFormularioButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="110.0"
+                          text="Limpar" textFill="#8C5625">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <!-- Quando criar o metodo no CadastroClienteController, adicionar no botao: onAction="#cadastrarCliente" -->
+                  <Button fx:id="cadastrarClienteButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="160.0"
+                          style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold;"
+                          text="Cadastrar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
