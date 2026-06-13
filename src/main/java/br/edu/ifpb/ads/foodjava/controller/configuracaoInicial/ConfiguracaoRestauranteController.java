@@ -5,13 +5,19 @@ import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.model.enums.CategoriaCulinaria;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ConfiguracaoRestauranteController {
 
@@ -77,7 +83,7 @@ public class ConfiguracaoRestauranteController {
     private File logoSelecionada;
 
     @FXML
-    void salvarORestaurante(ActionEvent event) {
+    void salvarORestaurante(ActionEvent event) throws IOException{
 
         Gerente gerente = new Gerente(nomeGerente.getText(),
                 cpfGerente.getText(),
@@ -100,6 +106,21 @@ public class ConfiguracaoRestauranteController {
             return;
         }
 
-        System.out.println("Restaurante cadastrado com sucesso!");
+        try {
+            // 1. Carrega o FXML da tela de cadastro
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+            Parent root = loader.load();
+
+            // 2. Pega a janela (Stage) atual a partir do botão que foi clicado
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // 3. Define a nova cena na mesma janela
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
