@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -16,92 +16,108 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
-   <bottom>
-      <HBox prefHeight="63.0" prefWidth="900.0" BorderPane.alignment="CENTER">
-         <children>
-            <Region prefHeight="63.0" prefWidth="120.0" />
-            <Button fx:id="verDetalhesBottom" mnemonicParsing="false" onAction="#verDetalhes" prefHeight="26.0" prefWidth="100.0" text="Ver Detalhes" textFill="#8c5625" />
-            <Region prefHeight="63.0" prefWidth="71.0" />
-            <Button fx:id="confirmarPedidoBottom" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="26.0" prefWidth="139.0" text="Confirmar Pedido" textFill="#38814f" />
-            <Region prefHeight="63.0" prefWidth="47.0" />
-            <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="26.0" prefWidth="143.0" text="Cancelar Pedido" textFill="#ac5b5b" />
-            <Region prefHeight="63.0" prefWidth="64.0" />
-            <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" text="Avançar Status" textFill="#2945a1" />
-            <Region prefHeight="63.0" prefWidth="120.0" />
-         </children>
-      </HBox>
-   </bottom>
-   <center>
-      <VBox prefHeight="532.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="67.0" prefWidth="900.0">
-               <children>
-                  <Region prefHeight="67.0" prefWidth="37.0" />
-                  <Label contentDisplay="CENTER" prefHeight="66.0" prefWidth="281.0" text="PAINEL DO GERENTE" textFill="#962828">
-                     <font>
-                        <Font name="Times New Roman" size="18.0" />
-                     </font>
-                  </Label>
-                  <Region prefHeight="67.0" prefWidth="468.0" />
-                  <Button fx:id="sairBottom" mnemonicParsing="false" onAction="#voltarTelaLogin" prefHeight="22.0" prefWidth="58.0" text="Sair" textFill="#8e0606">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </HBox>
-            <TitledPane animated="false" prefHeight="130.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" text="Resumo do dia" textFill="#1e0101">
-               <content>
-                  <GridPane fx:id="resumoDoDia">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="532.8000183105469" minWidth="10.0" prefWidth="476.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="681.6000518798828" minWidth="10.0" prefWidth="404.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="86.39999999999999" minHeight="10.0" prefHeight="67.1999755859375" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="66.40001220703124" minHeight="0.0" prefHeight="65.60002441406249" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="13.800009155273436" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Total de Pedidos:" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label text="Faturamento:" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </GridPane>
-               </content>
-               <font>
-                  <Font name="Segoe UI Semilight" size="13.0" />
-               </font>
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
+
+    <!-- CABEÇALHO -->
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="80.0" style="-fx-background-color: #34D399;">
+
+            <padding>
+                <Insets bottom="15" left="25" right="25" top="15" />
+            </padding>
+
+            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="FoodJava">
+                <font>
+                    <Font size="28" />
+                </font>
+            </Label>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Painel do Gerente">
+                <font>
+                    <Font size="18" />
+                </font>
+            </Label>
+
+            <Region prefWidth="20" />
+
+            <Button fx:id="sairBottom" mnemonicParsing="false" onAction="#voltarTelaLogin" prefHeight="35" prefWidth="90" style="-fx-background-color: white;                            -fx-text-fill: #8B1E1E;                            -fx-font-weight: bold;" text="Sair" />
+        </HBox>
+    </top>
+
+    <!-- CONTEÚDO -->
+    <center>
+        <VBox spacing="15" style="-fx-background-color: #F7F4EE;">
+
+            <padding>
+                <Insets bottom="20" left="25" right="25" top="20" />
+            </padding>
+
+            <!-- RESUMO -->
+            <TitledPane animated="false" collapsible="false" prefHeight="120" style="-fx-background-color: white;                                -fx-border-color: #D1D5DB;                                -fx-border-radius: 5;" text="Resumo do Dia">
+
+                <content>
+                    <GridPane fx:id="resumoDoDiaGridPane" hgap="40" vgap="15">
+
+                        <padding>
+                            <Insets bottom="15" left="20" right="20" top="15" />
+                        </padding>
+
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Total de Pedidos:" />
+
+                        <Label style="-fx-font-size: 14px;" text="0" GridPane.columnIndex="1" />
+
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Faturamento:" GridPane.rowIndex="1" />
+
+                        <Label style="-fx-font-size: 14px;" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+                    </GridPane>
+                </content>
             </TitledPane>
-            <HBox prefHeight="52.0" prefWidth="900.0">
-               <children>
-                  <Region prefHeight="52.0" prefWidth="314.0" />
-                  <Label prefHeight="18.0" prefWidth="103.0" text="Filtrar por Status:">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="filtroStatus" onAction="#listarStatus" prefWidth="150.0" />
-               </children>
+
+            <!-- FILTRO -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+
+                <Label style="-fx-font-size: 14px;                               -fx-font-weight: bold;                               -fx-text-fill: #374151;" text="Filtrar por Status:" />
+
+                <ComboBox fx:id="filtroStatus" prefWidth="220" />
             </HBox>
-            <TableView fx:id="tabelaPedidos" prefHeight="286.0" prefWidth="900.0">
-              <columns>
-                <TableColumn prefWidth="76.80001986026764" text="id" />
-                <TableColumn prefWidth="285.6000289916992" text="Cliente" />
-                  <TableColumn minWidth="8.0" prefWidth="155.19998168945312" text="Data e Hora" />
-                  <TableColumn minWidth="0.0" prefWidth="129.60003662109375" text="Total" />
-                  <TableColumn minWidth="0.0" prefWidth="251.199951171875" text="Status" />
-              </columns>
+
+            <!-- TABELA -->
+            <TableView fx:id="tabelaPedidos" style="-fx-background-color: white;                               -fx-border-color: #D1D5DB;" VBox.vgrow="ALWAYS">
+
+                <columns>
+                    <TableColumn prefWidth="80.0" text="ID" />
+                    <TableColumn prefWidth="250.0" text="Cliente" />
+                    <TableColumn prefWidth="180.0" text="Data e Hora" />
+                    <TableColumn prefWidth="120.0" text="Total" />
+                    <TableColumn prefWidth="220.0" text="Status" />
+                </columns>
             </TableView>
-         </children>
-      </VBox>
-   </center>
+
+        </VBox>
+    </center>
+
+    <!-- RODAPÉ -->
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="70" spacing="20" style="-fx-background-color: white;                      -fx-border-color: #E5E7EB;">
+
+            <Button fx:id="verDetalhesBottom" mnemonicParsing="false" onAction="#verDetalhes" prefHeight="40" prefWidth="130" style="-fx-background-color: #E5E7EB;                            -fx-font-weight: bold;" text="Ver Detalhes" />
+
+            <Button fx:id="confirmarPedidoBottom" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #34D399;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Confirmar Pedido" />
+
+            <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #EF4444;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Cancelar Pedido" />
+
+            <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" prefHeight="40" prefWidth="150" style="-fx-background-color: #3B82F6;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Avançar Status" />
+        </HBox>
+    </bottom>
+
 </BorderPane>

@@ -22,7 +22,7 @@ public class PainelGerenteController {
     private ComboBox<?> filtroStatus;
 
     @FXML
-    private GridPane resumoDoDia;
+    private GridPane resumoDoDiaGridPane;
 
     @FXML
     private Button sairBottom;
@@ -45,11 +45,6 @@ public class PainelGerenteController {
 
     @FXML
     void confirmarPedido(ActionEvent event) {
-
-    }
-
-    @FXML
-    void listarStatus(ActionEvent event) {
 
     }
 
