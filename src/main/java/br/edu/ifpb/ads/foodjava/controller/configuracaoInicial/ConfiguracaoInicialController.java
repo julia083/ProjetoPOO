@@ -29,7 +29,6 @@ public class ConfiguracaoInicialController {
 
             // 3. Define a nova cena na mesma janela
             Scene scene = new Scene(root);
-            stage.setMaximized(true);
             stage.setScene(scene);
             stage.show();
 
