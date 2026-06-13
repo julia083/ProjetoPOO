@@ -17,12 +17,10 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
+            prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
 
-    <!-- CABEÇALHO -->
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="80.0" style="-fx-background-color: #34D399;">
-
             <padding>
                 <Insets bottom="15" left="25" right="25" top="15" />
             </padding>
@@ -43,81 +41,63 @@
 
             <Region prefWidth="20" />
 
-            <Button fx:id="sairBottom" mnemonicParsing="false" onAction="#voltarTelaLogin" prefHeight="35" prefWidth="90" style="-fx-background-color: white;                            -fx-text-fill: #8B1E1E;                            -fx-font-weight: bold;" text="Sair" />
+            <Button fx:id="sairBottom" mnemonicParsing="false" onAction="#voltarTelaLogin" prefHeight="35" prefWidth="90" style="-fx-background-color: white; -fx-text-fill: #8B1E1E; -fx-font-weight: bold;" text="Sair" />
         </HBox>
     </top>
 
-    <!-- CONTEÚDO -->
     <center>
         <VBox spacing="15" style="-fx-background-color: #F7F4EE;">
-
             <padding>
                 <Insets bottom="20" left="25" right="25" top="20" />
             </padding>
 
-            <!-- RESUMO -->
-            <TitledPane animated="false" collapsible="false" prefHeight="120" style="-fx-background-color: white;                                -fx-border-color: #D1D5DB;                                -fx-border-radius: 5;" text="Resumo do Dia">
-
+            <TitledPane animated="false" collapsible="false" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 5;" text="Resumo do Dia">
                 <content>
                     <GridPane fx:id="resumoDoDiaGridPane" hgap="40" vgap="15">
-
                         <padding>
                             <Insets bottom="15" left="20" right="20" top="15" />
                         </padding>
 
                         <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Total de Pedidos:" />
-
                         <Label style="-fx-font-size: 14px;" text="0" GridPane.columnIndex="1" />
-
                         <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Faturamento:" GridPane.rowIndex="1" />
-
                         <Label style="-fx-font-size: 14px;" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <columnConstraints>
-                     <ColumnConstraints />
-                     <ColumnConstraints />
-                  </columnConstraints>
-                  <rowConstraints>
-                     <RowConstraints />
-                     <RowConstraints />
-                  </rowConstraints>
+
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
                     </GridPane>
                 </content>
             </TitledPane>
 
-            <!-- FILTRO -->
             <HBox alignment="CENTER_LEFT" spacing="10">
-
-                <Label style="-fx-font-size: 14px;                               -fx-font-weight: bold;                               -fx-text-fill: #374151;" text="Filtrar por Status:" />
-
+                <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #374151;" text="Filtrar por Status:" />
                 <ComboBox fx:id="filtroStatus" prefWidth="220" />
             </HBox>
 
-            <!-- TABELA -->
-            <TableView fx:id="tabelaPedidos" style="-fx-background-color: white;                               -fx-border-color: #D1D5DB;" VBox.vgrow="ALWAYS">
-
+            <TableView fx:id="tabelaPedidos" style="-fx-background-color: white; -fx-border-color: #D1D5DB;" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn prefWidth="80.0" text="ID" />
-                    <TableColumn prefWidth="250.0" text="Cliente" />
-                    <TableColumn prefWidth="180.0" text="Data e Hora" />
-                    <TableColumn prefWidth="120.0" text="Total" />
-                    <TableColumn prefWidth="220.0" text="Status" />
+                    <TableColumn fx:id="colId" prefWidth="80.0" text="ID" />
+                    <TableColumn fx:id="colCliente" prefWidth="250.0" text="Cliente" />
+                    <TableColumn fx:id="colDataHora" prefWidth="180.0" text="Data e Hora" />
+                    <TableColumn fx:id="colTotal" prefWidth="120.0" text="Total" />
+                    <TableColumn fx:id="colStatus" prefWidth="220.0" text="Status" />
                 </columns>
             </TableView>
-
         </VBox>
     </center>
 
-    <!-- RODAPÉ -->
     <bottom>
-        <HBox alignment="CENTER" prefHeight="70" spacing="20" style="-fx-background-color: white;                      -fx-border-color: #E5E7EB;">
-
-            <Button fx:id="verDetalhesBottom" mnemonicParsing="false" onAction="#verDetalhes" prefHeight="40" prefWidth="130" style="-fx-background-color: #E5E7EB;                            -fx-font-weight: bold;" text="Ver Detalhes" />
-
-            <Button fx:id="confirmarPedidoBottom" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #34D399;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Confirmar Pedido" />
-
-            <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #EF4444;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Cancelar Pedido" />
-
-            <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" prefHeight="40" prefWidth="150" style="-fx-background-color: #3B82F6;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Avançar Status" />
+        <HBox alignment="CENTER" prefHeight="70" spacing="20" style="-fx-background-color: white; -fx-border-color: #E5E7EB;">
+            <Button fx:id="verDetalhesBottom" mnemonicParsing="false" onAction="#verDetalhes" prefHeight="40" prefWidth="130" style="-fx-background-color: #E5E7EB; -fx-font-weight: bold;" text="Ver Detalhes" />
+            <Button fx:id="confirmarPedidoBottom" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;" text="Confirmar Pedido" />
+            <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-font-weight: bold;" text="Cancelar Pedido" />
+            <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" prefHeight="40" prefWidth="150" style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-font-weight: bold;" text="Avancar Status" />
         </HBox>
     </bottom>
 
