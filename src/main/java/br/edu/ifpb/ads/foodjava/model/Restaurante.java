@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.foodjava.model;
 
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
+import br.edu.ifpb.ads.foodjava.model.enums.CategoriaCulinaria;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,8 +12,7 @@ public class Restaurante implements Validavel {
     private String cnpj;
     private String endereco;
     private String telefone;
-    private String categoriaCulinaria;
-    private String email;
+    private CategoriaCulinaria categoriaCulinaria;
     private String logotipoPath;
     private Gerente gerente;
     private List<ItemCardapio> cardapio = new ArrayList<>();
@@ -21,13 +21,12 @@ public class Restaurante implements Validavel {
     }
 
     public Restaurante(String nomeFantasia, String cnpj, String endereco, String telefone,
-                       String categoriaCulinaria, String email, String logotipoPath, Gerente gerente) {
+                       CategoriaCulinaria categoriaCulinaria, String logotipoPath, Gerente gerente) {
         this.nomeFantasia = nomeFantasia;
         this.cnpj = cnpj;
         this.endereco = endereco;
         this.telefone = telefone;
         this.categoriaCulinaria = categoriaCulinaria;
-        this.email = email;
         this.logotipoPath = logotipoPath;
         this.gerente = gerente;
     }
@@ -37,7 +36,6 @@ public class Restaurante implements Validavel {
         return textoPreenchido(nomeFantasia)
                 && textoPreenchido(cnpj)
                 && textoPreenchido(endereco)
-                && textoPreenchido(email)
                 && gerente != null;
     }
 
@@ -85,21 +83,9 @@ public class Restaurante implements Validavel {
         this.telefone = telefone;
     }
 
-    public String getCategoriaCulinaria() {
-        return categoriaCulinaria;
-    }
+    public CategoriaCulinaria getCategoriaCulinaria() {return categoriaCulinaria;}
 
-    public void setCategoriaCulinaria(String categoriaCulinaria) {
-        this.categoriaCulinaria = categoriaCulinaria;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setCategoriaCulinaria(CategoriaCulinaria categoriaCulinaria) {this.categoriaCulinaria = categoriaCulinaria;}
 
     public String getLogotipoPath() {
         return logotipoPath;

@@ -8,10 +8,19 @@ public class Gerente extends Usuario {
         super();
     }
 
-    public Gerente(String id,String nome, String email, String senha,
+    public Gerente(String nome,
+                   String email,
+                   String senha,
+                   String cpf) {
+
+        super(nome, email, senha, null);
+        this.cpf = cpf;
+    }
+
+    public Gerente(String nome, String email, String senha,
                    String telefone, String cpf) {
 
-        super(id, nome, email, senha, telefone);
+        super(nome, email, senha, telefone);
         this.cpf = cpf;
     }
 
