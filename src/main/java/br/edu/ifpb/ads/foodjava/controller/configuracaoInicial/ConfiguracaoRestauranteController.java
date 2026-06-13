@@ -53,8 +53,30 @@ public class ConfiguracaoRestauranteController {
         cbCategoria.getItems().addAll(CategoriaCulinaria.values());
     }
 
+    @FXML
+    private void selecionarLogo(ActionEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.setTitle("Selecionar Logotipo");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Imagens", "*.png", "*.jpg", "*.jpeg"
+                )
+        );
+
+        File arquivo = fileChooser.showOpenDialog(null);
+
+        if (arquivo != null) {
+            logoSelecionada = arquivo;
+            System.out.println("Logo selecionada: " + arquivo.getAbsolutePath());
+        }
+    }
+
     private File logoSelecionada;
 
+    @FXML
     void salvarORestaurante(ActionEvent event) {
 
         Gerente gerente = new Gerente(nomeGerente.getText(),

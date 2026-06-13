@@ -104,7 +104,7 @@
 
             <VBox spacing="5">
                <Label text="Categoria culinária" />
-               <ComboBox fx:id="selecionarCategoria" prefWidth="350" promptText="Selecione uma categoria" />
+               <ComboBox fx:id="cbCategoria" prefWidth="350" promptText="Selecione uma categoria" />
             </VBox>
          </HBox>
 
