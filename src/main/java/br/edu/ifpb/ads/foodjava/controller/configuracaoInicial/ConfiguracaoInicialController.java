@@ -1,4 +1,5 @@
 package br.edu.ifpb.ads.foodjava.controller.configuracaoInicial;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,18 +19,21 @@ public class ConfiguracaoInicialController {
     @FXML
     void configurarORestaurante(ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/fxml/configuracao-restaurante.fxml"));
+        try {
+            // 1. Carrega o FXML da tela de cadastro
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/configuracao-restaurante.fxml"));
+            Parent root = loader.load();
 
-        Parent root = loader.load();
+            // 2. Pega a janela (Stage) atual a partir do botão que foi clicado
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // 3. Define a nova cena na mesma janela
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.show();
-
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 }

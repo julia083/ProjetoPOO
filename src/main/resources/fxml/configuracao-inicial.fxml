@@ -1,17 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
-   <children>
-      <Label layoutX="209.0" layoutY="254.0" prefHeight="23.0" prefWidth="482.0" text="Nenhum restaurante configurado, pronto para configurar?">
-         <font>
-            <Font name="Times New Roman" size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="configurarRestauranteBotton" layoutX="380.0" layoutY="300.0" mnemonicParsing="false" onAction="#configurarORestaurante" text="Configurar Restaurante" textFill="#0d6609" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: #D1FAE5;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
+
+   <left>
+      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="330.0" spacing="18.0"
+            style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="36.0" left="38.0" right="38.0" top="36.0" />
+         </padding>
+         <children>
+            <Label text="FoodJava" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman Bold" size="40.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="170.0" />
+            <Label alignment="CENTER" text="Primeiros Passos" textAlignment="CENTER" textFill="#0F5132" wrapText="true">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </left>
+
+   <center>
+      <VBox alignment="CENTER" spacing="16.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="56.0" left="90.0" right="90.0" top="56.0" />
+         </padding>
+         <children>
+            <Label text="Configuração Inicial" textFill="#962828">
+               <font>
+                  <Font name="Times New Roman Bold" size="34.0" />
+               </font>
+            </Label>
+
+            <Region prefHeight="12.0" />
+
+            <Label text="Nenhum restaurante configurado." textFill="#810b0b">
+               <font>
+                  <Font name="Times New Roman" size="20.0" />
+               </font>
+            </Label>
+
+            <Label text="Pronto para configurar um novo restaurante?" textFill="#4B5563">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+
+            <Region prefHeight="12.0" />
+
+            <Button fx:id="configurarRestauranteBotton" maxWidth="360.0" mnemonicParsing="false"
+                    onAction="#configurarORestaurante" prefHeight="38.0" prefWidth="220.0"
+                    style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold;"
+                    text="Configurar Restaurante">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

@@ -1,4 +1,4 @@
-package br.edu.ifpb.ads.foodjava.model;
+package br.edu.ifpb.ads.foodjava.model.enums;
 
 public enum StatusPedido {
     AGUARDANDO_CONFIRMACAO(1),
@@ -8,10 +8,6 @@ public enum StatusPedido {
     ENTREGUE(5),
     CANCELADO(6);
 
-    private int code;
-
-    StatusPedido(int code){
-        this.code = code;
-    }
+    StatusPedido(int code){}
 
 }

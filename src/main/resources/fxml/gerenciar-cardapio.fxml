@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.GerenciarCardapioController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="80" style="-fx-background-color: #34D399;">
+            <padding>
+                <Insets bottom="15" left="25" right="25" top="15" />
+            </padding>
+
+            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="FoodJava">
+                <font>
+                    <Font size="28" />
+                </font>
+            </Label>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Gerenciar Cardapio">
+                <font>
+                    <Font size="18" />
+                </font>
+            </Label>
+        </HBox>
+    </top>
+
+    <center>
+        <HBox spacing="20" style="-fx-background-color: #F7F4EE;">
+            <padding>
+                <Insets bottom="20" left="25" right="25" top="20" />
+            </padding>
+
+            <VBox prefWidth="280" spacing="10" style="-fx-background-color: white; -fx-border-color: #D1D5DB;">
+                <padding>
+                    <Insets bottom="15" left="15" right="15" top="15" />
+                </padding>
+
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Dados do Item" />
+
+                <Label text="Nome" />
+                <TextField fx:id="nomeField" />
+
+                <Label text="Descrição" />
+                <TextArea fx:id="descricaoArea" prefHeight="120" />
+
+                <Label text="Preço" />
+                <TextField fx:id="precoField" />
+
+                <Label text="Categoria" />
+                <ComboBox fx:id="categoriaDoItem" />
+
+                <Button fx:id="salvarButton" onAction="#salvarItem" prefHeight="40" style="-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;" text="Salvar" />
+            </VBox>
+
+            <TableView fx:id="tabelaItens" HBox.hgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colNome" prefWidth="138.4" text="Nome" />
+                    <TableColumn fx:id="colDescricao" prefWidth="219.2" text="Descricao" />
+                    <TableColumn fx:id="colPreco" minWidth="0.0" prefWidth="68.8" text="Preco" />
+                    <TableColumn fx:id="colCategoria" maxWidth="164.8" minWidth="62.4" prefWidth="147.2" text="Categoria" />
+                </columns>
+            </TableView>
+        </HBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="70" spacing="20" style="-fx-background-color: white; -fx-border-color: #E5E7EB;">
+            <Button fx:id="editarButton" onAction="#editarItem" prefWidth="120" style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-font-weight: bold;" text="Editar" />
+            <Button fx:id="excluirButton" onAction="#excluirItem" prefWidth="120" style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-font-weight: bold;" text="Excluir" />
+            <Button fx:id="voltarButton" onAction="#voltarPainelGerente" prefWidth="120" style="-fx-background-color: #E5E7EB; -fx-font-weight: bold;" text="Voltar" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

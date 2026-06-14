@@ -2,6 +2,7 @@ package br.edu.ifpb.ads.foodjava.model;
 
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
+import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
 
 public class ItemCardapio implements Validavel {
 

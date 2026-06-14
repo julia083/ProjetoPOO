@@ -3,6 +3,7 @@ package br.edu.ifpb.ads.foodjava.model;
 import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.interfaces.Autenticavel;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
+import br.edu.ifpb.ads.foodjava.util.GeradorID;
 
 public abstract class Usuario implements Autenticavel, Validavel {
     private String id;
@@ -13,8 +14,12 @@ public abstract class Usuario implements Autenticavel, Validavel {
     protected Usuario() {
     }
 
-    protected Usuario( String id,String nome, String email, String senha, String telefone) {
-        this.id = id;
+    protected Usuario(String nome,
+                      String email,
+                      String senha,
+                      String telefone) {
+
+        this.id = GeradorID.gerar();
         this.nome = nome;
         this.email = email;
         setSenha(senha);
