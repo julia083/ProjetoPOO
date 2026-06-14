@@ -139,7 +139,7 @@ public class LoginController {
                 // Passa os dados para o CardapioController
                 CardapioController controller = loader.getController();
                 controller.setRestaurante(restaurante);
-                // FUTURO: controller.setClienteLogado(cliente);
+                controller.setClienteLogado(cliente);
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
