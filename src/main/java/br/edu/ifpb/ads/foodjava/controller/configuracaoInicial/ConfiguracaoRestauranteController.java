@@ -85,10 +85,11 @@ public class ConfiguracaoRestauranteController {
     @FXML
     void salvarORestaurante(ActionEvent event) throws IOException{
 
-        Gerente gerente = new Gerente(nomeGerente.getText(),
-                cpfGerente.getText(),
+        Gerente gerente = new Gerente(
+                nomeGerente.getText(),
                 emailGerente.getText(),
-                senhaGerente.getText()
+                senhaGerente.getText(),
+                cpfGerente.getText()
         );
 
         Restaurante restaurante = new Restaurante(

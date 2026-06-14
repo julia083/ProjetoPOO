@@ -177,7 +177,7 @@ public class CadastroClienteController {
                 String id = UUID.randomUUID().toString();
 
                 // Cria o objeto Cliente
-                Cliente novoCliente = new Cliente(id, nome, email, senha, telefone, cpf, endereco);
+                Cliente novoCliente = new Cliente(nome, email, senha, telefone, cpf, endereco);
 
                 // --- 8. SALVAR O CLIENTE (usando o método estático do LoginController) ---
                 LoginController.adicionarCliente(novoCliente);
