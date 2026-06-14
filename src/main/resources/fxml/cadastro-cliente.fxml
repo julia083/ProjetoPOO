@@ -34,7 +34,7 @@
             </Label>
             <Region HBox.hgrow="ALWAYS" />
             <!-- Quando criar o metodo no CadastroClienteController, adicionar no botao: onAction="#voltarLogin" -->
-            <Button fx:id="voltarLoginButton" mnemonicParsing="false"
+            <Button fx:id="voltarLoginButton" mnemonicParsing="false" onAction="#voltarLogin"
                     style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;"
                     text="Voltar">
                <cursor>
@@ -116,14 +116,14 @@
             <HBox alignment="CENTER_RIGHT" maxWidth="720.0" spacing="12.0">
                <children>
                   <!-- Quando criar o metodo no CadastroClienteController, adicionar no botao: onAction="#limparFormulario" -->
-                  <Button fx:id="limparFormularioButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="110.0"
+                  <Button fx:id="limparFormularioButton" mnemonicParsing="false" onAction="#limparFormulario" prefHeight="34.0" prefWidth="110.0"
                           text="Limpar" textFill="#8C5625">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                   <!-- Quando criar o metodo no CadastroClienteController, adicionar no botao: onAction="#cadastrarCliente" -->
-                  <Button fx:id="cadastrarClienteButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="160.0"
+                  <Button fx:id="cadastrarClienteButton" mnemonicParsing="false" onAction="#cadastrarCliente" prefHeight="36.0" prefWidth="160.0"
                           style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold;"
                           text="Cadastrar">
                      <cursor>

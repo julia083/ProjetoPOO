@@ -71,7 +71,7 @@
                </children>
             </VBox>
             <!-- Quando criar o metodo no LoginController, adicionar no botao: onAction="#entrar" -->
-            <Button fx:id="entrarButton" maxWidth="360.0" mnemonicParsing="false" prefHeight="36.0"
+            <Button fx:id="entrarButton" maxWidth="360.0" mnemonicParsing="false" onAction="#entrar" prefHeight="36.0"
                     style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold;"
                     text="Entrar">
                <cursor>
@@ -82,7 +82,7 @@
                <children>
                   <Label text="Ainda nao tem conta?" textFill="#4B5563" />
                   <!-- Quando criar o metodo no LoginController, adicionar no link: onAction="#abrirCadastroCliente" -->
-                  <Hyperlink fx:id="cadastroClienteLink" text="Cadastrar cliente" textFill="#0D6609" />
+                  <Hyperlink fx:id="cadastroClienteLink" text="Cadastrar cliente" onAction="#abrirCadastroCliente" textFill="#0D6609" />
                </children>
             </HBox>
          </children>

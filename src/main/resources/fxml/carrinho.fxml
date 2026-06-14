@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: #D1FAE5;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.CarrinhoController">
+
+    <!-- TOPO: cabeçalho -->
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="18.0"
+              style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets left="38.0" right="38.0"/>
+            </padding>
+            <children>
+                <Label text="FoodJava" textFill="WHITE">
+                    <font>
+                        <Font name="Times New Roman Bold" size="30.0"/>
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Botão Voltar ao Cardápio -->
+                <Button fx:id="voltarCardapioButton" mnemonicParsing="false" onAction="#voltarCardapio"
+                        style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;"
+                        text="← Voltar ao Cardápio">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+            </children>
+        </HBox>
+    </top>
+
+    <!-- CENTRO: conteúdo do carrinho -->
+    <center>
+        <VBox spacing="15.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+            </padding>
+            <children>
+                <!-- Título -->
+                <Label text="🛒 MEU CARRINHO" textFill="#962828" alignment="CENTER">
+                    <font>
+                        <Font name="Times New Roman Bold" size="28.0"/>
+                    </font>
+                </Label>
+
+                <Separator prefWidth="200.0"/>
+
+                <!-- Tabela de itens do carrinho -->
+                <TableView fx:id="tabelaCarrinho" prefHeight="350.0">
+                    <columns>
+                        <TableColumn fx:id="colunaNome" prefWidth="250.0" text="Item"/>
+                        <TableColumn fx:id="colunaPrecoUnitario" prefWidth="120.0" text="Preço Unit."/>
+                        <TableColumn fx:id="colunaQuantidade" prefWidth="100.0" text="Quant."/>
+                        <TableColumn fx:id="colunaSubtotal" prefWidth="120.0" text="Subtotal"/>
+                        <TableColumn fx:id="colunaAcao" prefWidth="100.0" text="Ação"/>
+                    </columns>
+                </TableView>
+
+                <!-- Resumo do pedido -->
+                <HBox alignment="CENTER_RIGHT" spacing="30.0">
+                    <children>
+                        <Label text="Total do Pedido:" textFill="#4B5563">
+                            <font>
+                                <Font name="Times New Roman Bold" size="16.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="totalLabel" text="R$ 0,00" textFill="#0D6609">
+                            <font>
+                                <Font name="Times New Roman Bold" size="22.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+
+                <Separator/>
+
+                <!-- Botões de ação -->
+                <HBox alignment="CENTER" spacing="25.0">
+                    <children>
+                        <!-- Botão Limpar Carrinho -->
+                        <Button fx:id="limparCarrinhoButton" mnemonicParsing="false" onAction="#limparCarrinho"
+                                prefHeight="40.0" prefWidth="180.0"
+                                style="-fx-background-color: #FDE68A; -fx-text-fill: #92400E; -fx-font-weight: bold;"
+                                text="🗑️ Limpar Carrinho">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+
+                        <!-- Botão Confirmar Pedido -->
+                        <Button fx:id="confirmarPedidoButton" mnemonicParsing="false" onAction="#confirmarPedido"
+                                prefHeight="44.0" prefWidth="220.0"
+                                style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold; -fx-font-size: 16px;"
+                                text="✅ Confirmar Pedido">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+                    </children>
+                </HBox>
+
+                <!-- Mensagem informativa -->
+                <Label text="⚠️ Após confirmar, o pedido não poderá ser alterado" textFill="#962828" alignment="CENTER">
+                    <font>
+                        <Font size="11.0"/>
+                    </font>
+                </Label>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
