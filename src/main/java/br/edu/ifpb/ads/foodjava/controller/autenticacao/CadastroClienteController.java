@@ -174,10 +174,6 @@ public class CadastroClienteController {
                 throw new UsuarioDuplicadoException("CPF já cadastrado: " + cpf);
             }
 
-            // --- 7. CRIAR O NOVO CLIENTE ---
-            // Gera um ID único para o cliente
-            String id = UUID.randomUUID().toString();
-
             // Cria o objeto Cliente
             Cliente novoCliente = new Cliente(nome, email, senha, telefone, cpf, endereco);
 

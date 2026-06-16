@@ -79,7 +79,7 @@ public abstract class Usuario implements Autenticavel, Validavel {
 
     public void setSenha(String senha) {
         if (!senhaValida(senha)) {
-            throw new SenhaInvalidaException("A senha deve ter pelo menos 8 caracteres e um digito numerico.");
+            throw new SenhaInvalidaException("A senha deve ter pelo menos 8 caracteres e um digito numérico.");
         }
         this.senha = senha;
     }
