@@ -28,14 +28,21 @@ public class CardapioController {
     private static Cliente clienteLogado;
     private static List<ItemPedido> carrinho = new ArrayList<>();
 
+
     public void setRestaurante(Restaurante rest) {
         this.restaurante = rest;
         carregarCardapio();
     }
 
+    // Getter do email
+    public static String getEmailClienteLogado() {
+        return clienteLogado != null ? clienteLogado.getEmail() : null;
+    }
+
     public static List<ItemPedido> getCarrinho() {
         return carrinho;
     }
+
 
     public void setClienteLogado(Cliente cliente) {
         clienteLogado = cliente;
@@ -98,13 +105,14 @@ public class CardapioController {
         stage.setTitle("Carrinho");
     }
 
+
     @FXML
-    void abrirHistorico(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Historico de pedidos");
-        alert.setHeaderText(null);
-        alert.setContentText("A tela de historico ainda nao foi implementada.");
-        alert.showAndWait();
+    void abrirHistorico(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/historico-pedidos.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("FoodJava - Histórico");
     }
 
     @FXML
@@ -114,4 +122,6 @@ public class CardapioController {
         stage.setScene(new Scene(root));
         stage.setTitle("FoodJava - Login");
     }
+
+
 }
