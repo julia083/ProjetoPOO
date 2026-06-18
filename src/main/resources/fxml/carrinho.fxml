@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.CarrinhoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.CarrinhoController">
 
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="18.0" style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
@@ -75,7 +69,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button fx:id="confirmarPedidoButton" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="44.0" prefWidth="220.0" style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold; -fx-font-size: 16px;" text="Confirmar Pedido">
+                        <Button fx:id="confirmarPedidoButton" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="44.0" prefWidth="220.0" style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold;" text="Confirmar Pedido">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
