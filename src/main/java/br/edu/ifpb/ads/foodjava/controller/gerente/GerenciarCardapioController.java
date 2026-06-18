@@ -1,5 +1,6 @@
 package br.edu.ifpb.ads.foodjava.controller.gerente;
 
+import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -9,13 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -129,7 +124,27 @@ public class GerenciarCardapioController {
 
     @FXML
     void salvarItem(ActionEvent event) {
-        // Lógica para cadastrar ou atualizar o item
+        try {
+            String nome = nomeField.getText();
+            String descricao = descricaoArea.getText();
+            double preco = Double.parseDouble(precoField.getText());
+            Categoria categoria = categoriaDoItem.getValue();
+            boolean disponivel = disponivelCheckBox.isSelected();
+
+            ItemCardapio novoItem = new ItemCardapio(nome, descricao, preco, categoria, disponivel, "");
+
+            if (!novoItem.validar()) {
+                mostrarAlerta("Item inválido", "Nome, preço ou categoria inválidos!");
+                return;
+            }
+
+            // Adicionar na lista / salvar no banco...
+
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Formáto de número inválido", e.getMessage());
+        } catch (PrecoInvalidoException e) {
+            mostrarAlerta("Preço inválido", e.getMessage());
+        }
     }
 
     @FXML
@@ -150,5 +165,12 @@ public class GerenciarCardapioController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void mostrarAlerta(String titulo, String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 }
