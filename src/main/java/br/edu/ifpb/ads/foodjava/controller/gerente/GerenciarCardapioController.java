@@ -12,8 +12,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class GerenciarCardapioController {
@@ -102,14 +104,28 @@ public class GerenciarCardapioController {
         });
     }
 
+    private ItemCardapio itemSelecionado = null;
+
     @FXML
     void alterarDisponibilidade(ActionEvent event) {
-        // Lógica para alterar o status do item selecionado
+        itemSelecionado = tabelaItens.getSelectionModel().getSelectedItem();
+
+        if (itemSelecionado == null) {
+            return;
+        }
+
+        if (itemSelecionado.isDisponivel()) {
+            itemSelecionado.desativar();
+        } else {
+            itemSelecionado.ativar();
+        }
+
+        tabelaItens.refresh();
     }
 
     @FXML
     void editarItem(ActionEvent event) {
-        // Lógica para carregar os dados nos campos para edição
+
     }
 
     @FXML
@@ -131,7 +147,7 @@ public class GerenciarCardapioController {
             Categoria categoria = categoriaDoItem.getValue();
             boolean disponivel = disponivelCheckBox.isSelected();
 
-            ItemCardapio novoItem = new ItemCardapio(nome, descricao, preco, categoria, disponivel, "");
+            ItemCardapio novoItem = new ItemCardapio(nome, descricao, preco, categoria, disponivel, pathImagem);
 
             if (!novoItem.validar()) {
                 mostrarAlerta("Item inválido", "Nome, preço ou categoria inválidos!");
@@ -141,15 +157,33 @@ public class GerenciarCardapioController {
             // Adicionar na lista / salvar no banco...
 
         } catch (NumberFormatException e) {
-            mostrarAlerta("Formáto de número inválido", e.getMessage());
+            mostrarAlerta("Formato de número inválido", e.getMessage());
         } catch (PrecoInvalidoException e) {
             mostrarAlerta("Preço inválido", e.getMessage());
         }
     }
 
+    private File imagemSelecionada;
+    private String pathImagem;
+
     @FXML
     void selecionarImagem(ActionEvent event) {
-        // Lógica usando FileChooser para escolher a imagem e atualizar o imagemPreview
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.setTitle("Selecionar Imagem");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Imagens", "*.png", "*.jpg", "*.jpeg"
+                )
+        );
+
+        File arquivo = fileChooser.showOpenDialog(null);
+
+        if (arquivo != null) {
+            imagemSelecionada = arquivo;
+            pathImagem = arquivo.getAbsolutePath();
+        }
     }
 
     @FXML

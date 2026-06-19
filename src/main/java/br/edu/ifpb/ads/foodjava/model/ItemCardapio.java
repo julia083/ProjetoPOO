@@ -51,10 +51,6 @@ public class ItemCardapio implements Validavel {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public double getPreco() {
         return preco;
     }
@@ -70,23 +66,27 @@ public class ItemCardapio implements Validavel {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
     public boolean isDisponivel() {
         return disponivel;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
 
-    public String getImagemPath() {
-        return imagemPath;
-    }
-
     public void setImagemPath(String imagemPath) {
         this.imagemPath = imagemPath;
+    }
+
+    public String getImagemPath() {
+        return imagemPath;
     }
 }
