@@ -1,10 +1,9 @@
 package br.edu.ifpb.ads.foodjava.controller.autenticacao;
 
 import br.edu.ifpb.ads.foodjava.exception.DocumentoInvalidoException;
-import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.exception.UsuarioDuplicadoException;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
-import br.edu.ifpb.ads.foodjava.model.Usuario;
+import br.edu.ifpb.ads.foodjava.repository.ClienteRepository;
 import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,10 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class CadastroClienteController {
-
 
     /**
      * Controlador da tela de Cadastro de Cliente
@@ -58,12 +55,14 @@ public class CadastroClienteController {
     @FXML
     private Button cadastrarClienteButton;  // botão cadastrar
 
+    // ===== Persistência =====
+    private final ClienteRepository clienteRepository = new ClienteRepository();
+
     /**
      * Método chamado automaticamente quando a tela é carregada
      */
     @FXML
     public void initialize() {
-        // Configurações iniciais, se necessário
         System.out.println("Tela de cadastro de cliente carregada.");
     }
 
@@ -74,13 +73,11 @@ public class CadastroClienteController {
     @FXML
     void voltarLogin(ActionEvent event) {
         try {
-            // Carrega o FXML da tela de login
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/login.fxml")
             );
             Parent root = loader.load();
 
-            // Troca a cena
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -156,38 +153,26 @@ public class CadastroClienteController {
                 return;
             }
 
-            // --- 4. VALIDAÇÃO DA SENHA (usando o método da classe Usuario) ---
-            // Criamos um objeto temporário só para validar a senha
+            // --- 4. VALIDAÇÃO DA SENHA ---
             if (!senhaValida(senha)) {
                 mostrarAlerta("Senha Inválida",
                         "A senha deve ter pelo menos 8 caracteres e conter um dígito numérico.");
                 return;
             }
 
-            // --- 5. VERIFICAR SE EMAIL JÁ ESTÁ CADASTRADO (não pode duplicar) ---
-            if (emailJaCadastrado(email)) {
-                throw new UsuarioDuplicadoException("E-mail já cadastrado: " + email);
-            }
-
-            // --- 6. VERIFICAR SE CPF JÁ ESTÁ CADASTRADO (não pode duplicar) ---
-            if (cpfJaCadastrado(cpf)) {
-                throw new UsuarioDuplicadoException("CPF já cadastrado: " + cpf);
-            }
-
-            // Cria o objeto Cliente
+            // --- 5. CRIAR E PERSISTIR O CLIENTE ---
+            // A checagem de e-mail e CPF duplicados agora é feita dentro do Repository
             Cliente novoCliente = new Cliente(nome, email, senha, telefone, cpf, endereco);
+            clienteRepository.cadastrar(novoCliente);
 
-            // --- 8. SALVAR O CLIENTE (usando o método estático do LoginController) ---
-            LoginController.adicionarCliente(novoCliente);
-
-            // --- 9. MOSTRAR MENSAGEM DE SUCESSO ---
+            // --- 6. MOSTRAR MENSAGEM DE SUCESSO ---
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Cadastro Realizado");
             alert.setHeaderText(null);
             alert.setContentText("Cliente cadastrado com sucesso! Faça login para continuar.");
             alert.showAndWait();
 
-            // --- 10. VOLTAR PARA TELA DE LOGIN ---
+            // --- 7. VOLTAR PARA TELA DE LOGIN ---
             voltarLogin(event);
 
         } catch (UsuarioDuplicadoException e) {
@@ -205,43 +190,7 @@ public class CadastroClienteController {
      * @return true se a senha atende aos critérios
      */
     private boolean senhaValida(String senha) {
-        // Critérios: mínimo 8 caracteres e pelo menos 1 dígito numérico
         return senha != null && senha.length() >= 8 && senha.chars().anyMatch(Character::isDigit);
-    }
-
-    /**
-     * Verifica se o email já está cadastrado
-     *
-     * @param email Email a ser verificado
-     * @return true se já existe
-     */
-    private boolean emailJaCadastrado(String email) {
-        // Acessa a lista estática do LoginController
-        for (var cliente : LoginController.getClientesCadastrados()) {
-            if (cliente.getEmail().equalsIgnoreCase(email)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Verifica se o CPF já está cadastrado
-     *
-     * @param cpf CPF a ser verificado
-     * @return true se já existe
-     */
-    private boolean cpfJaCadastrado(String cpf) {
-        // Limpa o CPF (remove pontos e traços) para comparação
-        String cpfLimpo = cpf.replaceAll("[^0-9]", "");
-
-        for (var cliente : LoginController.getClientesCadastrados()) {
-            String cpfClienteLimpo = cliente.getCpf().replaceAll("[^0-9]", "");
-            if (cpfClienteLimpo.equals(cpfLimpo)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
