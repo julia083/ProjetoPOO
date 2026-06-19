@@ -1,51 +1,30 @@
 package br.edu.ifpb.ads.foodjava.repository;
 
-
 import br.edu.ifpb.ads.foodjava.exception.UsuarioDuplicadoException;
+import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
+import br.edu.ifpb.ads.foodjava.util.JsonUtil;
 import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ClienteRepository {
+public class ClienteRepository implements Repositorio<Cliente> {
 
     private static final String CAMINHO = "data/clientes.json";
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Type TIPO_LISTA = new TypeToken<List<Cliente>>() {}.getType();
 
+    @Override
     public List<Cliente> listarTodos() {
-        Path path = Path.of(CAMINHO);
-        if (!Files.exists(path)) {
-            return new ArrayList<>();
-        }
-        try {
-            String json = Files.readString(path);
-            if (json.isBlank()) {
-                return new ArrayList<>();
-            }
-            Type tipoLista = new TypeToken<List<Cliente>>() {}.getType();
-            List<Cliente> clientes = gson.fromJson(json, tipoLista);
-            return clientes != null ? clientes : new ArrayList<>();
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao ler clientes.json", e);
-        }
+        return JsonUtil.ler(CAMINHO, TIPO_LISTA, new ArrayList<>());
     }
 
+    @Override
     public void salvarTodos(List<Cliente> clientes) {
-        try {
-            Files.createDirectories(Path.of("data"));
-            Files.writeString(Path.of(CAMINHO), gson.toJson(clientes));
-        } catch (IOException e) {
-            throw new RuntimeException("Erro ao salvar clientes.json", e);
-        }
+        JsonUtil.escrever(CAMINHO, clientes);
     }
 
     public Optional<Cliente> buscarPorEmail(String email) {
