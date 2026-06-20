@@ -1,5 +1,6 @@
 package br.edu.ifpb.ads.foodjava.controller.cliente;
 
+import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
 import javafx.event.ActionEvent;
@@ -23,6 +24,8 @@ public class HistoricoPedidosController {
     private static final NumberFormat FORMATO_MOEDA = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
+    private final PedidoRepository pedidoRepository = new PedidoRepository();
+
     @FXML
     private ListView<String> listaPedidos;
 
@@ -34,21 +37,19 @@ public class HistoricoPedidosController {
     private void carregarPedidos() {
         listaPedidos.getItems().clear();
 
-        String email = CardapioController.getEmailClienteLogado();
-        if (email == null) {
+        Cliente cliente = CardapioController.getClienteLogado();
+        if (cliente == null || cliente.getId() == null) {
             listaPedidos.getItems().add("Cliente não identificado.");
             return;
         }
 
-        // Busca os pedidos do cliente (simulação - substituir pelo Repository real)
-        List<Pedido> pedidos = PedidoRepository.buscarPorCliente(email);
+        List<Pedido> pedidos = pedidoRepository.listarPorCliente(cliente.getId());
 
         if (pedidos.isEmpty()) {
             listaPedidos.getItems().add("Nenhum pedido encontrado.");
             return;
         }
 
-        // Ordena por data (mais recente primeiro)
         pedidos.sort((p1, p2) -> p2.getDataHora().compareTo(p1.getDataHora()));
 
         for (Pedido p : pedidos) {
@@ -84,4 +85,3 @@ public class HistoricoPedidosController {
         alert.showAndWait();
     }
 }
-

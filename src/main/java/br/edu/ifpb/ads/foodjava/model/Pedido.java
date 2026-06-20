@@ -13,7 +13,9 @@ import java.util.List;
 
 public class Pedido implements Validavel {
     private String id;
-    private Cliente cliente;
+    private String clienteId;
+    private String clienteNome;
+    private String clienteEndereco;
     private LocalDateTime dataHora;
     private List<ItemPedido> itens = new ArrayList<>();
     private StatusPedido status = StatusPedido.AGUARDANDO_CONFIRMACAO;
@@ -25,12 +27,14 @@ public class Pedido implements Validavel {
     public Pedido(String id, Cliente cliente) {
         this();
         this.id = id;
-        this.cliente = cliente;
+        this.clienteId = cliente.getId();
+        this.clienteNome = cliente.getNome();
+        this.clienteEndereco = cliente.getEndereco();
     }
 
     @Override
     public boolean validar() {
-        return cliente != null && !itens.isEmpty();
+        return clienteId != null && !itens.isEmpty();
     }
 
     public void adicionarItem(ItemCardapio itemCardapio, int quantidade) {
@@ -82,12 +86,22 @@ public class Pedido implements Validavel {
         this.id = id;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public String getClienteId() {
+        return clienteId;
+    }
+
+    public String getClienteNome() {
+        return clienteNome;
+    }
+
+    public String getClienteEndereco() {
+        return clienteEndereco;
     }
 
     public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+        this.clienteId = cliente.getId();
+        this.clienteNome = cliente.getNome();
+        this.clienteEndereco = cliente.getEndereco();
     }
 
     public LocalDateTime getDataHora() {

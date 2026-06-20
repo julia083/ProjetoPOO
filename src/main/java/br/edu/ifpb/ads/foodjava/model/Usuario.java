@@ -91,4 +91,6 @@ public abstract class Usuario implements Autenticavel, Validavel {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
 }
+

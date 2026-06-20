@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class CarrinhoController {
-
+    private final PedidoRepository pedidoRepository = new PedidoRepository();
     private static final NumberFormat FORMATO_MOEDA = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
     private final ObservableList<ItemPedido> itensCarrinho = FXCollections.observableArrayList();
@@ -111,7 +111,7 @@ public class CarrinhoController {
                 return;
             }
 
-            PedidoRepository.salvar(pedido);
+            pedidoRepository.adicionar(pedido);
             CardapioController.limparCarrinho();
             atualizarCarrinho();
 

@@ -34,10 +34,7 @@ public class CardapioController {
         carregarCardapio();
     }
 
-    // Getter do email
-    public static String getEmailClienteLogado() {
-        return clienteLogado != null ? clienteLogado.getEmail() : null;
-    }
+
 
     public static List<ItemPedido> getCarrinho() {
         return carrinho;

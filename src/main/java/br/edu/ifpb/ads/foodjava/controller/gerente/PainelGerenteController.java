@@ -79,10 +79,9 @@ public class PainelGerenteController {
 
     private void configurarTabela() {
         colId.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
-        colCliente.setCellValueFactory(cellData -> {
-            var cliente = cellData.getValue().getCliente();
-            return new ReadOnlyStringWrapper(cliente == null ? "" : cliente.getNome());
-        });
+        colCliente.setCellValueFactory(cellData ->
+                new ReadOnlyStringWrapper(cellData.getValue().getClienteNome())
+        );
         colDataHora.setCellValueFactory(cellData -> {
             var dataHora = cellData.getValue().getDataHora();
             return new ReadOnlyStringWrapper(dataHora == null ? "" : dataHora.format(FORMATO_DATA_HORA));
