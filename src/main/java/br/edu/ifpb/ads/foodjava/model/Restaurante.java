@@ -39,14 +39,6 @@ public class Restaurante implements Validavel {
                 && gerente != null;
     }
 
-    public void adicionarItemCardapio(ItemCardapio item) {
-        cardapio.add(item);
-    }
-
-    public void removerItemCardapio(ItemCardapio item) {
-        cardapio.remove(item);
-    }
-
     private boolean textoPreenchido(String texto) {
         return texto != null && !texto.isBlank();
     }
@@ -55,59 +47,11 @@ public class Restaurante implements Validavel {
         return nomeFantasia;
     }
 
-    public void setNomeFantasia(String nomeFantasia) {
-        this.nomeFantasia = nomeFantasia;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public CategoriaCulinaria getCategoriaCulinaria() {return categoriaCulinaria;}
-
-    public void setCategoriaCulinaria(CategoriaCulinaria categoriaCulinaria) {this.categoriaCulinaria = categoriaCulinaria;}
-
-    public String getLogotipoPath() {
-        return logotipoPath;
-    }
-
-    public void setLogotipoPath(String logotipoPath) {
-        this.logotipoPath = logotipoPath;
-    }
-
     public Gerente getGerente() {
         return gerente;
     }
 
-    public void setGerente(Gerente gerente) {
-        this.gerente = gerente;
-    }
-
     public List<ItemCardapio> getCardapio() {
         return Collections.unmodifiableList(cardapio);
-    }
-
-    public void setCardapio(List<ItemCardapio> cardapio) {
-        this.cardapio = new ArrayList<>(cardapio);
     }
 }
