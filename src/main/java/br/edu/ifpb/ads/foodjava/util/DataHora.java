@@ -4,14 +4,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DataHora {
+    private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private final LocalDateTime dh;
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime dh = LocalDateTime.now();
+    // Construtor gera o momento atual
+    public DataHora() {
+        this.dh = LocalDateTime.now();
+    }
 
-        private String dataHora = dh.format(fmt);
+    public LocalDateTime getLocalDateTime() {
+        return dh;
+    }
 
-        public String getDataHora(){
-            return dataHora;
-        }
-
+    public String getDataHoraFormatada() {
+        return dh.format(fmt);
+    }
 }
