@@ -5,6 +5,7 @@ import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.model.enums.StatusPedido;
+import br.edu.ifpb.ads.foodjava.util.DataHora;
 import br.edu.ifpb.ads.foodjava.util.JsonUtil;
 import com.google.gson.reflect.TypeToken;
 
@@ -49,8 +50,11 @@ public class PedidoRepository implements Repositorio<Pedido> {
 
     public void adicionar(Pedido pedido) {
         if (!pedido.validar()) {
-            throw new CarrinhoVazioException("Nao e possivel salvar um pedido sem itens ou sem cliente.");
+            throw new CarrinhoVazioException("Não é possivel salvar um pedido sem itens ou sem cliente.");
         }
+
+        DataHora utilDataHora = new DataHora();
+        pedido.setDataHora(utilDataHora.getLocalDateTime());
 
         List<Pedido> pedidos = listarTodos();
         pedidos.add(pedido);
