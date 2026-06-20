@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
+import static br.edu.ifpb.ads.foodjava.util.Mensagem.mostrarAlerta;
+
 public class GerenciarCardapioController {
 
     @FXML
@@ -199,12 +201,5 @@ public class GerenciarCardapioController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    private void mostrarAlerta(String titulo, String mensagem) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
     }
 }
