@@ -7,6 +7,7 @@ import br.edu.ifpb.ads.foodjava.model.ItemPedido;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
 import br.edu.ifpb.ads.foodjava.util.GeradorID;
+import br.edu.ifpb.ads.foodjava.util.Mensagem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -86,13 +87,13 @@ public class CarrinhoController {
     @FXML
     void limparCarrinho(ActionEvent event) {
         if (CardapioController.getCarrinho().isEmpty()) {
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Carrinho vazio", "Nao ha itens para remover.");
+            Mensagem.mostrarAlerta("Carrinho vazio", "Nao ha itens para remover.");
             return;
         }
 
         CardapioController.limparCarrinho();
         atualizarCarrinho();
-        mostrarAlerta(Alert.AlertType.INFORMATION, "Carrinho limpo", "Todos os itens foram removidos do carrinho.");
+        Mensagem.mostrarAlerta( "Carrinho limpo", "Todos os itens foram removidos do carrinho.");
     }
 
     @FXML
@@ -107,7 +108,7 @@ public class CarrinhoController {
             pedido.confirmar();
 
             if (!pedido.validar()) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Pedido invalido", "Nao foi possivel identificar o cliente do pedido.");
+                Mensagem.mostrarAlerta("Pedido invalido", "Nao foi possivel identificar o cliente do pedido.");
                 return;
             }
 
@@ -115,13 +116,13 @@ public class CarrinhoController {
             CardapioController.limparCarrinho();
             atualizarCarrinho();
 
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Pedido confirmado",
+            Mensagem.mostrarAlerta("Pedido confirmado",
                     "Pedido enviado com sucesso. Total: " + FORMATO_MOEDA.format(pedido.calcularTotal()));
             voltarCardapio(event);
         } catch (CarrinhoVazioException e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Carrinho vazio", e.getMessage());
+            Mensagem.mostrarAlerta("Carrinho vazio", e.getMessage());
         } catch (IOException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Pedido confirmado, mas nao foi possivel voltar ao cardapio.");
+            Mensagem.mostrarAlerta("Erro", "Pedido confirmado, mas nao foi possivel voltar ao cardapio.");
         }
     }
 
@@ -140,11 +141,4 @@ public class CarrinhoController {
         stage.show();
     }
 
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensagem) {
-        Alert alert = new Alert(tipo);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
-    }
 }

@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.foodjava.controller.autenticacao;
 
 import br.edu.ifpb.ads.foodjava.controller.cliente.CardapioController;
+import br.edu.ifpb.ads.foodjava.util.Mensagem;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Gerente;
 import br.edu.ifpb.ads.foodjava.model.Restaurante;
@@ -73,7 +74,7 @@ public class LoginController {
 
         // Validação básica: campos não podem estar vazios
         if (email == null || email.isBlank() || senha == null || senha.isBlank()) {
-            mostrarAlerta("Erro de Login", "Preencha todos os campos.");
+            Mensagem.mostrarAlerta("Erro de Login", "Preencha todos os campos.");
             return;
         }
 
@@ -94,7 +95,7 @@ public class LoginController {
         }
 
         // --- NENHUM AUTENTICOU: erro ---
-        mostrarAlerta("Erro de Login", "E-mail ou senha inválidos.");
+        Mensagem.mostrarAlerta("Erro de Login", "E-mail ou senha inválidos.");
     }
 
     /**
@@ -120,7 +121,7 @@ public class LoginController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Não foi possível abrir o cardápio.");
+            Mensagem.mostrarAlerta("Erro", "Não foi possível abrir o cardápio.");
         }
     }
 
@@ -142,7 +143,7 @@ public class LoginController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Não foi possível abrir o painel do gerente.");
+            Mensagem.mostrarAlerta("Erro", "Não foi possível abrir o painel do gerente.");
         }
     }
 
@@ -166,19 +167,8 @@ public class LoginController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Não foi possível abrir a tela de cadastro.");
+            Mensagem.mostrarAlerta("Erro", "Não foi possível abrir a tela de cadastro.");
         }
-    }
-
-    /**
-     * Método utilitário para exibir alertas na tela
-     */
-    private void mostrarAlerta(String titulo, String mensagem) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
     }
 
     public static Restaurante getRestaurante() {

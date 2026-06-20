@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import br.edu.ifpb.ads.foodjava.util.Mensagem;
 
 public class CadastroClienteController {
 
@@ -86,7 +87,7 @@ public class CadastroClienteController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Não foi possível voltar para o login.");
+            Mensagem.mostrarAlerta("Erro", "Não foi possível voltar para o login.");
         }
     }
 
@@ -121,27 +122,27 @@ public class CadastroClienteController {
 
             // --- 2. VALIDAÇÃO DE CAMPOS VAZIOS ---
             if (nome == null || nome.isBlank()) {
-                mostrarAlerta("Erro de Validação", "O campo Nome é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validação", "O campo Nome é obrigatório.");
                 return;
             }
             if (cpf == null || cpf.isBlank()) {
-                mostrarAlerta("Erro de Validação", "O campo CPF é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validação", "O campo CPF é obrigatório.");
                 return;
             }
             if (email == null || email.isBlank()) {
-                mostrarAlerta("Erro de Validação", "O campo Email é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validação", "O campo Email é obrigatório.");
                 return;
             }
             if (telefone == null || telefone.isBlank()) {
-                mostrarAlerta("Erro de Validação", "O campo Telefone é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validação", "O campo Telefone é obrigatório.");
                 return;
             }
             if (senha == null || senha.isBlank()) {
-                mostrarAlerta("Erro de Validação", "O campo Senha é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validação", "O campo Senha é obrigatório.");
                 return;
             }
             if (endereco == null || endereco.isBlank()) {
-                mostrarAlerta("Erro de Validação", "O campo Endereço é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validação", "O campo Endereço é obrigatório.");
                 return;
             }
 
@@ -149,13 +150,13 @@ public class CadastroClienteController {
             try {
                 ValidadorCPF.validar(cpf);
             } catch (DocumentoInvalidoException e) {
-                mostrarAlerta("CPF Inválido", e.getMessage());
+                Mensagem.mostrarAlerta("CPF Inválido", e.getMessage());
                 return;
             }
 
             // --- 4. VALIDAÇÃO DA SENHA ---
             if (!senhaValida(senha)) {
-                mostrarAlerta("Senha Inválida",
+                Mensagem.mostrarAlerta("Senha Inválida",
                         "A senha deve ter pelo menos 8 caracteres e conter um dígito numérico.");
                 return;
             }
@@ -176,10 +177,10 @@ public class CadastroClienteController {
             voltarLogin(event);
 
         } catch (UsuarioDuplicadoException e) {
-            mostrarAlerta("Cadastro Duplicado", e.getMessage());
+            Mensagem.mostrarAlerta("Cadastro Duplicado", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Erro", "Ocorreu um erro inesperado: " + e.getMessage());
+            Mensagem.mostrarAlerta("Erro", "Ocorreu um erro inesperado: " + e.getMessage());
         }
     }
 
@@ -193,14 +194,4 @@ public class CadastroClienteController {
         return senha != null && senha.length() >= 8 && senha.chars().anyMatch(Character::isDigit);
     }
 
-    /**
-     * Método utilitário para exibir alertas na tela
-     */
-    private void mostrarAlerta(String titulo, String mensagem) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
-    }
 }
