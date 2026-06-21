@@ -1,5 +1,7 @@
 package br.edu.ifpb.ads.foodjava.repository;
 
+import br.edu.ifpb.ads.foodjava.exception.ArquivoImportacaoException;
+import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
@@ -9,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CardapioRepository implements Repositorio<ItemCardapio> {
@@ -26,24 +29,49 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
         salvarTodos(itens);
     }
 
-    public void importarCardapio(String caminhoArquivoImportacao) {
-        Type tipoLista = new TypeToken<ArrayList<ItemCardapio>>() {}.getType();
-        List<ItemCardapio> itensImportados = JsonUtil.ler(caminhoArquivoImportacao, tipoLista, new ArrayList<>());
+    public List<String> importarCardapio(String caminho) throws ArquivoImportacaoException {
+        List<String> relatorioErros = new ArrayList<>();
 
-        for (ItemCardapio itemImportado : itensImportados) {
-            ItemCardapio itemAntigo = buscarPorNome(itemImportado.getNome());
-            if (itemAntigo != null) {
-                itemAntigo.setDescricao(itemImportado.getDescricao());
-                itemAntigo.setPreco(itemImportado.getPreco());
-                itemAntigo.setCategoria(itemImportado.getCategoria());
-                itemAntigo.setDisponivel(itemImportado.isDisponivel());
-                itemAntigo.setImagemPath(itemImportado.getImagemPath());
-            } else {
-                itens.add(itemImportado);
-            }
+        // O JSON deve ter a estrutura { "cardapio": [...] } conforme o PDF [3]
+        Type tipoMapa = new TypeToken<Map<String, List<ItemCardapio>>>() {}.getType();
+        Map<String, List<ItemCardapio>> dados = JsonUtil.ler(caminho, tipoMapa, null);
+
+        if (dados == null || !dados.containsKey("cardapio")) {
+            throw new ArquivoImportacaoException("Estrutura inválida: chave 'cardapio' não encontrada.");
         }
-        // Salva no disco uma única vez no final
-        salvarTodos(itens);
+
+        List<ItemCardapio> listaJson = dados.get("cardapio");
+        int linha = 1;
+
+        for (ItemCardapio itemNovo : listaJson) {
+            try {
+                // REQUISITO: Preço <= 0 deve lançar PrecoInvalidoException [4, 5]
+                if (itemNovo.getPreco() <= 0) {
+                    throw new PrecoInvalidoException("Preço inválido (" + itemNovo.getPreco() + ").");
+                }
+
+                // Lógica de atualização/adição para evitar duplicatas pelo nome
+                ItemCardapio existente = buscarPorNome(itemNovo.getNome());
+                if (existente != null) {
+                    existente.setDescricao(itemNovo.getDescricao());
+                    existente.setPreco(itemNovo.getPreco());
+                    existente.setCategoria(itemNovo.getCategoria());
+                    existente.setDisponivel(itemNovo.isDisponivel());
+                    existente.setImagemPath(itemNovo.getImagemPath());
+                } else {
+                    this.itens.add(itemNovo);
+                }
+
+            } catch (PrecoInvalidoException e) {
+                // REQUISITO: Relatório de erros linha a linha sem interromper o processo [1]
+                relatorioErros.add("Linha " + linha + " (" + itemNovo.getNome() + "): " + e.getMessage());
+            }
+            linha++;
+        }
+
+        // Salva os dados no cardapio.json oficial do sistema [6]
+        salvarTodos(this.itens);
+        return relatorioErros;
     }
 
     // Retorna tudo o que está cadastrado

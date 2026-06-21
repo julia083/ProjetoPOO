@@ -1,9 +1,11 @@
 package br.edu.ifpb.ads.foodjava.controller.gerente;
 
+import br.edu.ifpb.ads.foodjava.exception.ArquivoImportacaoException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +22,9 @@ import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import static br.edu.ifpb.ads.foodjava.util.Mensagem.exibirAlerta;
 import static br.edu.ifpb.ads.foodjava.util.Mensagem.mostrarAlerta;
 
 public class GerenciarCardapioController {
@@ -33,6 +37,8 @@ public class GerenciarCardapioController {
 
     @FXML
     private TableColumn<ItemCardapio, String> colCategoria;
+    @FXML
+    private TableView<ItemCardapio> tabelaItens;
 
     @FXML
     private TableColumn<ItemCardapio, String> colDescricao;
@@ -75,9 +81,6 @@ public class GerenciarCardapioController {
 
     @FXML
     private Button selecionarImagemButton;
-
-    @FXML
-    private TableView<ItemCardapio> tabelaItens;
 
     @FXML
     private Button voltarButton;
@@ -138,32 +141,36 @@ public class GerenciarCardapioController {
         // Lógica para deletar o item selecionado
     }
 
+    CardapioRepository repository = new CardapioRepository();
+
     @FXML
     void importarJson(ActionEvent event) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Importar Cardapio JSON");
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos JSON", "*.json"));
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Selecionar Arquivo de Cardápio (JSON)");
+        File arquivo = fc.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
 
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter(
-                        "Arquivos JSON (*.json)", "*.json"
-                )
-        );
+        if (arquivo != null) {
+            try {
+                // O repositório processa e devolve a lista de erros parciais
+                List<String> erros = repository.importarCardapio(arquivo.getAbsolutePath());
 
-        File arquivoSelecionado = fileChooser.showOpenDialog(null);
+                if (erros.isEmpty()) {
+                    exibirAlerta("Sucesso", "Importação Concluída", "Todos os itens foram importados.", Alert.AlertType.INFORMATION);
+                } else {
+                    // REQUISITO: Exibir relatório linha a linha [1]
+                    String relatorio = String.join("\n", erros);
+                    exibirAlerta("Importação Parcial", "Alguns itens foram ignorados:", relatorio, Alert.AlertType.WARNING);
+                }
 
-        if (arquivoSelecionado != null) {
+                atualizarTabelaCardapio();
 
-            String caminhoJson = arquivoSelecionado.getAbsolutePath();
-
-            CardapioRepository repository = new CardapioRepository();
-            repository.importarCardapio(caminhoJson);
-
-            System.out.println("Arquivo selecionado para importação: " + caminhoJson);
-        } else {
-            System.out.println("Nenhum arquivo foi selecionado.");
+            } catch (ArquivoImportacaoException e) {
+                // REQUISITO: Tratar erro crítico de arquivo ausente/vazio [7]
+                exibirAlerta("Erro Crítico", "Falha no arquivo", e.getMessage(), Alert.AlertType.ERROR);
+            }
         }
-
     }
 
     @FXML
@@ -228,5 +235,11 @@ public class GerenciarCardapioController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void atualizarTabelaCardapio() {
+        // Para atualizar o JavaFX, usamos ObservableList
+        List<ItemCardapio> lista = repository.listarTodos();
+        tabelaItens.setItems(FXCollections.observableArrayList(lista));
+        tabelaItens.refresh();
     }
 }

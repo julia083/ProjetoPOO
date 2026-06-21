@@ -11,4 +11,13 @@ public class Mensagem {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
+
+    public static void exibirAlerta(String titulo, String cabecalho, String conteudo, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(cabecalho);
+        alert.setContentText(conteudo);
+        alert.showAndWait();
+    }
+
 }
