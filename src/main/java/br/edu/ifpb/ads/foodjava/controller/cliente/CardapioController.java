@@ -14,11 +14,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
+import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
+import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
+import javafx.scene.image.ImageView;
 public class CardapioController {
 
     @FXML private Button carrinhoButton;
@@ -54,11 +57,10 @@ public class CardapioController {
     }
 
     private void carregarCardapio() {
-        if (restaurante == null) return;
+        CardapioRepository cardapioRepository = new CardapioRepository();
+        List<ItemCardapio> itens = cardapioRepository.buscarSomenteDisponiveis();
 
-        for (ItemCardapio item : restaurante.getCardapio()) {
-            if (!item.isDisponivel()) continue;
-
+        for (ItemCardapio item : itens) {
             VBox card = criarCard(item);
             switch (item.getCategoria()) {
                 case ENTRADA -> entradaGrid.add(card, 0, entradaGrid.getChildren().size());
@@ -73,6 +75,11 @@ public class CardapioController {
         VBox card = new VBox(5);
         card.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-color: #34D399;");
 
+        ImageView imagem = new ImageView(ImagemUtil.carregar(item.getImagemPath()));
+        imagem.setFitWidth(150);
+        imagem.setFitHeight(100);
+        imagem.setPreserveRatio(true);
+
         Label nome = new Label(item.getNome());
         nome.setStyle("-fx-font-weight: bold;");
 
@@ -85,7 +92,7 @@ public class CardapioController {
             carrinhoButton.setText("🛒 (" + carrinho.size() + ")");
         });
 
-        card.getChildren().addAll(nome, preco, qtd, add);
+        card.getChildren().addAll(imagem, nome, preco, qtd, add);
         return card;
     }
 

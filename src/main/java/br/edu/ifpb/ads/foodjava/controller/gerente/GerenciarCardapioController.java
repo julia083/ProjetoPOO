@@ -11,10 +11,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 
 import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
 
@@ -192,7 +192,7 @@ public class GerenciarCardapioController {
         }
     }
 
-    private File imagemSelecionada;
+
     private String pathImagem;
 
     @FXML
@@ -210,12 +210,8 @@ public class GerenciarCardapioController {
         File arquivo = fileChooser.showOpenDialog(null);
 
         if (arquivo != null) {
-            imagemSelecionada = arquivo;
-            pathImagem = arquivo.getAbsolutePath();
-
-
-            Image imagem = new Image(arquivo.toURI().toString());
-            imagemPreview.setImage(imagem);
+            pathImagem = ImagemUtil.salvar(arquivo);
+            imagemPreview.setImage(ImagemUtil.carregar(pathImagem));
         }
     }
 

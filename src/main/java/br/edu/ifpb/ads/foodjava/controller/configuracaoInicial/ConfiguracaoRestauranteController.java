@@ -15,7 +15,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
+import br.edu.ifpb.ads.foodjava.controller.autenticacao.LoginController;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
+import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
+import javafx.scene.control.Alert;
 import java.io.File;
 import java.io.IOException;
 
@@ -59,28 +62,21 @@ public class ConfiguracaoRestauranteController {
         cbCategoria.getItems().addAll(CategoriaCulinaria.values());
     }
 
-    @FXML
     private void selecionarLogo(ActionEvent event) {
-
         FileChooser fileChooser = new FileChooser();
-
         fileChooser.setTitle("Selecionar Logotipo");
-
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter(
-                        "Imagens", "*.png", "*.jpg", "*.jpeg"
-                )
+                new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg")
         );
 
         File arquivo = fileChooser.showOpenDialog(null);
 
         if (arquivo != null) {
-            logoSelecionada = arquivo;
-            System.out.println("Logo selecionada: " + arquivo.getAbsolutePath());
+            logoPath = ImagemUtil.salvar(arquivo);
         }
     }
 
-    private File logoSelecionada;
+    private String logoPath;
 
     @FXML
     void salvarORestaurante(ActionEvent event) throws IOException{
