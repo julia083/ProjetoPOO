@@ -11,9 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -137,7 +140,30 @@ public class GerenciarCardapioController {
 
     @FXML
     void importarJson(ActionEvent event) {
-        // Lógica para carregar os dados via arquivo JSON
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecionar Arquivo de Cardápio (JSON)");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Arquivos JSON (*.json)", "*.json"
+                )
+        );
+
+        File arquivoSelecionado = fileChooser.showOpenDialog(null);
+
+        if (arquivoSelecionado != null) {
+
+            String caminhoJson = arquivoSelecionado.getAbsolutePath();
+
+            CardapioRepository repository = new CardapioRepository();
+            repository.importarCardapio(caminhoJson);
+
+            System.out.println("Arquivo selecionado para importação: " + caminhoJson);
+        } else {
+            System.out.println("Nenhum arquivo foi selecionado.");
+        }
+
     }
 
     @FXML
@@ -156,7 +182,8 @@ public class GerenciarCardapioController {
                 return;
             }
 
-            // Adicionar na lista / salvar no banco...
+            CardapioRepository repositorio = new CardapioRepository();
+            repositorio.salvar(novoItem);
 
         } catch (NumberFormatException e) {
             mostrarAlerta("Formato de número inválido", e.getMessage());
@@ -185,6 +212,10 @@ public class GerenciarCardapioController {
         if (arquivo != null) {
             imagemSelecionada = arquivo;
             pathImagem = arquivo.getAbsolutePath();
+
+
+            Image imagem = new Image(arquivo.toURI().toString());
+            imagemPreview.setImage(imagem);
         }
     }
 

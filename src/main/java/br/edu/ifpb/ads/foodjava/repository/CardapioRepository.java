@@ -26,6 +26,26 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
         salvarTodos(itens);
     }
 
+    public void importarCardapio(String caminhoArquivoImportacao) {
+        Type tipoLista = new TypeToken<ArrayList<ItemCardapio>>() {}.getType();
+        List<ItemCardapio> itensImportados = JsonUtil.ler(caminhoArquivoImportacao, tipoLista, new ArrayList<>());
+
+        for (ItemCardapio itemImportado : itensImportados) {
+            ItemCardapio itemAntigo = buscarPorNome(itemImportado.getNome());
+            if (itemAntigo != null) {
+                itemAntigo.setDescricao(itemImportado.getDescricao());
+                itemAntigo.setPreco(itemImportado.getPreco());
+                itemAntigo.setCategoria(itemImportado.getCategoria());
+                itemAntigo.setDisponivel(itemImportado.isDisponivel());
+                itemAntigo.setImagemPath(itemImportado.getImagemPath());
+            } else {
+                itens.add(itemImportado);
+            }
+        }
+        // Salva no disco uma única vez no final
+        salvarTodos(itens);
+    }
+
     // Retorna tudo o que está cadastrado
     public List<ItemCardapio> buscarTodos() {
         return new ArrayList<>(itens);
