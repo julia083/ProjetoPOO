@@ -144,7 +144,7 @@ public class ConfiguracaoRestauranteController {
                 return;
             }
 
-            Mensagem.mostrarAlerta("Cadastro Realizado com Sucesso!", nomeFantasia + " acaba de ser cadastrado.");
+            Mensagem.mostrarAlerta("Cadastro Realizado com Sucesso!", nomeFantasia.getText() + " acaba de ser cadastrado.");
         } catch (Exception e) {
             e.printStackTrace();
             Mensagem.mostrarAlerta("Erro", "Ocorreu um erro inesperado: " + e.getMessage());
