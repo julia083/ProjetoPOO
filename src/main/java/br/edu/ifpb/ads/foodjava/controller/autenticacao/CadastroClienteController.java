@@ -1,9 +1,11 @@
 package br.edu.ifpb.ads.foodjava.controller.autenticacao;
 
 import br.edu.ifpb.ads.foodjava.exception.DocumentoInvalidoException;
+import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.exception.UsuarioDuplicadoException;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.repository.ClienteRepository;
+import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
 import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import br.edu.ifpb.ads.foodjava.util.Mensagem;
-import br.edu.ifpb.ads.foodjava.util.ValidadorSenha;
+
 
 public class CadastroClienteController {
 
@@ -152,15 +154,15 @@ public class CadastroClienteController {
                 return;
             }
 
-            if (!ValidadorSenha.senhaValida(senha)) {
-                Mensagem.mostrarAlerta("Senha Inválida",
-                        "A senha deve ter pelo menos 8 caracteres e conter um dígito numérico.");
+            try {
+                SenhaUtil.senhaValida(senha);
+            } catch (SenhaInvalidaException e) {
+                Mensagem.mostrarAlerta("Senha inválida", e.getMessage());
                 return;
             }
 
             // A checagem de e-mail e CPF duplicados é feita dentro do Repository
-
-            Cliente novoCliente = new Cliente(nome, email, senha, telefone, cpf, endereco);
+            Cliente novoCliente = new Cliente(nome, email, SenhaUtil.hash(senha), telefone, cpf, endereco);
             clienteRepository.cadastrar(novoCliente);
 
             Mensagem.mostrarAlerta("Cadastro Realizado", "Cliente cadastrado com sucesso! Faça login para continuar.");

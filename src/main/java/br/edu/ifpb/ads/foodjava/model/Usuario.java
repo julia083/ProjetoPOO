@@ -4,25 +4,24 @@ import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.interfaces.Autenticavel;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 import br.edu.ifpb.ads.foodjava.util.GeradorID;
-import br.edu.ifpb.ads.foodjava.util.ValidadorSenha;
+import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
+
 public abstract class Usuario implements Autenticavel, Validavel {
+
     private String id;
     private String nome;
     private String email;
     private String senha;
     private String telefone;
+
     protected Usuario() {
     }
 
-    protected Usuario(String nome,
-                      String email,
-                      String senha,
-                      String telefone) {
-
+    protected Usuario(String nome, String email, String senha, String telefone) {
         this.id = GeradorID.gerar();
         this.nome = nome;
         this.email = email;
-        setSenha(senha);
+        this.senha = senha;
         this.telefone = telefone;
     }
 
@@ -30,65 +29,33 @@ public abstract class Usuario implements Autenticavel, Validavel {
 
     @Override
     public boolean autenticar(String email, String senha) {
-        return this.email != null
-                && this.senha != null
-                && this.email.equalsIgnoreCase(email)
-                && this.senha.equals(senha);
+        return this.email.equals(email) && SenhaUtil.verificar(senha, this.senha);
     }
 
     @Override
     public boolean validar() {
         return textoPreenchido(nome)
                 && textoPreenchido(email)
-                && ValidadorSenha.senhaValida(senha);
+                && textoPreenchido(senha);
     }
 
     protected boolean textoPreenchido(String texto) {
         return texto != null && !texto.isBlank();
     }
 
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public String getId() {
-        return id;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-    public String getNome() {
-        return nome;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        if (!ValidadorSenha.senhaValida(senha)) {
-            throw new SenhaInvalidaException("A senha deve ter pelo menos 8 caracteres e um digito numérico.");
-        }
-        this.senha = senha;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
+    public String getTelefone() { return telefone; }
+    public void setTelefone(String telefone) { this.telefone = telefone; }
 }
 

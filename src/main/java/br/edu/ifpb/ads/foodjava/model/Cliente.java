@@ -36,13 +36,6 @@ public class Cliente extends Usuario {
         return endereco;
     }
 
-    @Override
-    public String getNome() {
-        return super.getNome();
-    }
-    public String getId() {
-        return super.getId();
-    }
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }

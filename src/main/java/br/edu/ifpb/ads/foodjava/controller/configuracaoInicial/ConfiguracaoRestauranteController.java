@@ -1,10 +1,12 @@
 package br.edu.ifpb.ads.foodjava.controller.configuracaoInicial;
 
 import br.edu.ifpb.ads.foodjava.exception.DocumentoInvalidoException;
+import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.model.Gerente;
 import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.model.enums.CategoriaCulinaria;
 import br.edu.ifpb.ads.foodjava.util.Mensagem;
+import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
 import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +24,10 @@ import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import java.io.File;
 import java.io.IOException;
 
-import static br.edu.ifpb.ads.foodjava.util.ValidadorSenha.senhaValida;
+
+import static br.edu.ifpb.ads.foodjava.util.Mensagem.mostrarAlerta;
+import static br.edu.ifpb.ads.foodjava.util.SenhaUtil;
+
 
 public class ConfiguracaoRestauranteController {
 
@@ -94,60 +99,65 @@ public class ConfiguracaoRestauranteController {
 
             // --- 2. VALIDAÇÃO DE CAMPOS VAZIOS ---
             if (nome == null || nome.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Nome é obrigatório.");
+                mostrarAlerta("Erro de Validação", "O campo Nome é obrigatório.");
                 return;
             }
             if (cpf == null || cpf.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo CPF é obrigatório.");
+                mostrarAlerta("Erro de Validação", "O campo CPF é obrigatório.");
                 return;
             }
             if (email == null || email.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Email é obrigatório.");
+                mostrarAlerta("Erro de Validação", "O campo Email é obrigatório.");
                 return;
             }
             if (telefone == null || telefone.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Telefone é obrigatório.");
+                mostrarAlerta("Erro de Validação", "O campo Telefone é obrigatório.");
                 return;
             }
             if (senha == null || senha.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Senha é obrigatório.");
+                mostrarAlerta("Erro de Validação", "O campo Senha é obrigatório.");
                 return;
             }
             if (endereco == null || endereco.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Endereço é obrigatório.");
+                mostrarAlerta("Erro de Validação", "O campo Endereço é obrigatório.");
                 return;
             }
 
             try {
                 ValidadorCPF.validar(cpf);
             } catch (DocumentoInvalidoException e) {
-                Mensagem.mostrarAlerta("CPF Inválido", e.getMessage());
+                mostrarAlerta("CPF Inválido", e.getMessage());
                 return;
             }
 
             if (!senhaValida(senha)) {
-                Mensagem.mostrarAlerta("Senha Inválida",
+                mostrarAlerta("Senha Inválida",
                         "A senha deve ter pelo menos 8 caracteres e conter um dígito numérico.");
                 return;
             }
-            Gerente gerente = new Gerente(nome, email, senha, cpf);
-            Restaurante restaurante = new Restaurante(
-                    nomeFantasia.getText(),
-                    cnpjRestaurante.getText(),
-                    enderecoRestaurante.getText(),
-                    telefoneRestaurante.getText(),
-                    cbCategoria.getValue(),
-                    logoPath, gerente);
+            try {
+                SenhaUtil.senhaValida(senhaGerente.getText());
+            } catch (SenhaInvalidaException e) {
+                mostrarAlerta("Senha inválida", e.getMessage());
+                return;
+            }
+
+            Gerente gerente = new Gerente(
+                    nomeGerente.getText(),
+                    emailGerente.getText(),
+                    SenhaUtil.hash(senhaGerente.getText()),
+                    cpfGerente.getText()
+            );
 
             if (!restaurante.validar()) {
                 System.out.println("Dados inválidos.");
                 return;
             }
 
-            Mensagem.mostrarAlerta("Cadastro Realizado com Sucesso!", nomeFantasia.getText() + " acaba de ser cadastrado.");
+            mostrarAlerta("Cadastro Realizado com Sucesso!", nomeFantasia.getText() + " acaba de ser cadastrado.");
         } catch (Exception e) {
             e.printStackTrace();
-            Mensagem.mostrarAlerta("Erro", "Ocorreu um erro inesperado: " + e.getMessage());
+            mostrarAlerta("Erro", "Ocorreu um erro inesperado: " + e.getMessage());
         }
 
         try {
