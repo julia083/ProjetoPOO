@@ -4,7 +4,7 @@ import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.interfaces.Autenticavel;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 import br.edu.ifpb.ads.foodjava.util.GeradorID;
-
+import br.edu.ifpb.ads.foodjava.util.ValidadorSenha;
 public abstract class Usuario implements Autenticavel, Validavel {
     private String id;
     private String nome;
@@ -40,16 +40,14 @@ public abstract class Usuario implements Autenticavel, Validavel {
     public boolean validar() {
         return textoPreenchido(nome)
                 && textoPreenchido(email)
-                && senhaValida(senha);
+                && ValidadorSenha.senhaValida(senha);
     }
 
     protected boolean textoPreenchido(String texto) {
         return texto != null && !texto.isBlank();
     }
 
-    protected boolean senhaValida(String senha) {
-        return senha != null && senha.length() >= 8 && senha.chars().anyMatch(Character::isDigit);
-    }
+
     public String getId() {
         return id;
     }
@@ -78,7 +76,7 @@ public abstract class Usuario implements Autenticavel, Validavel {
     }
 
     public void setSenha(String senha) {
-        if (!senhaValida(senha)) {
+        if (!ValidadorSenha.senhaValida(senha)) {
             throw new SenhaInvalidaException("A senha deve ter pelo menos 8 caracteres e um digito numérico.");
         }
         this.senha = senha;
