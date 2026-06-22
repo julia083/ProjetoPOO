@@ -11,8 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import br.edu.ifpb.ads.foodjava.util.Mensagem;
+import br.edu.ifpb.ads.foodjava.util.ValidadorSenha;
 
 public class CadastroClienteController {
 
@@ -146,7 +145,6 @@ public class CadastroClienteController {
                 return;
             }
 
-            // --- 3. VALIDAÇÃO DO CPF (usando seu ValidadorCPF) ---
             try {
                 ValidadorCPF.validar(cpf);
             } catch (DocumentoInvalidoException e) {
@@ -154,26 +152,19 @@ public class CadastroClienteController {
                 return;
             }
 
-            // --- 4. VALIDAÇÃO DA SENHA ---
-            if (!senhaValida(senha)) {
+            if (!ValidadorSenha.senhaValida(senha)) {
                 Mensagem.mostrarAlerta("Senha Inválida",
                         "A senha deve ter pelo menos 8 caracteres e conter um dígito numérico.");
                 return;
             }
 
-            // --- 5. CRIAR E PERSISTIR O CLIENTE ---
-            // A checagem de e-mail e CPF duplicados agora é feita dentro do Repository
+            // A checagem de e-mail e CPF duplicados é feita dentro do Repository
+
             Cliente novoCliente = new Cliente(nome, email, senha, telefone, cpf, endereco);
             clienteRepository.cadastrar(novoCliente);
 
-            // --- 6. MOSTRAR MENSAGEM DE SUCESSO ---
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Cadastro Realizado");
-            alert.setHeaderText(null);
-            alert.setContentText("Cliente cadastrado com sucesso! Faça login para continuar.");
-            alert.showAndWait();
+            Mensagem.mostrarAlerta("Cadastro Realizado", "Cliente cadastrado com sucesso! Faça login para continuar.");
 
-            // --- 7. VOLTAR PARA TELA DE LOGIN ---
             voltarLogin(event);
 
         } catch (UsuarioDuplicadoException e) {
@@ -183,15 +174,4 @@ public class CadastroClienteController {
             Mensagem.mostrarAlerta("Erro", "Ocorreu um erro inesperado: " + e.getMessage());
         }
     }
-
-    /**
-     * Valida a senha (mesma regra da classe Usuario)
-     *
-     * @param senha Senha a ser validada
-     * @return true se a senha atende aos critérios
-     */
-    private boolean senhaValida(String senha) {
-        return senha != null && senha.length() >= 8 && senha.chars().anyMatch(Character::isDigit);
-    }
-
 }

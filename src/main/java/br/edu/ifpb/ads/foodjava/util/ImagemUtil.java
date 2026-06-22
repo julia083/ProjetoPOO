@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.UUID;
 
 public class ImagemUtil {
 
@@ -23,7 +22,7 @@ public class ImagemUtil {
             Files.createDirectories(Path.of(PASTA_UPLOADS));
 
             String extensao = obterExtensao(arquivoOrigem.getName());
-            String nomeUnico = UUID.randomUUID() + extensao;
+            String nomeUnico = GeradorID.gerar() + extensao;
 
             Path destino = Path.of(PASTA_UPLOADS, nomeUnico);
             Files.copy(arquivoOrigem.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
