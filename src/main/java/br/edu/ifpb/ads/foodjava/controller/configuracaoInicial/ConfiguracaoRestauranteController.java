@@ -64,6 +64,7 @@ public class ConfiguracaoRestauranteController {
         cbCategoria.getItems().addAll(CategoriaCulinaria.values());
     }
 
+    @FXML
     private void selecionarLogo(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecionar Logotipo");
