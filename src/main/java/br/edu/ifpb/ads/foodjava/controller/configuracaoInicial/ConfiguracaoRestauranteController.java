@@ -5,7 +5,6 @@ import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.model.Gerente;
 import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.model.enums.CategoriaCulinaria;
-import br.edu.ifpb.ads.foodjava.util.Mensagem;
 import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
 import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
 import javafx.event.ActionEvent;
@@ -26,7 +25,6 @@ import java.io.IOException;
 
 
 import static br.edu.ifpb.ads.foodjava.util.Mensagem.mostrarAlerta;
-import static br.edu.ifpb.ads.foodjava.util.SenhaUtil;
 
 
 public class ConfiguracaoRestauranteController {
@@ -87,7 +85,7 @@ public class ConfiguracaoRestauranteController {
     private String logoPath;
 
     @FXML
-    void salvarORestaurante(ActionEvent event) throws IOException {
+    void salvarORestaurante(ActionEvent event) {
         try {
             // --- 1. PEGAR OS VALORES DOS CAMPOS ---
             String nome = nomeGerente.getText();
@@ -130,11 +128,6 @@ public class ConfiguracaoRestauranteController {
                 return;
             }
 
-            if (!senhaValida(senha)) {
-                mostrarAlerta("Senha Inválida",
-                        "A senha deve ter pelo menos 8 caracteres e conter um dígito numérico.");
-                return;
-            }
             try {
                 SenhaUtil.senhaValida(senhaGerente.getText());
             } catch (SenhaInvalidaException e) {
@@ -147,6 +140,15 @@ public class ConfiguracaoRestauranteController {
                     emailGerente.getText(),
                     SenhaUtil.hash(senhaGerente.getText()),
                     cpfGerente.getText()
+            );
+            Restaurante restaurante = new Restaurante(
+                    nomeFantasia.getText(),
+                    cnpjRestaurante.getText(),
+                    enderecoRestaurante.getText(),
+                    telefoneRestaurante.getText(),
+                    cbCategoria.getValue(),
+                    logoPath,
+                    gerente
             );
 
             if (!restaurante.validar()) {
