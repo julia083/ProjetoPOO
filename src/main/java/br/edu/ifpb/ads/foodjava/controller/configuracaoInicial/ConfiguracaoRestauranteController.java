@@ -131,6 +131,13 @@ public class ConfiguracaoRestauranteController {
             }
 
             try {
+                DocumentoUtil.validarCnpj(cnpjRestaurante.getText());
+            } catch (DocumentoInvalidoException e) {
+                mostrarAlerta("CNPJ Inválido", e.getMessage());
+                return;
+            }
+
+            try {
                 SenhaUtil.senhaValida(senhaGerente.getText());
             } catch (SenhaInvalidaException e) {
                 mostrarAlerta("Senha inválida", e.getMessage());
