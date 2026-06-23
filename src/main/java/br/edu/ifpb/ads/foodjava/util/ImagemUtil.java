@@ -10,7 +10,7 @@ import java.nio.file.StandardCopyOption;
 
 public class ImagemUtil {
 
-    private static final String PASTA_UPLOADS = "uploads";
+    private static final String PASTA_UPLOADS = "resources/uploads";
     private static final String IMAGEM_PADRAO = "/images/placeholder.png";
 
     /**
