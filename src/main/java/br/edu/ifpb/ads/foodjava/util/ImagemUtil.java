@@ -10,8 +10,8 @@ import java.nio.file.StandardCopyOption;
 
 public class ImagemUtil {
 
-    private static final String PASTA_UPLOADS = "resources/uploads";
-    private static final String IMAGEM_PADRAO = "resources/images/placeholder.png";
+    private static final String PASTA_UPLOADS = "uploads";
+    private static final String IMAGEM_PADRAO = "/images/placeholder.png";
 
     /**
      * Copia a imagem escolhida pelo usuário para a pasta uploads/ do projeto
