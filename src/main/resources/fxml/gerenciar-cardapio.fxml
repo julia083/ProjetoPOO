@@ -16,124 +16,84 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefWidth="900.0" prefHeight="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.GerenciarCardapioController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.GerenciarCardapioController">
     <top>
-        <HBox alignment="CENTER_LEFT"
-              prefHeight="80.0"
-              style="-fx-background-color: #34D399;">
+        <HBox alignment="CENTER_LEFT" prefHeight="80.0" style="-fx-background-color: #34D399;">
 
             <padding>
-                <Insets top="15" right="25" bottom="15" left="25"/>
+                <Insets bottom="15" left="25" right="25" top="15" />
             </padding>
 
-            <Label text="FoodJava"
-                   style="-fx-text-fill: white; -fx-font-weight: bold;">
+            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="FoodJava">
                 <font>
-                    <Font size="28"/>
+                    <Font size="28" />
                 </font>
             </Label>
 
-            <Region HBox.hgrow="ALWAYS"/>
+            <Region HBox.hgrow="ALWAYS" />
 
-            <Label text="Gerenciar Cardápio"
-                   style="-fx-text-fill: white; -fx-font-weight: bold;">
+            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Gerenciar Cardápio">
                 <font>
-                    <Font size="18"/>
+                    <Font size="18" />
                 </font>
             </Label>
         </HBox>
     </top>
 
     <center>
-        <HBox spacing="15"
-              style="-fx-background-color: #F7F4EE;">
+        <HBox spacing="15" style="-fx-background-color: #F7F4EE;">
 
             <padding>
-                <Insets top="15" right="20" bottom="15" left="20"/>
+                <Insets bottom="15" left="20" right="20" top="15" />
             </padding>
 
-            <VBox prefWidth="280.0"
-                  minWidth="280.0"
-                  spacing="8"
-                  style="-fx-background-color: white;
-                         -fx-border-color: #D1D5DB;">
+            <VBox minWidth="280.0" prefHeight="485.0" prefWidth="280.0" spacing="8" style="-fx-background-color: white;                          -fx-border-color: #D1D5DB;">
 
                 <padding>
-                    <Insets top="15" right="15" bottom="15" left="15"/>
+                    <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
 
-                <Label text="Dados do Item"
-                       style="-fx-font-size: 16px;
-                              -fx-font-weight: bold;"/>
+                <Label style="-fx-font-size: 16px;                               -fx-font-weight: bold;" text="Dados do Item" />
 
-                <Label text="Nome"/>
-                <TextField fx:id="nomeField"/>
+                <Label text="Nome" />
+                <TextField fx:id="nomeField" />
 
-                <Label text="Descrição"/>
-                <TextArea fx:id="descricaoArea"
-                          prefHeight="60.0"
-                          wrapText="true"/>
+                <Label text="Descrição" />
+                <TextArea fx:id="descricaoArea" prefHeight="60.0" wrapText="true" />
 
-                <Label text="Preço"/>
-                <TextField fx:id="precoField"/>
+                <Label text="Preço" />
+                <TextField fx:id="precoField" />
 
-                <Label text="Categoria"/>
-                <ComboBox fx:id="categoriaDoItem"
-                          prefWidth="250.0"/>
+                <Label text="Categoria" />
+                <ComboBox fx:id="categoriaDoItem" prefWidth="250.0" />
 
-                <CheckBox fx:id="disponivelCheckBox"
-                          text="Item disponível"/>
+                <CheckBox fx:id="disponivelCheckBox" text="Item disponível" />
 
-                <Label text="Imagem"/>
+                <Label text="Imagem" />
 
-                <ImageView fx:id="imagemPreview"
-                           fitHeight="70.0"
-                           fitWidth="120.0"
-                           preserveRatio="true"/>
+                <ImageView fx:id="imagemPreview" fitHeight="70.0" fitWidth="120.0" preserveRatio="true" />
 
-                <Button fx:id="selecionarImagemButton"
-                        mnemonicParsing="false"
-                        onAction="#selecionarImagem"
-                        text="Escolher Imagem"/>
+                <Button fx:id="selecionarImagemButton" mnemonicParsing="false" onAction="#selecionarImagem" text="Escolher Imagem" />
 
-                <Button fx:id="salvarButton"
-                        mnemonicParsing="false"
-                        onAction="#salvarItem"
-                        prefHeight="35.0"
-                        maxWidth="1.7976931348623157E308"
-                        style="-fx-background-color: #34D399;
-                               -fx-text-fill: white;
-                               -fx-font-weight: bold;"
-                        text="Salvar"/>
+                <Button fx:id="salvarButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#salvarItem" prefHeight="35.0" style="-fx-background-color: #34D399;                                -fx-text-fill: white;                                -fx-font-weight: bold;" text="Salvar" />
             </VBox>
 
-            <TableView fx:id="tabelaItens"
-                       HBox.hgrow="ALWAYS">
+            <TableView fx:id="tabelaItens" HBox.hgrow="ALWAYS">
 
                 <columns>
-                    <TableColumn fx:id="colNome"
-                                 prefWidth="130.0"
-                                 text="Nome"/>
+                    <TableColumn fx:id="colNome" prefWidth="130.0" text="Nome" />
 
-                    <TableColumn fx:id="colDescricao"
-                                 prefWidth="230.0"
-                                 text="Descrição"/>
+                    <TableColumn fx:id="colDescricao" prefWidth="230.0" text="Descrição" />
 
-                    <TableColumn fx:id="colPreco"
-                                 prefWidth="80.0"
-                                 text="Preço"/>
+                    <TableColumn fx:id="colPreco" prefWidth="80.0" text="Preço" />
 
-                    <TableColumn fx:id="colCategoria"
-                                 prefWidth="120.0"
-                                 text="Categoria"/>
+                    <TableColumn fx:id="colCategoria" prefWidth="120.0" text="Categoria" />
 
-                    <TableColumn fx:id="colDisponibilidade"
-                                 prefWidth="90.0"
-                                 text="Status"/>
+                    <TableColumn fx:id="colDisponibilidade" prefWidth="90.0" text="Status" />
                 </columns>
 
                 <columnResizePolicy>
-                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                 </columnResizePolicy>
 
             </TableView>
@@ -142,55 +102,17 @@
     </center>
 
     <bottom>
-        <HBox alignment="CENTER"
-              prefHeight="70.0"
-              spacing="12"
-              style="-fx-background-color: white;
-                     -fx-border-color: #E5E7EB;">
+        <HBox alignment="CENTER" prefHeight="70.0" spacing="12" style="-fx-background-color: white;                      -fx-border-color: #E5E7EB;">
 
-            <Button fx:id="editarButton"
-                    mnemonicParsing="false"
-                    onAction="#editarItem"
-                    prefWidth="110.0"
-                    style="-fx-background-color: #3B82F6;
-                           -fx-text-fill: white;
-                           -fx-font-weight: bold;"
-                    text="Editar"/>
+            <Button fx:id="editarButton" mnemonicParsing="false" onAction="#editarItem" prefWidth="110.0" style="-fx-background-color: #3B82F6;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Editar" />
 
-            <Button fx:id="excluirButton"
-                    mnemonicParsing="false"
-                    onAction="#excluirItem"
-                    prefWidth="110.0"
-                    style="-fx-background-color: #EF4444;
-                           -fx-text-fill: white;
-                           -fx-font-weight: bold;"
-                    text="Excluir"/>
+            <Button fx:id="excluirButton" mnemonicParsing="false" onAction="#excluirItem" prefWidth="110.0" style="-fx-background-color: #EF4444;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Excluir" />
 
-            <Button fx:id="alterarDisponibilidadeButton"
-                    mnemonicParsing="false"
-                    onAction="#alterarDisponibilidade"
-                    prefWidth="150.0"
-                    style="-fx-background-color: #F59E0B;
-                           -fx-text-fill: white;
-                           -fx-font-weight: bold;"
-                    text="Ativar/Desativar"/>
+            <Button fx:id="alterarDisponibilidadeButton" mnemonicParsing="false" onAction="#alterarDisponibilidade" prefWidth="150.0" style="-fx-background-color: #F59E0B;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Ativar/Desativar" />
 
-            <Button fx:id="importarJsonButton"
-                    mnemonicParsing="false"
-                    onAction="#importarJson"
-                    prefWidth="140.0"
-                    style="-fx-background-color: #8B5CF6;
-                           -fx-text-fill: white;
-                           -fx-font-weight: bold;"
-                    text="Importar JSON"/>
+            <Button fx:id="importarJsonButton" mnemonicParsing="false" onAction="#importarJson" prefWidth="140.0" style="-fx-background-color: #8B5CF6;                            -fx-text-fill: white;                            -fx-font-weight: bold;" text="Importar JSON" />
 
-            <Button fx:id="voltarButton"
-                    mnemonicParsing="false"
-                    onAction="#voltarPainelGerente"
-                    prefWidth="110.0"
-                    style="-fx-background-color: #E5E7EB;
-                           -fx-font-weight: bold;"
-                    text="Voltar"/>
+            <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#voltarPainelGerente" prefWidth="110.0" style="-fx-background-color: #E5E7EB;                            -fx-font-weight: bold;" text="Voltar" />
 
         </HBox>
     </bottom>
