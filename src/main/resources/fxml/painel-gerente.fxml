@@ -16,8 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
 
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="80.0" style="-fx-background-color: #34D399;">
@@ -94,7 +93,7 @@
 
     <bottom>
         <HBox alignment="CENTER" prefHeight="70" spacing="20" style="-fx-background-color: white; -fx-border-color: #E5E7EB;">
-            <Button fx:id="verDetalhesBottom" mnemonicParsing="false" onAction="#verDetalhes" prefHeight="40" prefWidth="130" style="-fx-background-color: #E5E7EB; -fx-font-weight: bold;" text="Ver Detalhes" />
+            <Button fx:id="buttonGerenciarCardapio" mnemonicParsing="false" onAction="#gerenciarCardapio" prefHeight="40" prefWidth="130" style="-fx-background-color: #D3B4C4; -fx-font-weight: bold;" text="Gerenciar Cardapio" />
             <Button fx:id="confirmarPedidoBottom" mnemonicParsing="false" onAction="#confirmarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;" text="Confirmar Pedido" />
             <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-font-weight: bold;" text="Cancelar Pedido" />
             <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" prefHeight="40" prefWidth="150" style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-font-weight: bold;" text="Avancar Status" />

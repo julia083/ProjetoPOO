@@ -35,6 +35,9 @@ public class PainelGerenteController {
     private Button avancarStatusBottom;
 
     @FXML
+    private Button buttonGerenciarCardapio;
+
+    @FXML
     private Button cancelarPedidoBottom;
 
     @FXML
@@ -67,8 +70,6 @@ public class PainelGerenteController {
     @FXML
     private TableView<Pedido> tabelaPedidos;
 
-    @FXML
-    private Button verDetalhesBottom;
 
     @FXML
     void initialize() {
@@ -132,8 +133,23 @@ public class PainelGerenteController {
     }
 
     @FXML
-    void verDetalhes(ActionEvent event) {
+    void gerenciarCardapio(ActionEvent event){
+        try {
+            // 1. Carrega o FXML da tela de cadastro
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/gerenciar-cardapio.fxml"));
+            Parent root = loader.load();
 
+            // 2. Pega a janela (Stage) atual a partir do botão que foi clicado
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // 3. Define a nova cena na mesma janela
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
