@@ -5,6 +5,7 @@ import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.model.Gerente;
 import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.model.enums.CategoriaCulinaria;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
 import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
 import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
 import javafx.event.ActionEvent;
@@ -155,6 +156,8 @@ public class ConfiguracaoRestauranteController {
                 System.out.println("Dados inválidos.");
                 return;
             }
+            RestauranteRepository repositorio = new RestauranteRepository();
+            repositorio.salvar(restaurante);
 
             mostrarAlerta("Cadastro Realizado com Sucesso!", nomeFantasia.getText() + " acaba de ser cadastrado.");
         } catch (Exception e) {
@@ -178,5 +181,6 @@ public class ConfiguracaoRestauranteController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
