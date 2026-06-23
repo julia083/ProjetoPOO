@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.foodjava.controller.autenticacao;
 
 import br.edu.ifpb.ads.foodjava.controller.cliente.CardapioController;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
 import br.edu.ifpb.ads.foodjava.util.Mensagem;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Gerente;
@@ -46,11 +47,16 @@ public class LoginController {
     /**
      * Método chamado automaticamente quando a tela é carregada
      */
+
     @FXML
     public void initialize() {
-        System.out.println("Tela de login carregada.");
+        if (restaurante == null) {
+            RestauranteRepository repo = new RestauranteRepository();
+            restaurante = repo.buscar();
+        }
+        System.out.println("Tela de login carregada. Restaurante: " +
+                (restaurante != null ? restaurante.getNomeFantasia() : "não configurado"));
     }
-
     /**
      * Método estático para definir o restaurante/gerente (usado na configuração inicial)
      * @param rest Restaurante configurado
