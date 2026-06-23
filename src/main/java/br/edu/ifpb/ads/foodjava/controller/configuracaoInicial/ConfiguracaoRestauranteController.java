@@ -6,8 +6,9 @@ import br.edu.ifpb.ads.foodjava.model.Gerente;
 import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.model.enums.CategoriaCulinaria;
 import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
+import br.edu.ifpb.ads.foodjava.util.DocumentoUtil;
 import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
-import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -123,7 +124,7 @@ public class ConfiguracaoRestauranteController {
             }
 
             try {
-                ValidadorCPF.validar(cpf);
+                DocumentoUtil.validarCpf(cpf);
             } catch (DocumentoInvalidoException e) {
                 mostrarAlerta("CPF Inválido", e.getMessage());
                 return;

@@ -6,7 +6,7 @@ import br.edu.ifpb.ads.foodjava.exception.UsuarioDuplicadoException;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.repository.ClienteRepository;
 import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
-import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
+import br.edu.ifpb.ads.foodjava.util.DocumentoUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -148,7 +148,7 @@ public class CadastroClienteController {
             }
 
             try {
-                ValidadorCPF.validar(cpf);
+                DocumentoUtil.validarCpf(cpf);
             } catch (DocumentoInvalidoException e) {
                 Mensagem.mostrarAlerta("CPF Inválido", e.getMessage());
                 return;

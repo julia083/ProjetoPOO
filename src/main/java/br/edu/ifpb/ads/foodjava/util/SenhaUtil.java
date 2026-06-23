@@ -29,7 +29,7 @@ public class SenhaUtil {
      * Verifica se a senha digitada corresponde ao hash salvo.
      * Usada no login.
      */
-    public static boolean verificar(String senhaDigitada, String hashSalvo) {
+    public static boolean verificarSenha(String senhaDigitada, String hashSalvo) {
         return hash(senhaDigitada).equals(hashSalvo);
     }
 

@@ -3,8 +3,9 @@ package br.edu.ifpb.ads.foodjava.repository;
 import br.edu.ifpb.ads.foodjava.exception.UsuarioDuplicadoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
+import br.edu.ifpb.ads.foodjava.util.DocumentoUtil;
 import br.edu.ifpb.ads.foodjava.util.JsonUtil;
-import br.edu.ifpb.ads.foodjava.util.ValidadorCPF;
+
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -38,9 +39,9 @@ public class ClienteRepository implements Repositorio<Cliente> {
     }
 
     public boolean existeCpf(String cpf) {
-        String cpfLimpo = ValidadorCPF.limpar(cpf);
+        String cpfLimpo = DocumentoUtil.limpar(cpf);
         return listarTodos().stream()
-                .anyMatch(c -> ValidadorCPF.limpar(c.getCpf()).equals(cpfLimpo));
+                .anyMatch(c -> DocumentoUtil.limpar(c.getCpf()).equals(cpfLimpo));
     }
 
     public void cadastrar(Cliente cliente) throws UsuarioDuplicadoException {

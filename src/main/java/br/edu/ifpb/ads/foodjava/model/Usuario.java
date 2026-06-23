@@ -1,6 +1,5 @@
 package br.edu.ifpb.ads.foodjava.model;
 
-import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.interfaces.Autenticavel;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 import br.edu.ifpb.ads.foodjava.util.GeradorID;
@@ -29,7 +28,7 @@ public abstract class Usuario implements Autenticavel, Validavel {
 
     @Override
     public boolean autenticar(String email, String senha) {
-        return this.email.equals(email) && SenhaUtil.verificar(senha, this.senha);
+        return this.email.equals(email) && SenhaUtil.verificarSenha(senha, this.senha);
     }
 
     @Override
