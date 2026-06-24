@@ -89,6 +89,7 @@ public class GerenciarCardapioController {
     void initialize() {
         configurarCampos();
         configurarTabela();
+        atualizarTabelaCardapio();
     }
 
     private void configurarCampos() {
@@ -191,6 +192,7 @@ public class GerenciarCardapioController {
 
             CardapioRepository repositorio = new CardapioRepository();
             repositorio.salvar(novoItem);
+            atualizarTabelaCardapio();
 
         } catch (NumberFormatException e) {
             mostrarAlerta("Formato de número inválido", e.getMessage());
