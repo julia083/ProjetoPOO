@@ -87,7 +87,7 @@
                 <!-- Abas por categoria -->
                 <TabPane fx:id="categoriaTabPane" tabClosingPolicy="UNAVAILABLE" prefHeight="460.0">
                     <!-- Aba: ENTRADA -->
-                    <Tab text="🌿 ENTRADA">
+                    <Tab text="ENTRADA">
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
@@ -102,7 +102,7 @@
                     </Tab>
 
                     <!-- Aba: PRATO PRINCIPAL -->
-                    <Tab text="🍖 PRATO PRINCIPAL">
+                    <Tab text="PRATO PRINCIPAL">
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
@@ -117,7 +117,7 @@
                     </Tab>
 
                     <!-- Aba: SOBREMESA -->
-                    <Tab text="🍰 SOBREMESA">
+                    <Tab text="SOBREMESA">
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
@@ -132,7 +132,7 @@
                     </Tab>
 
                     <!-- Aba: BEBIDAS -->
-                    <Tab text="🥤 BEBIDAS">
+                    <Tab text="BEBIDAS">
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
