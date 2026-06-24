@@ -126,6 +126,10 @@ public class ConfiguracaoRestauranteController {
                 mostrarAlerta("Erro de Validação", "O campo Endereço é obrigatório.");
                 return;
             }
+            if (cbCategoria == null || cbCategoria.getValue() == null){
+                mostrarAlerta("Erro de Validação", "O campo Categoria é obrigatório.");
+                return;
+            }
 
             try {
                 DocumentoUtil.validarCpf(cpf);
