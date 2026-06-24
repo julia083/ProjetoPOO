@@ -102,26 +102,28 @@ public class CarrinhoController {
                 cliente = CardapioController.getClienteLogado();
             }
 
-            Pedido pedido = new Pedido(GeradorID.gerar(), cliente);
-            pedido.setItens(new ArrayList<>(CardapioController.getCarrinho()));
-            pedido.confirmar();
-
-            if (!pedido.validar()) {
-                Mensagem.mostrarAlerta("Pedido invalido", "Nao foi possivel identificar o cliente do pedido.");
+            if (CardapioController.getCarrinho().isEmpty()) {
+                Mensagem.mostrarAlerta("Carrinho vazio", "Adicione itens antes de confirmar o pedido.");
                 return;
             }
 
+            Pedido pedido = new Pedido(GeradorID.gerar(), cliente);
+            pedido.setItens(new ArrayList<>(CardapioController.getCarrinho()));
+
             pedidoRepository.adicionar(pedido);
+
             CardapioController.limparCarrinho();
             atualizarCarrinho();
 
             Mensagem.mostrarAlerta("Pedido confirmado",
-                    "Pedido enviado com sucesso. Total: " + FORMATO_MOEDA.format(pedido.calcularTotal()));
+                    "Pedido enviado com sucesso! Total: " + FORMATO_MOEDA.format(pedido.calcularTotal()));
+
             voltarCardapio(event);
+
         } catch (CarrinhoVazioException e) {
             Mensagem.mostrarAlerta("Carrinho vazio", e.getMessage());
         } catch (IOException e) {
-            Mensagem.mostrarAlerta("Erro", "Pedido confirmado, mas nao foi possivel voltar ao cardapio.");
+            Mensagem.mostrarAlerta("Erro", "Pedido confirmado, mas não foi possível voltar ao cardápio.");
         }
     }
 

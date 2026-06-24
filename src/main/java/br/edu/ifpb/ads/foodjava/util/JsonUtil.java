@@ -1,17 +1,37 @@
 package br.edu.ifpb.ads.foodjava.util;
 
-import br.edu.ifpb.ads.foodjava.exception.ArquivoImportacaoException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class JsonUtil {
 
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+    private static final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(LocalDateTime.class, new TypeAdapter<LocalDateTime>() {
+                @Override
+                public void write(JsonWriter out, LocalDateTime value) throws IOException {
+                    if (value == null) out.nullValue();
+                    else out.value(FORMATTER.format(value));
+                }
+
+                @Override
+                public LocalDateTime read(JsonReader in) throws IOException {
+                    return LocalDateTime.parse(in.nextString(), FORMATTER);
+                }
+            })
+            .create();
 
     /**
      * Lê um arquivo JSON e converte para o tipo informado.
@@ -26,26 +46,22 @@ public class JsonUtil {
 
         try {
             String json = Files.readString(path);
+
             if (json.isBlank()) {
-                // Em vez de retornar valorPadrao, o projeto exige lançar a exceção de importação
-                throw new ArquivoImportacaoException("O arquivo de importação está vazio.");
+                return valorPadrao;
             }
 
             T resultado = gson.fromJson(json, tipo);
-            if (resultado == null) {
-                throw new ArquivoImportacaoException("Estrutura JSON inválida.");
-            }
-            return resultado;
+            return resultado != null ? resultado : valorPadrao;
 
         } catch (IOException e) {
-            // Troque a RuntimeException pela exceção exigida no projeto
-            throw new ArquivoImportacaoException("Arquivo JSON de importação ausente ou inacessível.");
+            throw new RuntimeException("Erro ao ler arquivo: " + caminho, e);
         }
     }
 
     /**
      * Converte o objeto para JSON e grava no arquivo informado.
-     * Cria a pasta "data" automaticamente, se não existir.
+     * Cria a pasta automaticamente, se não existir.
      */
     public static void escrever(String caminho, Object dados) {
         try {
