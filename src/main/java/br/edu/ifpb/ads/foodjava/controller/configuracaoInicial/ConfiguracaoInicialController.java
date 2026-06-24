@@ -48,11 +48,6 @@ public class ConfiguracaoInicialController {
     @FXML
     void configurarORestaurante(ActionEvent event) throws IOException {
 
-        if (logoPath == null || logoPath.isEmpty()) {
-            exibirAlerta("Campo Obrigatório", "Aviso", "Você precisa selecionar um logotipo antes de continuar!", Alert.AlertType.WARNING);
-            return;
-        }
-
         try {
             // 1. Carrega o FXML da tela de cadastro
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/configuracao-restaurante.fxml"));
