@@ -10,15 +10,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0"
-            style="-fx-background-color: #D1FAE5;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
 
    <left>
-      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="330.0" spacing="18.0"
-            style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="330.0" spacing="18.0" style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="36.0" left="38.0" right="38.0" top="36.0" />
          </padding>
@@ -65,16 +60,20 @@
             </Label>
 
             <Region prefHeight="12.0" />
-
-            <Button fx:id="configurarRestauranteBotton" maxWidth="360.0" mnemonicParsing="false"
-                    onAction="#configurarORestaurante" prefHeight="38.0" prefWidth="220.0"
-                    style="-fx-background-color: #34D399; -fx-text-fill: #064E3B; -fx-font-weight: bold;"
-                    text="Configurar Restaurante">
+            <Button fx:id="logoObrigatoria" mnemonicParsing="false" onAction="#selecioneLogotipo" prefHeight="44.0" prefWidth="363.0" style="-fx-background-color: #A3B2C1;" text="Selecionar uma Logo" textFill="#185125">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="configurarRestauranteBotton" mnemonicParsing="false" onAction="#configurarORestaurante" prefHeight="44.0" prefWidth="363.0" style="-fx-background-color: #A3A8D8;" text="Configurar Restaurante" textFill="#185125">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
          </children>

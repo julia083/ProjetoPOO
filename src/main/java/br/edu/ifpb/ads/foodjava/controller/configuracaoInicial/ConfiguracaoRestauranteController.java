@@ -64,6 +64,10 @@ public class ConfiguracaoRestauranteController {
     @FXML
     private TextField telefoneRestaurante;
 
+    public void setLogo(String logoCaminho){
+        this.logoPath = logoCaminho;
+    }
+
     @FXML
     public void initialize() {
         cbCategoria.getItems().addAll(CategoriaCulinaria.values());
