@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PedidoRepository implements Repositorio<Pedido> {
 
@@ -36,16 +37,17 @@ public class PedidoRepository implements Repositorio<Pedido> {
                 .findFirst();
     }
 
+
     public List<Pedido> listarPorCliente(String clienteId) {
         return listarTodos().stream()
                 .filter(p -> p.getClienteId() != null && p.getClienteId().equals(clienteId))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public List<Pedido> listarPorStatus(StatusPedido status) {
         return listarTodos().stream()
                 .filter(p -> p.getStatus() == status)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public void adicionar(Pedido pedido) {

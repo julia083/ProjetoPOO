@@ -51,13 +51,24 @@ public class HistoricoPedidosController {
             return;
         }
 
-        pedidos.sort((p1, p2) -> p2.getDataHora().compareTo(p1.getDataHora()));
+        // protege contra dataHora null
+        pedidos.sort((p1, p2) -> {
+            if (p1.getDataHora() == null) return 1;
+            if (p2.getDataHora() == null) return -1;
+            return p2.getDataHora().compareTo(p1.getDataHora());
+        });
 
         for (Pedido p : pedidos) {
-            String id = p.getId().substring(0, Math.min(8, p.getId().length()));
-            String data = p.getDataHora().format(FORMATO_DATA);
+            String id = p.getId() != null
+                    ? p.getId().substring(0, Math.min(8, p.getId().length()))
+                    : "??";
+            String data = p.getDataHora() != null
+                    ? p.getDataHora().format(FORMATO_DATA)
+                    : "Data indisponível";
             String total = FORMATO_MOEDA.format(p.getValorTotal());
-            String status = p.getStatus().toString().replace("_", " ");
+            String status = p.getStatus() != null
+                    ? p.getStatus().toString().replace("_", " ")
+                    : "Desconhecido";
 
             String linha = String.format("#%s | %s | %s | %s", id, data, total, status);
             listaPedidos.getItems().add(linha);
