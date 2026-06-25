@@ -2,12 +2,14 @@ package br.edu.ifpb.ads.foodjava.controller.gerente;
 
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.model.enums.StatusPedido;
+import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +23,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 public class PainelGerenteController {
@@ -56,6 +59,12 @@ public class PainelGerenteController {
     private TableColumn<Pedido, String> colTotal;
 
     @FXML
+    private Label txtTotalPedidos;
+
+    @FXML
+    private Label txtFaturamento;
+
+    @FXML
     private ComboBox<String> filtroStatus;
 
     @FXML
@@ -67,12 +76,27 @@ public class PainelGerenteController {
     @FXML
     private TableView<Pedido> tabelaPedidos;
 
+    private PedidoRepository repository = new PedidoRepository();
 
     @FXML
     void initialize() {
+        configurarGridPane();
         configurarTabela();
+        atualizarTabelaPedidos();
         configurarFiltroStatus();
         aplicarFiltroStatus();
+    }
+    private void configurarGridPane() {
+        resumoDoDiaGridPane.setHgap(20);
+        resumoDoDiaGridPane.setVgap(10);
+
+        resumoDoDiaGridPane.setStyle("-fx-padding: 15; " +
+                "-fx-background-color: #ffffff; " +
+                "-fx-border-color: #dddddd; " +
+                "-fx-border-radius: 8; " +
+                "-fx-background-radius: 8;");
+
+        resumoDoDiaGridPane.setGridLinesVisible(false); // Mantém o visual limpo
     }
 
     private void configurarTabela() {
@@ -163,5 +187,26 @@ public class PainelGerenteController {
             e.printStackTrace();
         }
     }
+    private void atualizarTabelaPedidos() {
+        List<Pedido> pedidos = repository.listarTodos();
 
+        tabelaPedidos.setItems(FXCollections.observableArrayList(pedidos));
+
+        atualizarResumoDoDia(pedidos);
+
+        tabelaPedidos.refresh();
+    }
+
+    private void atualizarResumoDoDia(List<Pedido> pedidos) {
+
+        int totalPedidos = pedidos.size();
+
+        double faturamento = pedidos.stream()
+                .filter(p -> p.getStatus() != StatusPedido.CANCELADO)
+                .mapToDouble(Pedido::calcularTotal)
+                .sum();
+
+        txtTotalPedidos.setText(String.valueOf(totalPedidos));
+        txtFaturamento.setText(FORMATO_MOEDA.format(faturamento));
+    }
 }
