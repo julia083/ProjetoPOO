@@ -188,11 +188,13 @@ public class PainelGerenteController {
         }
     }
     private void atualizarTabelaPedidos() {
-        List<Pedido> pedidos = repository.listarTodos();
+        List<Pedido> listaPedidos = repository.listarTodos();
 
-        tabelaPedidos.setItems(FXCollections.observableArrayList(pedidos));
+        pedidos.setAll(listaPedidos);
 
-        atualizarResumoDoDia(pedidos);
+        atualizarResumoDoDia(listaPedidos);
+
+        aplicarFiltroStatus();
 
         tabelaPedidos.refresh();
     }

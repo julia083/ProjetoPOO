@@ -50,32 +50,20 @@
                 <Insets bottom="20" left="25" right="25" top="20" />
             </padding>
 
-            <TitledPane animated="false" collapsible="false" prefHeight="120"
-                        style="-fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 5;"
-                        text="Resumo do Dia">
+            <TitledPane animated="false" collapsible="false" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 5;" text="Resumo do Dia">
                 <content>
                     <GridPane fx:id="resumoDoDiaGridPane" hgap="40" vgap="15">
                         <padding>
                             <Insets bottom="15" left="20" right="20" top="15" />
                         </padding>
 
-                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;"
-                               text="Total de Pedidos:" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Total de Pedidos:" />
 
-                        <Label fx:id="txtTotalPedidos"
-                               style="-fx-font-size: 14px;"
-                               text="0"
-                               GridPane.columnIndex="1" />
+                        <Label fx:id="txtTotalPedidos" style="-fx-font-size: 14px;" text="0" GridPane.columnIndex="1" />
 
-                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;"
-                               text="Faturamento:"
-                               GridPane.rowIndex="1" />
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Faturamento:" GridPane.rowIndex="1" />
 
-                        <Label fx:id="txtFaturamento"
-                               style="-fx-font-size: 14px;"
-                               text="R$ 0,00"
-                               GridPane.columnIndex="1"
-                               GridPane.rowIndex="1" />
+                        <Label fx:id="txtFaturamento" style="-fx-font-size: 14px;" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                         <columnConstraints>
                             <ColumnConstraints />
