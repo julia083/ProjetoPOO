@@ -4,6 +4,7 @@ import br.edu.ifpb.ads.foodjava.exception.ArquivoImportacaoException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
+import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -86,12 +87,18 @@ public class GerenciarCardapioController implements Validavel {
     @FXML
     private Button voltarButton;
 
+    CardapioRepository repository = new CardapioRepository();
+    private AtualizadorAutomatico atualizador;
+
     @FXML
     void initialize() {
         configurarCampos();
         configurarTabela();
         atualizarTabelaCardapio();
+        this.atualizador = new AtualizadorAutomatico(5, this::atualizarTabelaCardapio);
+        this.atualizador.iniciar();
     }
+
 
     private void configurarCampos() {
         categoriaDoItem.getItems().setAll(Categoria.values());
@@ -171,8 +178,6 @@ public class GerenciarCardapioController implements Validavel {
         atualizarTabelaCardapio();
     }
 
-    CardapioRepository repository = new CardapioRepository();
-
     @FXML
     void importarJson(ActionEvent event) {
         FileChooser fc = new FileChooser();
@@ -206,7 +211,7 @@ public class GerenciarCardapioController implements Validavel {
     @FXML
     void salvarItem(ActionEvent event) {
 
-        if(!validar()){
+        if (!validar()) {
             return;
         }
 
@@ -219,7 +224,7 @@ public class GerenciarCardapioController implements Validavel {
         try {
             ItemCardapio novoItem = new ItemCardapio(nome, descricao, preco, categoria, disponivel, pathImagem);
 
-            if(itemEditado != null){
+            if (itemEditado != null) {
                 repository.atualizar(novoItem);
                 atualizarTabelaCardapio();
                 limparCampos();
@@ -262,6 +267,11 @@ public class GerenciarCardapioController implements Validavel {
 
     @FXML
     void voltarPainelGerente(ActionEvent event) {
+
+        if (atualizador != null) {
+            atualizador.parar();
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/painel-gerente.fxml"));
             Parent root = loader.load();
@@ -274,6 +284,7 @@ public class GerenciarCardapioController implements Validavel {
             e.printStackTrace();
         }
     }
+
     private void atualizarTabelaCardapio() {
         // Para atualizar o JavaFX, usamos ObservableList
         List<ItemCardapio> lista = repository.listarTodos();
@@ -282,7 +293,7 @@ public class GerenciarCardapioController implements Validavel {
     }
 
     //valida o item antes de armazenar
-    public boolean validar(){
+    public boolean validar() {
 
         if (nomeField.getText().trim().isEmpty() ||
                 precoField.getText().trim().isEmpty() ||
@@ -295,7 +306,7 @@ public class GerenciarCardapioController implements Validavel {
         return true;
     }
 
-    private void limparCampos(){
+    private void limparCampos() {
         nomeField.clear();
         precoField.clear();
         descricaoArea.clear();
