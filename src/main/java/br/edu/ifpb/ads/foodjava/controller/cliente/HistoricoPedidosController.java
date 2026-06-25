@@ -1,5 +1,6 @@
 package br.edu.ifpb.ads.foodjava.controller.cliente;
 
+import br.edu.ifpb.ads.foodjava.controller.autenticacao.LoginController;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
@@ -78,11 +79,18 @@ public class HistoricoPedidosController {
     @FXML
     void voltarCardapio(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/cardapio.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cardapio.fxml"));
+            Parent root = loader.load();
+
+            CardapioController controller = loader.getController();
+            controller.setClienteLogado(CardapioController.getClienteLogado());
+            controller.setRestaurante(LoginController.getRestaurante());
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("FoodJava - Cardápio");
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
             mostrarAlerta("Erro", "Não foi possível voltar ao cardápio.");
