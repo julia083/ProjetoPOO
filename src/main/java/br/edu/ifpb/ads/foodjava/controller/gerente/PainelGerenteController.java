@@ -20,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -105,15 +106,18 @@ public class PainelGerenteController {
     }
 
     private void configurarTabela() {
-        colId.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
-        colCliente.setCellValueFactory(cellData ->
-                new ReadOnlyStringWrapper(cellData.getValue().getClienteNome())
-        );
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colCliente.setCellValueFactory(new PropertyValueFactory<>("clienteNome"));
+
         colDataHora.setCellValueFactory(cellData -> {
             var dataHora = cellData.getValue().getDataHora();
             return new ReadOnlyStringWrapper(dataHora == null ? "" : dataHora.format(FORMATO_DATA_HORA));
         });
-        colTotal.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(FORMATO_MOEDA.format(cellData.getValue().calcularTotal())));
+
+        colTotal.setCellValueFactory(cellData ->
+                new ReadOnlyStringWrapper(FORMATO_MOEDA.format(cellData.getValue().calcularTotal()))
+        );
+
         colStatus.setCellValueFactory(cellData -> {
             var status = cellData.getValue().getStatus();
             return new ReadOnlyStringWrapper(status == null ? "" : status.name());

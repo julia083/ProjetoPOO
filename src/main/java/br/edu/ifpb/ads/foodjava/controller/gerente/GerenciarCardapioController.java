@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -105,20 +106,20 @@ public class GerenciarCardapioController implements Validavel {
     }
 
     private void configurarTabela() {
-        colNome.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNome()));
-        colDescricao.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDescricao()));
-        colPreco.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(String.format("R$ %.2f", cellData.getValue().getPreco())));
 
-        colCategoria.setCellValueFactory(cellData -> {
-            Categoria categoria = cellData.getValue().getCategoria();
-            return new ReadOnlyStringWrapper(categoria == null ? "" : categoria.name());
-        });
+        colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        colPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        colCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        colDisponibilidade.setCellValueFactory(new PropertyValueFactory<>("disponivel"));
 
-        // Configuração básica da nova coluna de Status/Disponibilidade
-        colDisponibilidade.setCellValueFactory(cellData -> {
-            boolean disponivel = cellData.getValue().isDisponivel(); // Certifique-se de que esse método existe na sua model
-            return new ReadOnlyStringWrapper(disponivel ? "Ativo" : "Inativo");
-        });
+        colPreco.setCellValueFactory(cellData ->
+                new ReadOnlyStringWrapper(String.format("R$ %.2f", cellData.getValue().getPreco()))
+        );
+
+        colDisponibilidade.setCellValueFactory(cellData ->
+                new ReadOnlyStringWrapper(cellData.getValue().isDisponivel() ? "Ativo" : "Inativo")
+        );
     }
 
     private ItemCardapio itemSelecionado = null;
@@ -147,23 +148,20 @@ public class GerenciarCardapioController implements Validavel {
 
     @FXML
     void editarItem(ActionEvent event) {
-        // 1. Capta o item selecionado diretamente da TableView [1]
+
         itemEditado = tabelaItens.getSelectionModel().getSelectedItem();
 
         if (itemEditado != null) {
-            // 2. Dispõe as informações nos campos para que possam ser editados [2, 3]
             nomeField.setText(itemEditado.getNome().trim());
             descricaoArea.setText(itemEditado.getDescricao());
             precoField.setText(String.valueOf(itemEditado.getPreco()));
             categoriaDoItem.setValue(itemEditado.getCategoria());
             disponivelCheckBox.setSelected(itemEditado.isDisponivel());
 
-            // Carrega a imagem no preview se houver um caminho salvo [1]
             if (itemEditado.getImagemPath() != null) {
                 imagemPreview.setImage(ImagemUtil.carregar(itemEditado.getImagemPath()));
             }
 
-            // 3. Muda temporariamente o nome do botão para "Salvar Alterações"
             salvarButton.setText("Salvar Alterações");
         } else {
             mostrarAlerta("Aviso", "Selecione um item na tabela antes de clicar em editar.");
@@ -188,13 +186,11 @@ public class GerenciarCardapioController implements Validavel {
 
         if (arquivo != null) {
             try {
-                // O repositório processa e devolve a lista de erros parciais
                 List<String> erros = repository.importarCardapio(arquivo.getAbsolutePath());
 
                 if (erros.isEmpty()) {
                     exibirAlerta("Sucesso", "Importação Concluída", "Todos os itens foram importados.", Alert.AlertType.INFORMATION);
                 } else {
-                    // REQUISITO: Exibir relatório linha a linha [1]
                     String relatorio = String.join("\n", erros);
                     exibirAlerta("Importação Parcial", "Alguns itens foram ignorados:", relatorio, Alert.AlertType.WARNING);
                 }
@@ -202,7 +198,6 @@ public class GerenciarCardapioController implements Validavel {
                 atualizarTabelaCardapio();
 
             } catch (ArquivoImportacaoException e) {
-                // REQUISITO: Tratar erro crítico de arquivo ausente/vazio [7]
                 exibirAlerta("Erro Crítico", "Falha no arquivo", e.getMessage(), Alert.AlertType.ERROR);
             }
         }
@@ -286,7 +281,6 @@ public class GerenciarCardapioController implements Validavel {
     }
 
     private void atualizarTabelaCardapio() {
-        // Para atualizar o JavaFX, usamos ObservableList
         List<ItemCardapio> lista = repository.listarTodos();
         tabelaItens.setItems(FXCollections.observableArrayList(lista));
         tabelaItens.refresh();
