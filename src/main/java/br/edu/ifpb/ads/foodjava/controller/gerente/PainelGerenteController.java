@@ -41,9 +41,6 @@ public class PainelGerenteController {
     private Button cancelarPedidoBottom;
 
     @FXML
-    private Button confirmarPedidoBottom;
-
-    @FXML
     private TableColumn<Pedido, String> colCliente;
 
     @FXML
@@ -124,11 +121,6 @@ public class PainelGerenteController {
 
     @FXML
     void cancelarPedido(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confirmarPedido(ActionEvent event) {
 
     }
 
