@@ -2,7 +2,9 @@ package br.edu.ifpb.ads.foodjava.controller.cliente;
 
 import br.edu.ifpb.ads.foodjava.controller.autenticacao.LoginController;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
+import br.edu.ifpb.ads.foodjava.model.ItemPedido;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
+
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -29,7 +32,10 @@ public class HistoricoPedidosController {
     private final PedidoRepository pedidoRepository = new PedidoRepository();
 
     @FXML
-    private ListView<String> listaPedidos;
+    private ListView<String> listaPedidos; // Mantém String para simplificar
+
+    @FXML
+    private Label mensagemVazia;
 
     @FXML
     public void initialize() {
@@ -38,42 +44,62 @@ public class HistoricoPedidosController {
 
     private void carregarPedidos() {
         listaPedidos.getItems().clear();
+        mensagemVazia.setVisible(false);
 
         Cliente cliente = CardapioController.getClienteLogado();
         if (cliente == null || cliente.getId() == null) {
-            listaPedidos.getItems().add("Cliente não identificado.");
+            mensagemVazia.setText("Cliente não identificado.");
+            mensagemVazia.setVisible(true);
             return;
         }
 
         List<Pedido> pedidos = pedidoRepository.listarPorCliente(cliente.getId());
 
         if (pedidos.isEmpty()) {
-            listaPedidos.getItems().add("Nenhum pedido encontrado.");
+            mensagemVazia.setText("Nenhum pedido encontrado.");
+            mensagemVazia.setVisible(true);
             return;
         }
 
-        // protege contra dataHora null
+        // Ordena por data (mais recente primeiro)
         pedidos.sort((p1, p2) -> {
             if (p1.getDataHora() == null) return 1;
             if (p2.getDataHora() == null) return -1;
             return p2.getDataHora().compareTo(p1.getDataHora());
         });
 
+        // Cria uma string formatada para cada pedido
         for (Pedido p : pedidos) {
-            String id = p.getId() != null
-                    ? p.getId().substring(0, Math.min(8, p.getId().length()))
-                    : "??";
-            String data = p.getDataHora() != null
-                    ? p.getDataHora().format(FORMATO_DATA)
-                    : "Data indisponível";
-            String total = FORMATO_MOEDA.format(p.getValorTotal());
-            String status = p.getStatus() != null
-                    ? p.getStatus().toString().replace("_", " ")
-                    : "Desconhecido";
-
-            String linha = String.format("#%s | %s | %s | %s", id, data, total, status);
-            listaPedidos.getItems().add(linha);
+            listaPedidos.getItems().add(formatarPedido(p));
         }
+    }
+
+    private String formatarPedido(Pedido p) {
+        StringBuilder sb = new StringBuilder();
+
+        // Cabeçalho
+        String id = p.getId() != null ? p.getId().substring(0, Math.min(8, p.getId().length())) : "??";
+        String data = p.getDataHora() != null ? p.getDataHora().format(FORMATO_DATA) : "Data indisponível";
+        String total = FORMATO_MOEDA.format(p.getValorTotal());
+        String status = p.getStatus() != null ? p.getStatus().toString().replace("_", " ") : "Desconhecido";
+
+        sb.append(String.format("#%s | %s | %s | %s", id, data, total, status));
+
+        // Itens (em linhas separadas)
+        if (p.getItens() != null && !p.getItens().isEmpty()) {
+            sb.append("\n  ");
+            for (ItemPedido item : p.getItens()) {
+                if (item.getItemCardapio() == null) continue;
+                String nome = item.getItemCardapio().getNome();
+                int qtd = item.getQuantidade();
+                double subtotal = item.calcularSubtotal();
+                sb.append(String.format("  %dx %s (%s)", qtd, nome, FORMATO_MOEDA.format(subtotal)));
+            }
+        } else {
+            sb.append("\n  (Nenhum item)");
+        }
+
+        return sb.toString();
     }
 
     @FXML
@@ -96,5 +122,4 @@ public class HistoricoPedidosController {
             mostrarAlerta("Erro", "Não foi possível voltar ao cardápio.");
         }
     }
-
 }

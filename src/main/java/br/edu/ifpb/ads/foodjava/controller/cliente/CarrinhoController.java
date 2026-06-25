@@ -8,6 +8,7 @@ import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
 import br.edu.ifpb.ads.foodjava.util.GeradorID;
 import br.edu.ifpb.ads.foodjava.util.Mensagem;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class CarrinhoController {
+
     private final PedidoRepository pedidoRepository = new PedidoRepository();
     private static final NumberFormat FORMATO_MOEDA = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
@@ -40,9 +43,23 @@ public class CarrinhoController {
     private Label totalLabel;
 
     @FXML
+    private Button removerItemButton; // Novo botão
+
+    @FXML
+    private Button limparCarrinhoButton;
+
+    @FXML
+    private Button confirmarPedidoButton;
+
+    @FXML
     void initialize() {
         configurarLista();
         atualizarCarrinho();
+
+        // Habilita/desabilita o botão "Remover Item" conforme seleção
+        removerItemButton.disableProperty().bind(
+                Bindings.isEmpty(listaCarrinho.getSelectionModel().getSelectedItems())
+        );
     }
 
     public void setCliente(Cliente cliente) {
@@ -70,6 +87,9 @@ public class CarrinhoController {
                         quantidade, nome, precoUnitario, subtotal));
             }
         });
+
+        // Seleção única (padrão já é single)
+        listaCarrinho.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
     }
 
     private void atualizarCarrinho() {
@@ -83,16 +103,42 @@ public class CarrinhoController {
                 .sum();
     }
 
+    // === NOVO MÉTODO: Remover item selecionado ===
+    @FXML
+    void removerItemSelecionado(ActionEvent event) {
+        ItemPedido selecionado = listaCarrinho.getSelectionModel().getSelectedItem();
+        if (selecionado == null) {
+            Mensagem.mostrarAlerta("Nenhum item selecionado", "Selecione um item para remover.");
+            return;
+        }
+
+        // Remove da lista observável
+        itensCarrinho.remove(selecionado);
+
+        // Remove da lista estática do CardapioController
+        CardapioController.getCarrinho().remove(selecionado);
+
+        // Atualiza total
+        atualizarTotal();
+
+        Mensagem.mostrarAlerta("Item removido", selecionado.getItemCardapio().getNome() + " foi removido do carrinho.");
+    }
+
+    // Atualiza apenas o total (sem recarregar a lista toda)
+    private void atualizarTotal() {
+        totalLabel.setText(FORMATO_MOEDA.format(calcularTotal()));
+    }
+
     @FXML
     void limparCarrinho(ActionEvent event) {
         if (CardapioController.getCarrinho().isEmpty()) {
-            Mensagem.mostrarAlerta("Carrinho vazio", "Nao ha itens para remover.");
+            Mensagem.mostrarAlerta("Carrinho vazio", "Não há itens para remover.");
             return;
         }
 
         CardapioController.limparCarrinho();
         atualizarCarrinho();
-        Mensagem.mostrarAlerta( "Carrinho limpo", "Todos os itens foram removidos do carrinho.");
+        Mensagem.mostrarAlerta("Carrinho limpo", "Todos os itens foram removidos do carrinho.");
     }
 
     @FXML
@@ -141,5 +187,4 @@ public class CarrinhoController {
         stage.setTitle("FoodJava - Cardapio");
         stage.show();
     }
-
 }

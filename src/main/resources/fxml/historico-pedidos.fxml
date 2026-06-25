@@ -57,8 +57,15 @@
                 <Separator/>
 
                 <ListView fx:id="listaPedidos" prefHeight="400.0"/>
+
+                <!-- Mensagem quando não há pedidos (será exibida via CSS) -->
+                <Label fx:id="mensagemVazia" text="Nenhum pedido encontrado."
+                       textFill="#4B5563" alignment="CENTER" visible="false">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
             </children>
         </VBox>
     </center>
 </BorderPane>
-
