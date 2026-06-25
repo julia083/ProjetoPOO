@@ -121,6 +121,7 @@ public class GerenciarCardapioController implements Validavel {
         itemSelecionado = tabelaItens.getSelectionModel().getSelectedItem();
 
         if (itemSelecionado == null) {
+            mostrarAlerta("Aviso", "Selecione um item.");
             return;
         }
 
@@ -130,7 +131,9 @@ public class GerenciarCardapioController implements Validavel {
             itemSelecionado.ativar();
         }
 
-        tabelaItens.refresh();
+        repository.atualizar(itemSelecionado);
+
+        atualizarTabelaCardapio();
     }
 
     private ItemCardapio itemEditado = null;
