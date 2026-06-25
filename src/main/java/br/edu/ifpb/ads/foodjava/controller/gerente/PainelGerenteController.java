@@ -79,7 +79,7 @@ public class PainelGerenteController {
     private TableView<Pedido> tabelaPedidos;
 
     private PedidoRepository repository = new PedidoRepository();
-    private AtualizadorAutomatico atualizador;
+
 
     @FXML
     void initialize() {
@@ -88,9 +88,6 @@ public class PainelGerenteController {
         atualizarTabelaPedidos();
         configurarFiltroStatus();
         aplicarFiltroStatus();
-
-        this.atualizador = new AtualizadorAutomatico(5, this::atualizarTabelaPedidos);
-        this.atualizador.iniciar();
     }
     private void configurarGridPane() {
         resumoDoDiaGridPane.setHgap(20);
@@ -160,10 +157,6 @@ public class PainelGerenteController {
     @FXML
     void gerenciarCardapio(ActionEvent event){
 
-        if (atualizador != null) {
-            atualizador.parar();
-        }
-
         try {
             // 1. Carrega o FXML da tela de cadastro
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/gerenciar-cardapio.fxml"));
@@ -184,10 +177,6 @@ public class PainelGerenteController {
 
     @FXML
     void voltarTelaLogin(ActionEvent event) throws IOException{
-
-        if (atualizador != null) {
-            atualizador.parar(); // Parando o cronômetro!
-        }
 
         try {
             // 1. Carrega o FXML da tela de cadastro
