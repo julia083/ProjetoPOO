@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
+import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 
 import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
 
@@ -27,7 +28,7 @@ import java.util.List;
 import static br.edu.ifpb.ads.foodjava.util.Mensagem.exibirAlerta;
 import static br.edu.ifpb.ads.foodjava.util.Mensagem.mostrarAlerta;
 
-public class GerenciarCardapioController {
+public class GerenciarCardapioController implements Validavel {
 
     @FXML
     private Button alterarDisponibilidadeButton;
@@ -132,14 +133,39 @@ public class GerenciarCardapioController {
         tabelaItens.refresh();
     }
 
+    private ItemCardapio itemEditado = null;
+
     @FXML
     void editarItem(ActionEvent event) {
+        // 1. Capta o item selecionado diretamente da TableView [1]
+        itemEditado = tabelaItens.getSelectionModel().getSelectedItem();
+
+        if (itemEditado != null) {
+            // 2. Dispõe as informações nos campos para que possam ser editados [2, 3]
+            nomeField.setText(itemEditado.getNome());
+            descricaoArea.setText(itemEditado.getDescricao());
+            precoField.setText(String.valueOf(itemEditado.getPreco()));
+            categoriaDoItem.setValue(itemEditado.getCategoria());
+            disponivelCheckBox.setSelected(itemEditado.isDisponivel());
+
+            // Carrega a imagem no preview se houver um caminho salvo [1]
+            if (itemEditado.getImagemPath() != null) {
+                imagemPreview.setImage(ImagemUtil.carregar(itemEditado.getImagemPath()));
+            }
+
+            // 3. Muda temporariamente o nome do botão para "Salvar Alterações"
+            salvarButton.setText("Salvar Alterações");
+        } else {
+            mostrarAlerta("Aviso", "Selecione um item na tabela antes de clicar em editar.");
+        }
 
     }
 
     @FXML
     void excluirItem(ActionEvent event) {
-        // Lógica para deletar o item selecionado
+        itemSelecionado = tabelaItens.getSelectionModel().getSelectedItem();
+        repository.deletar(itemSelecionado.getNome());
+        atualizarTabelaCardapio();
     }
 
     CardapioRepository repository = new CardapioRepository();
@@ -176,23 +202,30 @@ public class GerenciarCardapioController {
 
     @FXML
     void salvarItem(ActionEvent event) {
-        try {
-            String nome = nomeField.getText();
-            String descricao = descricaoArea.getText();
-            double preco = Double.parseDouble(precoField.getText());
-            Categoria categoria = categoriaDoItem.getValue();
-            boolean disponivel = disponivelCheckBox.isSelected();
 
+        if(!validar()){
+            return;
+        }
+
+        String nome = nomeField.getText();
+        String descricao = descricaoArea.getText();
+        double preco = Double.parseDouble(precoField.getText());
+        Categoria categoria = categoriaDoItem.getValue();
+        boolean disponivel = disponivelCheckBox.isSelected();
+
+        try {
             ItemCardapio novoItem = new ItemCardapio(nome, descricao, preco, categoria, disponivel, pathImagem);
 
-            if (!novoItem.validar()) {
-                mostrarAlerta("Item inválido", "Nome, preço ou categoria inválidos!");
+            if(itemEditado != null){
+                repository.atualizar(novoItem);
+                atualizarTabelaCardapio();
+                limparCampos();
                 return;
             }
 
-            CardapioRepository repositorio = new CardapioRepository();
-            repositorio.salvar(novoItem);
+            repository.salvar(novoItem);
             atualizarTabelaCardapio();
+            limparCampos();
 
         } catch (NumberFormatException e) {
             mostrarAlerta("Formato de número inválido", e.getMessage());
@@ -243,5 +276,28 @@ public class GerenciarCardapioController {
         List<ItemCardapio> lista = repository.listarTodos();
         tabelaItens.setItems(FXCollections.observableArrayList(lista));
         tabelaItens.refresh();
+    }
+
+    //valida o item antes de armazenar
+    public boolean validar(){
+
+        if (nomeField.getText().trim().isEmpty() ||
+                precoField.getText().trim().isEmpty() ||
+                categoriaDoItem.getValue() == null) {
+
+            mostrarAlerta("Erro", "Nome, preço e categoria devem estar devidamente preenchidos!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void limparCampos(){
+        nomeField.clear();
+        precoField.clear();
+        descricaoArea.clear();
+        categoriaDoItem.setValue(null);
+        imagemPreview.setImage(null);
+        salvarButton.setText("Salvar");
     }
 }
