@@ -142,7 +142,7 @@ public class GerenciarCardapioController implements Validavel {
 
         if (itemEditado != null) {
             // 2. Dispõe as informações nos campos para que possam ser editados [2, 3]
-            nomeField.setText(itemEditado.getNome());
+            nomeField.setText(itemEditado.getNome().trim());
             descricaoArea.setText(itemEditado.getDescricao());
             precoField.setText(String.valueOf(itemEditado.getPreco()));
             categoriaDoItem.setValue(itemEditado.getCategoria());
@@ -207,7 +207,7 @@ public class GerenciarCardapioController implements Validavel {
             return;
         }
 
-        String nome = nomeField.getText();
+        String nome = nomeField.getText().trim();
         String descricao = descricaoArea.getText();
         double preco = Double.parseDouble(precoField.getText());
         Categoria categoria = categoriaDoItem.getValue();
