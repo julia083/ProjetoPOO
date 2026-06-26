@@ -1,23 +1,20 @@
 package br.edu.ifpb.ads.foodjava.controller.gerente;
 
+import br.edu.ifpb.ads.foodjava.exception.CancelamentoNaoPermitidoException;
+import br.edu.ifpb.ads.foodjava.exception.StatusInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.model.enums.StatusPedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
-import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,6 +24,8 @@ import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+
+import static br.edu.ifpb.ads.foodjava.util.Mensagem.exibirAlerta;
 
 public class PainelGerenteController {
 
@@ -147,11 +146,59 @@ public class PainelGerenteController {
     @FXML
     void avancarStatus(ActionEvent event) {
 
+        Pedido pedidoSelecionado = tabelaPedidos.getSelectionModel().getSelectedItem();
+
+        if (pedidoSelecionado == null) {
+            return;
+        }
+
+        try {
+            int proximoOrdinal = getProximoOrdinal(pedidoSelecionado);
+            StatusPedido[] todosStatus = StatusPedido.values();
+
+            if (proximoOrdinal < todosStatus.length) {
+                StatusPedido proximoStatus = todosStatus[proximoOrdinal];
+
+                if (proximoStatus == StatusPedido.CANCELADO) {
+                    throw new StatusInvalidoException(
+                            "Fluxo de atendimento finalizado. Não é possível avançar além de ENTREGUE."
+                    );
+                }
+
+                pedidoSelecionado.setStatus(proximoStatus);
+
+                repository.atualizar(pedidoSelecionado);
+                atualizarTabelaPedidos();
+            }
+
+        } catch (StatusInvalidoException e) {
+            exibirAlerta("Erro ao Avançar Status", "Mudança de Status Inválida", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
     void cancelarPedido(ActionEvent event) {
+        Pedido pedidoSelecionado = tabelaPedidos.getSelectionModel().getSelectedItem();
 
+        if (pedidoSelecionado == null) {
+            exibirAlerta("Erro", "Nenhum pedido foi selecionado", "Selecione um pedido para cancelar.", Alert.AlertType.WARNING);
+            return;
+        }
+        try{
+        StatusPedido statusAtual = pedidoSelecionado.getStatus();
+
+        if (statusAtual != StatusPedido.AGUARDANDO_CONFIRMACAO) {
+            throw new CancelamentoNaoPermitidoException(
+                    "Não é possível cancelar um pedido que já foi confirmado ou está em preparo.");
+        }
+
+        pedidoSelecionado.setStatus(StatusPedido.CANCELADO);
+
+        repository.atualizar(pedidoSelecionado);
+        atualizarTabelaPedidos();}
+        catch(CancelamentoNaoPermitidoException e){
+            exibirAlerta("Erro ao cancelar", "Cancelamento não permitido", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -218,5 +265,16 @@ public class PainelGerenteController {
 
         txtTotalPedidos.setText(String.valueOf(totalPedidos));
         txtFaturamento.setText(FORMATO_MOEDA.format(faturamento));
+    }
+
+    private static int getProximoOrdinal(Pedido pedidoSelecionado) {
+        StatusPedido statusAtual = pedidoSelecionado.getStatus();
+        if (statusAtual == null || statusAtual == StatusPedido.ENTREGUE || statusAtual == StatusPedido.CANCELADO) {
+            throw new br.edu.ifpb.ads.foodjava.exception.StatusInvalidoException(
+                    "Não é possível avançar o status de um pedido que já está " + statusAtual + "."
+            );
+        }
+        int proximoOrdinal = statusAtual.ordinal() + 1;
+        return proximoOrdinal;
     }
 }
