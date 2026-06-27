@@ -135,19 +135,21 @@ public class GerenciarCardapioController implements Validavel {
             itemSelecionado.ativar();
         }
 
-        repository.atualizar(itemSelecionado);
+        repository.atualizar(nomeOriginalDoItem, itemSelecionado);
 
         atualizarTabelaCardapio();
     }
 
     private ItemCardapio itemEditado = null;
+    private String nomeOriginalDoItem = null;
 
     @FXML
     void editarItem(ActionEvent event) {
-
         itemEditado = tabelaItens.getSelectionModel().getSelectedItem();
 
         if (itemEditado != null) {
+            nomeOriginalDoItem = itemEditado.getNome();
+
             nomeField.setText(itemEditado.getNome().trim());
             descricaoArea.setText(itemEditado.getDescricao());
             precoField.setText(String.valueOf(itemEditado.getPreco()));
@@ -216,7 +218,12 @@ public class GerenciarCardapioController implements Validavel {
             ItemCardapio novoItem = new ItemCardapio(nome, descricao, preco, categoria, disponivel, pathImagem);
 
             if (itemEditado != null) {
-                repository.atualizar(novoItem);
+
+                repository.atualizar(nomeOriginalDoItem, novoItem);
+
+                itemEditado = null;
+                nomeOriginalDoItem = null;
+
                 atualizarTabelaCardapio();
                 limparCampos();
                 return;

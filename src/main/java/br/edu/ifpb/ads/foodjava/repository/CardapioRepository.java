@@ -107,21 +107,20 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
                 .collect(Collectors.toList());
     }
 
-    // Atualiza um item existente
-    public void atualizar(ItemCardapio itemAtualizado) {
+    public void atualizar(String nomeAntigo, ItemCardapio itemAtualizado) {
 
-        ItemCardapio itemAntigo = buscarPorNome(itemAtualizado.getNome());
+        ItemCardapio itemNaLista = buscarPorNome(nomeAntigo);
 
-        if (itemAntigo != null) {
-            itemAntigo.setDescricao(itemAtualizado.getDescricao());
-            itemAntigo.setPreco(itemAtualizado.getPreco());
-            itemAntigo.setCategoria(itemAtualizado.getCategoria());
-            itemAntigo.setDisponivel(itemAtualizado.isDisponivel());
-            itemAntigo.setImagemPath(itemAtualizado.getImagemPath());
+        if (itemNaLista != null) {
+            itemNaLista.setNome(itemAtualizado.getNome());
+            itemNaLista.setDescricao(itemAtualizado.getDescricao());
+            itemNaLista.setPreco(itemAtualizado.getPreco());
+            itemNaLista.setCategoria(itemAtualizado.getCategoria());
+            itemNaLista.setDisponivel(itemAtualizado.isDisponivel());
+            itemNaLista.setImagemPath(itemAtualizado.getImagemPath());
         } else {
             itens.add(itemAtualizado);
         }
-
         salvarTodos(itens);
     }
 

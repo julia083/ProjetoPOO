@@ -17,22 +17,22 @@ O projeto foi desenvolvido aplicando conceitos de Programação Orientada a Obje
 
 ### Cliente
 
-- Cadastro de usuário.
-- Login no sistema.
-- Visualização do cardápio.
-- Realização de pedidos.
-- Consulta do histórico de pedidos.
+- Cadastro de usuário;
+- Login no sistema;
+- Visualização do cardápio;
+- Realização de pedidos;
+- Consulta do histórico de pedidos;
 - Acompanhamento do status dos pedidos.
 
 ### Gerente
-
-- Login administrativo.
-- Gerenciamento do cardápio.
-- Cadastro de novos itens.
-- Edição e remoção de itens existentes.
-- Controle da disponibilidade dos produtos.
-- Gerenciamento dos pedidos recebidos.
-- Atualização do status dos pedidos.
+- Login administrativo;
+- Gerenciamento do cardápio;
+- Cadastro de novos itens;
+- Edição e remoção de itens existentes;
+- Controle da disponibilidade dos produtos;
+- Gerenciamento dos pedidos recebidos;
+- Atualização do status dos pedidos;
+- Visualização do resumo do dia e faturamento.
 
 ## Tecnologias Utilizadas
 
@@ -49,6 +49,7 @@ O projeto foi desenvolvido aplicando conceitos de Programação Orientada a Obje
 ```text
 FoodJava
 ├── data
+├── uploads
 ├── src
 │   └── main
 │       ├── java
@@ -62,9 +63,7 @@ FoodJava
 │       │
 │       └── resources
 │           ├── fxml
-│           ├── css
-│           ├── images
-│           └── uploads
+│           └── images
 ```
 
 ## Arquitetura
@@ -79,15 +78,7 @@ Além disso, o projeto utiliza uma camada de **Repository** para persistência d
 
 ## Persistência de Dados
 
-Os dados da aplicação são armazenados em arquivos JSON localizados na pasta `data`.
-
-Arquivos utilizados:
-
-- clientes.json
-- gerentes.json
-- pedidos.json
-- cardapio.json
-- restaurante.json
+Os dados da aplicação são armazenados em arquivos JSON gerados em tempo de execução, localizados na pasta `data`.
 
 ## Conceitos de POO Aplicados
 
