@@ -88,7 +88,7 @@ public class PainelGerenteController {
         atualizarTabelaPedidos();
         configurarFiltroStatus();
         aplicarFiltroStatus();
-        this.atualizador = new AtualizadorAutomatico(5, this::atualizarTabelaPedidos);
+        this.atualizador = new AtualizadorAutomatico(7, this::atualizarTabelaPedidos);
         this.atualizador.iniciar();
     }
 
