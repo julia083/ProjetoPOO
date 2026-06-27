@@ -2,7 +2,6 @@ package br.edu.ifpb.ads.foodjava.repository;
 
 import br.edu.ifpb.ads.foodjava.exception.CarrinhoVazioException;
 import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
-import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.model.enums.StatusPedido;
 import br.edu.ifpb.ads.foodjava.util.DataHora;
@@ -90,5 +89,17 @@ public class PedidoRepository implements Repositorio<Pedido> {
         return listarTodos().stream()
                 .filter(p -> p.getDataHora() != null && p.getDataHora().toLocalDate().equals(hoje))
                 .count();
+    }
+    public boolean possuiItemEmPedidoAtivo(String idItemCardapio) {
+        List<Pedido> todosPedidos = listarTodos();
+        return todosPedidos.stream()
+                .filter(pedido -> {
+                    StatusPedido status = pedido.getStatus();
+                    return status == StatusPedido.CONFIRMADO || status == StatusPedido.EM_PREPARO;
+                })
+                .anyMatch(pedido -> pedido.getItens() != null && pedido.getItens().stream()
+                        .anyMatch(itemPedido -> itemPedido.getItemCardapio() != null &&
+                                itemPedido.getItemCardapio().getItemID().equals(idItemCardapio))
+                );
     }
 }

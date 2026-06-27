@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.foodjava.controller.gerente;
 
 import br.edu.ifpb.ads.foodjava.exception.ArquivoImportacaoException;
+import br.edu.ifpb.ads.foodjava.exception.ItemVinculadoException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
@@ -19,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
+import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
 
 import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
 
@@ -88,6 +90,7 @@ public class GerenciarCardapioController implements Validavel {
     private Button voltarButton;
 
     CardapioRepository repository = new CardapioRepository();
+    PedidoRepository pedidoRepository = new PedidoRepository();
 
     @FXML
     void initialize() {
@@ -149,7 +152,15 @@ public class GerenciarCardapioController implements Validavel {
     void editarItem(ActionEvent event) {
         itemEditado = tabelaItens.getSelectionModel().getSelectedItem();
 
-        if (itemEditado != null) {
+        if (itemEditado == null) {
+            mostrarAlerta("Aviso", "Selecione um item na tabela antes de clicar em editar.");
+            return;
+        }
+
+        try {
+            if (pedidoRepository.possuiItemEmPedidoAtivo(itemEditado.getItemID())) {
+                throw new ItemVinculadoException("Este item faz parte de um pedido ativo que ainda não foi finalizado.");
+            }
 
             nomeField.setText(itemEditado.getNome().trim());
             descricaoArea.setText(itemEditado.getDescricao());
@@ -163,23 +174,34 @@ public class GerenciarCardapioController implements Validavel {
 
             salvarButton.setText("Salvar Alterações");
             tabelaItens.getSelectionModel().clearSelection();
-        } else {
-            mostrarAlerta("Aviso", "Selecione um item na tabela antes de clicar em editar.");
-        }
 
+        } catch (ItemVinculadoException e) {
+            exibirAlerta("Erro", "Não é possível alterar o item", e.getMessage(), Alert.AlertType.ERROR);
+            itemEditado = null;
+        }
     }
 
     @FXML
     void excluirItem(ActionEvent event) {
         itemSelecionado = tabelaItens.getSelectionModel().getSelectedItem();
 
-        if (itemSelecionado != null) {
-            repository.deletar(itemSelecionado.getItemID());
-
-            tabelaItens.getSelectionModel().clearSelection();
-            atualizarTabelaCardapio();
-        }else{
+        if (itemSelecionado == null) {
             mostrarAlerta("Erro", "Selecione um item na tabela antes de clicar em excluir.");
+            return;
+        }
+
+        try {
+            if (pedidoRepository.possuiItemEmPedidoAtivo(itemSelecionado.getItemID())) {
+                throw new br.edu.ifpb.ads.foodjava.exception.ItemVinculadoException("Este item faz parte de um pedido ativo que ainda não foi finalizado e não pode ser excluído.");
+            }
+            repository.deletar(itemSelecionado.getItemID());
+            tabelaItens.getSelectionModel().clearSelection();
+            itemSelecionado = null;
+            atualizarTabelaCardapio();
+
+        } catch (ItemVinculadoException e) {
+            exibirAlerta("Erro", "Não é possível excluir o item", e.getMessage(), Alert.AlertType.ERROR);
+            itemSelecionado = null;
         }
     }
 
