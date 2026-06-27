@@ -172,9 +172,15 @@ public class GerenciarCardapioController implements Validavel {
     @FXML
     void excluirItem(ActionEvent event) {
         itemSelecionado = tabelaItens.getSelectionModel().getSelectedItem();
-        repository.deletar(itemSelecionado.getNome());
-        tabelaItens.getSelectionModel().clearSelection();
-        atualizarTabelaCardapio();
+
+        if (itemSelecionado != null) {
+            repository.deletar(itemSelecionado.getItemID());
+
+            tabelaItens.getSelectionModel().clearSelection();
+            atualizarTabelaCardapio();
+        }else{
+            mostrarAlerta("Erro", "Selecione um item na tabela antes de clicar em excluir.");
+        }
     }
 
     @FXML
