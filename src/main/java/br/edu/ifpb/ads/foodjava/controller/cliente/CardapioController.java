@@ -227,9 +227,7 @@ public class CardapioController {
 
     @FXML
     void sair(ActionEvent event) throws IOException {
-        if (atualizador!=null){
-            atualizador.parar();
-        }
+        CardapioController.limparCarrinho(); // ← limpa ao sair
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

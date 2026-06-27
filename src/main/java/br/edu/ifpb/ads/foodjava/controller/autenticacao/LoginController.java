@@ -85,6 +85,7 @@ public class LoginController {
         // --- 1ª TENTATIVA: Autenticar como CLIENTE (via Repository) ---
         Optional<Cliente> clienteOpt = clienteRepository.buscarPorEmail(email);
         if (clienteOpt.isPresent() && clienteOpt.get().autenticar(email, senha)) {
+            CardapioController.limparCarrinho(); // ← limpa o carrinho da sessão anterior
             abrirTelaCliente(event, clienteOpt.get());
             return;
         }
