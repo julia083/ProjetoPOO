@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.foodjava.repository;
 
 import br.edu.ifpb.ads.foodjava.exception.ArquivoImportacaoException;
+import br.edu.ifpb.ads.foodjava.exception.CategoriaInvalidaException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
@@ -32,7 +33,6 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
     public List<String> importarCardapio(String caminho) throws ArquivoImportacaoException {
         List<String> relatorioErros = new ArrayList<>();
 
-        // O JSON deve ter a estrutura { "cardapio": [...] } conforme o PDF [3]
         Type tipoMapa = new TypeToken<Map<String, List<ItemCardapio>>>() {}.getType();
         Map<String, List<ItemCardapio>> dados = JsonUtil.ler(caminho, tipoMapa, null);
 
@@ -45,38 +45,54 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
 
         for (ItemCardapio itemNovo : listaJson) {
             try {
-                // REQUISITO: Preço <= 0 deve lançar PrecoInvalidoException [4, 5]
+                // 1. REQUISITO: Preço <= 0 deve lançar PrecoInvalidoException
                 if (itemNovo.getPreco() <= 0) {
                     throw new PrecoInvalidoException("Preço inválido (" + itemNovo.getPreco() + ").");
                 }
 
-                // Lógica de atualização/adição para evitar duplicatas pelo nome
-                ItemCardapio existente = buscarPorNome(itemNovo.getNome());
+                if (itemNovo.getCategoria() == null) {
+                    throw new CategoriaInvalidaException("Categoria inválida ou não informada.");
+                }
+
+                ItemCardapio existente = null;
+                if (itemNovo.getItemID() != null) {
+                    existente = buscarPorId(itemNovo.getItemID());
+                }
+
+                if (existente == null && itemNovo.getNome() != null) {
+                    existente = buscarPorNome(itemNovo.getNome());
+                }
+
                 if (existente != null) {
+                    // Atualiza o item que já existe no sistema
                     existente.setDescricao(itemNovo.getDescricao());
                     existente.setPreco(itemNovo.getPreco());
                     existente.setCategoria(itemNovo.getCategoria());
                     existente.setDisponivel(itemNovo.isDisponivel());
                     existente.setImagemPath(itemNovo.getImagemPath());
                 } else {
-                    this.itens.add(itemNovo);
+                    // Instancia um novo objeto seguro com ID automático
+                    ItemCardapio novoItemComId = new ItemCardapio();
+
+                    novoItemComId.setNome(itemNovo.getNome());
+                    novoItemComId.setDescricao(itemNovo.getDescricao());
+                    novoItemComId.setPreco(itemNovo.getPreco());
+                    novoItemComId.setCategoria(itemNovo.getCategoria());
+                    novoItemComId.setDisponivel(itemNovo.isDisponivel());
+                    novoItemComId.setImagemPath(itemNovo.getImagemPath());
+
+                    this.itens.add(novoItemComId);
                 }
 
-            } catch (PrecoInvalidoException e) {
-                // REQUISITO: Relatório de erros linha a linha sem interromper o processo [1]
-                relatorioErros.add("Linha " + linha + " (" + itemNovo.getNome() + "): " + e.getMessage());
+            } catch (PrecoInvalidoException | CategoriaInvalidaException e) {
+                String nomeItem = itemNovo.getNome() != null ? itemNovo.getNome() : "Item sem nome";
+                relatorioErros.add("Linha " + linha + " (" + nomeItem + "): " + e.getMessage());
             }
             linha++;
         }
 
-        // Salva os dados no cardapio.json oficial do sistema [6]
         salvarTodos(this.itens);
         return relatorioErros;
-    }
-
-    // Retorna tudo o que está cadastrado
-    public List<ItemCardapio> buscarTodos() {
-        return new ArrayList<>(itens);
     }
 
     // Busca um item pelo nome
@@ -86,18 +102,19 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
                 .findFirst()
                 .orElse(null);
     }
-
-    // Remove um item pelo nome
-    public void deletar(String nome) {
-        itens.removeIf(item -> item.getNome().equalsIgnoreCase(nome));
-        salvarTodos(itens);
+    public ItemCardapio buscarPorId(String id) {
+        if (id == null) return null;
+        return itens.stream()
+                .filter(item -> id.equals(item.getItemID()))
+                .findFirst()
+                .orElse(null);
     }
 
-    // Filtra itens por categoria
-    public List<ItemCardapio> buscarPorCategoria(Categoria categoria) {
-        return itens.stream()
-                .filter(item -> item.getCategoria() == categoria)
-                .collect(Collectors.toList());
+    public void deletar(String id) {
+        if (id != null) {
+            itens.removeIf(item -> id.equals(item.getItemID()));
+            salvarTodos(itens);
+        }
     }
 
     // Retorna apenas itens disponíveis
@@ -107,9 +124,10 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
                 .collect(Collectors.toList());
     }
 
-    public void atualizar(String nomeAntigo, ItemCardapio itemAtualizado) {
+    public void atualizar(ItemCardapio itemAtualizado) {
+        if (itemAtualizado == null) return;
 
-        ItemCardapio itemNaLista = buscarPorNome(nomeAntigo);
+        ItemCardapio itemNaLista = buscarPorId(itemAtualizado.getItemID());
 
         if (itemNaLista != null) {
             itemNaLista.setNome(itemAtualizado.getNome());

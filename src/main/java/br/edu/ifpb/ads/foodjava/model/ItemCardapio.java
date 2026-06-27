@@ -3,6 +3,7 @@ package br.edu.ifpb.ads.foodjava.model;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Validavel;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
+import br.edu.ifpb.ads.foodjava.util.GeradorID;
 
 public class ItemCardapio implements Validavel {
 
@@ -12,6 +13,7 @@ public class ItemCardapio implements Validavel {
     private Categoria categoria;
     private boolean disponivel = true;
     private String imagemPath;
+    private String itemID;
 
     public ItemCardapio() {
     }
@@ -24,6 +26,7 @@ public class ItemCardapio implements Validavel {
         this.categoria = categoria;
         this.disponivel = disponivel;
         this.imagemPath = imagemPath;
+        this.itemID = GeradorID.gerar();
     }
 
     @Override
@@ -84,6 +87,14 @@ public class ItemCardapio implements Validavel {
 
     public void setImagemPath(String imagemPath) {
         this.imagemPath = imagemPath;
+    }
+
+    public String getItemID(){
+        return itemID;
+    }
+
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
     }
 
     public String getImagemPath() {
