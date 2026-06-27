@@ -5,6 +5,7 @@ import br.edu.ifpb.ads.foodjava.model.ItemPedido;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
+import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
 import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,12 +34,16 @@ public class CardapioController {
     private Restaurante restaurante;
     private static Cliente clienteLogado;
     private static List<ItemPedido> carrinho = new ArrayList<>();
+    private AtualizadorAutomatico atualizador;
 
     // ===== SETTERS E GETTERS =====
 
     public void setRestaurante(Restaurante rest) {
         this.restaurante = rest;
         carregarCardapio();
+
+        this.atualizador = new AtualizadorAutomatico(5, this::carregarCardapio);
+        this.atualizador.iniciar();
     }
 
     public void setClienteLogado(Cliente cliente) {
@@ -194,6 +197,9 @@ public class CardapioController {
 
     @FXML
     void abrirCarrinho(ActionEvent event) throws IOException {
+        if (atualizador!=null){
+            atualizador.parar();
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/carrinho.fxml"));
         Parent root = loader.load();
 
@@ -208,6 +214,9 @@ public class CardapioController {
 
     @FXML
     void abrirHistorico(ActionEvent event) throws IOException {
+        if (atualizador!=null){
+            atualizador.parar();
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/historico-pedidos.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -218,6 +227,9 @@ public class CardapioController {
 
     @FXML
     void sair(ActionEvent event) throws IOException {
+        if (atualizador!=null){
+            atualizador.parar();
+        }
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

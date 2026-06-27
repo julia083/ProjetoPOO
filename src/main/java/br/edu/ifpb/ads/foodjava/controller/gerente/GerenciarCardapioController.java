@@ -4,7 +4,6 @@ import br.edu.ifpb.ads.foodjava.exception.ArquivoImportacaoException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
-import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -89,15 +88,12 @@ public class GerenciarCardapioController implements Validavel {
     private Button voltarButton;
 
     CardapioRepository repository = new CardapioRepository();
-    private AtualizadorAutomatico atualizador;
 
     @FXML
     void initialize() {
         configurarCampos();
         configurarTabela();
         atualizarTabelaCardapio();
-        this.atualizador = new AtualizadorAutomatico(5, this::atualizarTabelaCardapio);
-        this.atualizador.iniciar();
     }
 
 
@@ -262,10 +258,6 @@ public class GerenciarCardapioController implements Validavel {
 
     @FXML
     void voltarPainelGerente(ActionEvent event) {
-
-        if (atualizador != null) {
-            atualizador.parar();
-        }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/painel-gerente.fxml"));
