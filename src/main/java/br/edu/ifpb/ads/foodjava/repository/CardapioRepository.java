@@ -92,7 +92,9 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
         }
 
         salvarTodos(this.itens);
+        System.out.println(relatorioErros);
         return relatorioErros;
+
     }
 
     // Busca um item pelo nome

@@ -1,0 +1,102 @@
+{
+  "cardapio": [
+    {
+      "nome": "Caldo de Feijão",
+      "descricao": "Caldo temperado com linguiça calabresa, couve manteiga e bacon. Servido bem quente, acompanhado de torradas.",
+      "preco": 12.50,
+      "categoria": "ENTRADA",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/caldo_feijao.jpg"
+    },
+    {
+      "nome": "Macaxeira Frita",
+      "descricao": "Macaxeira cozida e frita na hora, crocante por fora e macia por dentro. Servida com manteiga de garrafa.",
+      "preco": 14.00,
+      "categoria": "ENTRADA",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/macaxeira_frita.jpg"
+    },
+    {
+      "nome": "Baião de Dois",
+      "descricao": "Prato clássico nordestino com arroz, feijão-verde, queijo coalho, carne-seca desfiada e manteiga de garrafa.",
+      "preco": 38.90,
+      "categoria": "PRATO_PRINCIPAL",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/baiao_de_dois.jpg"
+    },
+    {
+      "nome": "Carne de Sol na Chapa",
+      "descricao": "Carne de sol grelhada na chapa, acompanhada de arroz, feijão, farofa e vinagrete. Porção individual.",
+      "preco": 45.00,
+      "categoria": "PRATO_PRINCIPAL",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/carne_de_sol.jpg"
+    },
+    {
+      "nome": "Frango Assado Caipira",
+      "descricao": "Frango caipira assado com ervas finas, alho e limão. Acompanha arroz, feijão e salada.",
+      "preco": 42.00,
+      "categoria": "PRATO_PRINCIPAL",
+      "disponivel": false,
+      "imagemPath": "exemplos-json/imagens/frango_assado.jpg"
+    },
+    {
+      "nome": "Moqueca de Camarão",
+      "descricao": "Camarões frescos cozidos em leite de coco, azeite de dendê, tomate e coentro. Acompanha arroz e pirão.",
+      "preco": 62.00,
+      "categoria": "PRATO_PRINCIPAL",
+      "disponivel": true
+    },
+    {
+      "nome": "Mungunzá",
+      "descricao": "Sobremesa típica nordestina feita com milho branco, leite de coco, canela e açúcar. Servida fria.",
+      "preco": 10.00,
+      "categoria": "SOBREMESA",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/munguzza.jpg"
+    },
+    {
+      "nome": "Pudim de Leite Condensado",
+      "descricao": "Pudim cremoso de leite condensado com calda de caramelo. Receita da vovó, feito no dia.",
+      "preco": 12.00,
+      "categoria": "SOBREMESA",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/pudim.jpg"
+    },
+    {
+      "nome": "Cartola",
+      "descricao": "Banana frita com queijo coalho derretido, polvilhada com açúcar e canela. Sobremesa pernambucana.",
+      "preco": 13.50,
+      "categoria": "SOBREMESA",
+      "disponivel": true
+    },
+    {
+      "nome": "Suco de Umbu",
+      "descricao": "Suco natural de umbu, fruta típica do sertão nordestino. Gelado, sem adição de corantes. 500ml.",
+      "preco": -8.00,
+      "categoria": "BEBIDAS",
+      "disponivel": true,
+      "imagemPath": "exemplos-json/imagens/suco_umbu.jpg"
+    },
+    {
+      "nome": "Suco de Cajá",
+      "descricao": "Suco natural de cajá com gelo, levemente adocicado e com o sabor único da fruta nativa. 500ml.",
+      "preco": 8.00,
+      "categoria": "BEBIDAS",
+      "disponivel": true
+    },
+    {
+      "nome": "Água de Coco",
+      "descricao": "Água de coco natural, servida na própria embalagem refrigerada. 330ml.",
+      "preco": 6.00,
+      "disponivel": true
+    },
+    {
+      "nome": "Refrigerante Lata",
+      "descricao": "Coca-Cola, Guaraná Antarctica ou Sprite. Informe a preferência no campo de observações do pedido. 350ml.",
+      "preco": 5.50,
+      "categoria": "BEBIDAS",
+      "disponivel": true
+    }
+  ]
+}

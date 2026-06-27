@@ -16,6 +16,7 @@ public class ItemCardapio implements Validavel {
     private String itemID;
 
     public ItemCardapio() {
+        this.itemID = GeradorID.gerar();
     }
 
     public ItemCardapio(String nome, String descricao, double preco, Categoria categoria,
