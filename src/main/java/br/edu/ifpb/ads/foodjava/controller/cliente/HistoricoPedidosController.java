@@ -4,8 +4,8 @@ import br.edu.ifpb.ads.foodjava.controller.autenticacao.LoginController;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.ItemPedido;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
-
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
+import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,9 +30,10 @@ public class HistoricoPedidosController {
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private final PedidoRepository pedidoRepository = new PedidoRepository();
+    private AtualizadorAutomatico atualizador;
 
     @FXML
-    private ListView<String> listaPedidos; // Mantém String para simplificar
+    private ListView<String> listaPedidos;
 
     @FXML
     private Label mensagemVazia;
@@ -40,6 +41,16 @@ public class HistoricoPedidosController {
     @FXML
     public void initialize() {
         carregarPedidos();
+
+        atualizador = new AtualizadorAutomatico(1, this::carregarPedidos);
+        atualizador.iniciar();
+
+        // para o atualizador quando a tela for fechada ou trocada
+        listaPedidos.sceneProperty().addListener((obs, cenaAntiga, cenaNova) -> {
+            if (cenaNova == null) {
+                atualizador.parar();
+            }
+        });
     }
 
     private void carregarPedidos() {
@@ -61,14 +72,12 @@ public class HistoricoPedidosController {
             return;
         }
 
-        // Ordena por data (mais recente primeiro)
         pedidos.sort((p1, p2) -> {
             if (p1.getDataHora() == null) return 1;
             if (p2.getDataHora() == null) return -1;
             return p2.getDataHora().compareTo(p1.getDataHora());
         });
 
-        // Cria uma string formatada para cada pedido
         for (Pedido p : pedidos) {
             listaPedidos.getItems().add(formatarPedido(p));
         }
@@ -77,7 +86,6 @@ public class HistoricoPedidosController {
     private String formatarPedido(Pedido p) {
         StringBuilder sb = new StringBuilder();
 
-        // Cabeçalho
         String id = p.getId() != null ? p.getId().substring(0, Math.min(8, p.getId().length())) : "??";
         String data = p.getDataHora() != null ? p.getDataHora().format(FORMATO_DATA) : "Data indisponível";
         String total = FORMATO_MOEDA.format(p.getValorTotal());
@@ -85,7 +93,6 @@ public class HistoricoPedidosController {
 
         sb.append(String.format("#%s | %s | %s | %s", id, data, total, status));
 
-        // Itens (em linhas separadas)
         if (p.getItens() != null && !p.getItens().isEmpty()) {
             sb.append("\n  ");
             for (ItemPedido item : p.getItens()) {
@@ -105,6 +112,8 @@ public class HistoricoPedidosController {
     @FXML
     void voltarCardapio(ActionEvent event) {
         try {
+            atualizador.parar();
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cardapio.fxml"));
             Parent root = loader.load();
 
