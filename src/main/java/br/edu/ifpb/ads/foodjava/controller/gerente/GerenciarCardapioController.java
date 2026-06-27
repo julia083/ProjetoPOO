@@ -129,13 +129,18 @@ public class GerenciarCardapioController implements Validavel {
             return;
         }
 
+        String nomeDoItemParaAtualizar = itemSelecionado.getNome();
+
         if (itemSelecionado.isDisponivel()) {
             itemSelecionado.desativar();
         } else {
             itemSelecionado.ativar();
         }
 
-        repository.atualizar(nomeOriginalDoItem, itemSelecionado);
+        repository.atualizar(nomeDoItemParaAtualizar, itemSelecionado);
+
+        tabelaItens.getSelectionModel().clearSelection();
+        itemSelecionado = null;
 
         atualizarTabelaCardapio();
     }
@@ -161,6 +166,7 @@ public class GerenciarCardapioController implements Validavel {
             }
 
             salvarButton.setText("Salvar Alterações");
+            tabelaItens.getSelectionModel().clearSelection();
         } else {
             mostrarAlerta("Aviso", "Selecione um item na tabela antes de clicar em editar.");
         }
@@ -171,6 +177,7 @@ public class GerenciarCardapioController implements Validavel {
     void excluirItem(ActionEvent event) {
         itemSelecionado = tabelaItens.getSelectionModel().getSelectedItem();
         repository.deletar(itemSelecionado.getNome());
+        tabelaItens.getSelectionModel().clearSelection();
         atualizarTabelaCardapio();
     }
 
