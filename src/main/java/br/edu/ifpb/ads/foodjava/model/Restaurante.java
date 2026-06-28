@@ -36,6 +36,8 @@ public class Restaurante implements Validavel {
         return textoPreenchido(nomeFantasia)
                 && textoPreenchido(cnpj)
                 && textoPreenchido(endereco)
+                && textoPreenchido(telefone)
+                && categoriaCulinaria != null
                 && gerente != null;
     }
 

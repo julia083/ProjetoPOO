@@ -18,6 +18,9 @@ public final class DocumentoUtil {
      * @return apenas números
      */
     public static String limpar(String doc) {
+        if (doc == null) {
+            return "";
+        }
         return doc.replaceAll("[^0-9]", "");
     }
 

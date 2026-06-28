@@ -161,6 +161,7 @@ public class CarrinhoController {
 
             Pedido pedido = new Pedido(GeradorID.gerar(), cliente);
             pedido.setItens(new ArrayList<>(CardapioController.getCarrinho()));
+            pedido.confirmar();
 
             pedidoRepository.adicionar(pedido);
 

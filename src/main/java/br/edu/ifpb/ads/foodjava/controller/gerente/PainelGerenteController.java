@@ -14,14 +14,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -38,6 +43,7 @@ public class PainelGerenteController {
     private static final NumberFormat FORMATO_MOEDA = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
     private final ObservableList<Pedido> pedidos = FXCollections.observableArrayList();
+    private final PedidoRepository repository = new PedidoRepository();
 
     @FXML
     private Button avancarStatusBottom;
@@ -63,7 +69,8 @@ public class PainelGerenteController {
     @FXML
     private TableColumn<Pedido, String> colTotal;
 
-    @FXML private ImageView logoTipoView;
+    @FXML
+    private ImageView logoTipoView;
 
     @FXML
     private Label txtTotalPedidos;
@@ -83,7 +90,6 @@ public class PainelGerenteController {
     @FXML
     private TableView<Pedido> tabelaPedidos;
 
-    private PedidoRepository repository = new PedidoRepository();
     private AtualizadorAutomatico atualizador;
 
     @FXML
@@ -155,7 +161,6 @@ public class PainelGerenteController {
 
     @FXML
     void avancarStatus(ActionEvent event) {
-
         Pedido pedidoSelecionado = tabelaPedidos.getSelectionModel().getSelectedItem();
 
         if (pedidoSelecionado == null) {
@@ -163,26 +168,11 @@ public class PainelGerenteController {
         }
 
         try {
-            int proximoOrdinal = getProximoOrdinal(pedidoSelecionado);
-            StatusPedido[] todosStatus = StatusPedido.values();
-
-            if (proximoOrdinal < todosStatus.length) {
-                StatusPedido proximoStatus = todosStatus[proximoOrdinal];
-
-                if (proximoStatus == StatusPedido.CANCELADO) {
-                    throw new StatusInvalidoException(
-                            "Fluxo de atendimento finalizado. Não é possível avançar além de ENTREGUE."
-                    );
-                }
-
-                pedidoSelecionado.setStatus(proximoStatus);
-
-                repository.atualizar(pedidoSelecionado);
-                atualizarTabelaPedidos();
-            }
-
+            pedidoSelecionado.avancarStatus();
+            repository.atualizar(pedidoSelecionado);
+            atualizarTabelaPedidos();
         } catch (StatusInvalidoException e) {
-            exibirAlerta("Erro ao Avançar Status", "Mudança de Status Inválida", e.getMessage(), Alert.AlertType.ERROR);
+            exibirAlerta("Erro ao avancar status", "Mudanca de status invalida", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -194,37 +184,24 @@ public class PainelGerenteController {
             exibirAlerta("Erro", "Nenhum pedido foi selecionado", "Selecione um pedido para cancelar.", Alert.AlertType.WARNING);
             return;
         }
-        try{
-        StatusPedido statusAtual = pedidoSelecionado.getStatus();
 
-        if (statusAtual != StatusPedido.AGUARDANDO_CONFIRMACAO) {
-            throw new CancelamentoNaoPermitidoException(
-                    "Não é possível cancelar um pedido que já foi confirmado ou está em preparo.");
-        }
-
-        pedidoSelecionado.setStatus(StatusPedido.CANCELADO);
-
-        repository.atualizar(pedidoSelecionado);
-        atualizarTabelaPedidos();}
-        catch(CancelamentoNaoPermitidoException e){
-            exibirAlerta("Erro ao cancelar", "Cancelamento não permitido", e.getMessage(), Alert.AlertType.ERROR);
+        try {
+            pedidoSelecionado.cancelar();
+            repository.atualizar(pedidoSelecionado);
+            atualizarTabelaPedidos();
+        } catch (CancelamentoNaoPermitidoException e) {
+            exibirAlerta("Erro ao cancelar", "Cancelamento nao permitido", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
-    void gerenciarCardapio(ActionEvent event){
-        if (atualizador!=null){
-            atualizador.parar();
-        }
+    void gerenciarCardapio(ActionEvent event) {
+        pararAtualizador();
         try {
-            // 1. Carrega o FXML da tela de cadastro
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/gerenciar-cardapio.fxml"));
             Parent root = loader.load();
 
-            // 2. Pega a janela (Stage) atual a partir do botão que foi clicado
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // 3. Define a nova cena na mesma janela
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -235,19 +212,13 @@ public class PainelGerenteController {
     }
 
     @FXML
-    void voltarTelaLogin(ActionEvent event) throws IOException{
-        if (atualizador!=null){
-            atualizador.parar();
-        }
+    void voltarTelaLogin(ActionEvent event) throws IOException {
+        pararAtualizador();
         try {
-            // 1. Carrega o FXML da tela de cadastro
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
             Parent root = loader.load();
 
-            // 2. Pega a janela (Stage) atual a partir do botão que foi clicado
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // 3. Define a nova cena na mesma janela
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -256,39 +227,24 @@ public class PainelGerenteController {
             e.printStackTrace();
         }
     }
+
     private void atualizarTabelaPedidos() {
         List<Pedido> listaPedidos = repository.listarTodos();
 
         pedidos.setAll(listaPedidos);
-
-        atualizarResumoDoDia(listaPedidos);
-
+        atualizarResumoDoDia();
         aplicarFiltroStatus();
-
         tabelaPedidos.refresh();
     }
 
-    private void atualizarResumoDoDia(List<Pedido> pedidos) {
-
-        int totalPedidos = pedidos.size();
-
-        double faturamento = pedidos.stream()
-                .filter(p -> p.getStatus() != StatusPedido.CANCELADO)
-                .mapToDouble(Pedido::calcularTotal)
-                .sum();
-
-        txtTotalPedidos.setText(String.valueOf(totalPedidos));
-        txtFaturamento.setText(FORMATO_MOEDA.format(faturamento));
+    private void atualizarResumoDoDia() {
+        txtTotalPedidos.setText(String.valueOf(repository.contarPedidosDoDia()));
+        txtFaturamento.setText(FORMATO_MOEDA.format(repository.calcularFaturamentoDoDia()));
     }
 
-    private static int getProximoOrdinal(Pedido pedidoSelecionado) {
-        StatusPedido statusAtual = pedidoSelecionado.getStatus();
-        if (statusAtual == null || statusAtual == StatusPedido.ENTREGUE || statusAtual == StatusPedido.CANCELADO) {
-            throw new br.edu.ifpb.ads.foodjava.exception.StatusInvalidoException(
-                    "Não é possível avançar o status de um pedido que já está " + statusAtual + "."
-            );
+    private void pararAtualizador() {
+        if (atualizador != null) {
+            atualizador.parar();
         }
-        int proximoOrdinal = statusAtual.ordinal() + 1;
-        return proximoOrdinal;
     }
 }

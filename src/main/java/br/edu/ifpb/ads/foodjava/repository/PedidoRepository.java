@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,27 +32,38 @@ public class PedidoRepository implements Repositorio<Pedido> {
     }
 
     public Optional<Pedido> buscarPorId(String id) {
+        if (id == null || id.isBlank()) {
+            return Optional.empty();
+        }
+
         return listarTodos().stream()
-                .filter(p -> p.getId().equals(id))
+                .filter(p -> p != null && Objects.equals(p.getId(), id))
                 .findFirst();
     }
 
-
     public List<Pedido> listarPorCliente(String clienteId) {
+        if (clienteId == null || clienteId.isBlank()) {
+            return new ArrayList<>();
+        }
+
         return listarTodos().stream()
-                .filter(p -> p.getClienteId() != null && p.getClienteId().equals(clienteId))
+                .filter(p -> p != null && Objects.equals(p.getClienteId(), clienteId))
                 .collect(Collectors.toList());
     }
 
     public List<Pedido> listarPorStatus(StatusPedido status) {
         return listarTodos().stream()
-                .filter(p -> p.getStatus() == status)
+                .filter(p -> p != null && p.getStatus() == status)
                 .collect(Collectors.toList());
     }
 
     public void adicionar(Pedido pedido) {
+        if (pedido == null) {
+            throw new CarrinhoVazioException("Nao e possivel salvar um pedido nulo.");
+        }
+
         if (!pedido.validar()) {
-            throw new CarrinhoVazioException("Não é possivel salvar um pedido sem itens ou sem cliente.");
+            throw new CarrinhoVazioException("Nao e possivel salvar um pedido sem itens ou sem cliente.");
         }
 
         DataHora utilDataHora = new DataHora();
@@ -63,10 +75,15 @@ public class PedidoRepository implements Repositorio<Pedido> {
     }
 
     public void atualizar(Pedido pedidoAtualizado) {
+        if (pedidoAtualizado == null || pedidoAtualizado.getId() == null) {
+            return;
+        }
+
         List<Pedido> pedidos = listarTodos();
 
         for (int i = 0; i < pedidos.size(); i++) {
-            if (pedidos.get(i).getId().equals(pedidoAtualizado.getId())) {
+            Pedido pedido = pedidos.get(i);
+            if (pedido != null && Objects.equals(pedido.getId(), pedidoAtualizado.getId())) {
                 pedidos.set(i, pedidoAtualizado);
                 break;
             }
@@ -78,7 +95,7 @@ public class PedidoRepository implements Repositorio<Pedido> {
     public double calcularFaturamentoDoDia() {
         LocalDate hoje = LocalDate.now();
         return listarTodos().stream()
-                .filter(p -> p.getDataHora() != null && p.getDataHora().toLocalDate().equals(hoje))
+                .filter(p -> p != null && p.getDataHora() != null && p.getDataHora().toLocalDate().equals(hoje))
                 .filter(p -> p.getStatus() != StatusPedido.CANCELADO)
                 .mapToDouble(Pedido::calcularTotal)
                 .sum();
@@ -87,19 +104,24 @@ public class PedidoRepository implements Repositorio<Pedido> {
     public long contarPedidosDoDia() {
         LocalDate hoje = LocalDate.now();
         return listarTodos().stream()
-                .filter(p -> p.getDataHora() != null && p.getDataHora().toLocalDate().equals(hoje))
+                .filter(p -> p != null && p.getDataHora() != null && p.getDataHora().toLocalDate().equals(hoje))
                 .count();
     }
+
     public boolean possuiItemEmPedidoAtivo(String idItemCardapio) {
-        List<Pedido> todosPedidos = listarTodos();
-        return todosPedidos.stream()
+        if (idItemCardapio == null || idItemCardapio.isBlank()) {
+            return false;
+        }
+
+        return listarTodos().stream()
+                .filter(Objects::nonNull)
                 .filter(pedido -> {
                     StatusPedido status = pedido.getStatus();
                     return status == StatusPedido.CONFIRMADO || status == StatusPedido.EM_PREPARO;
                 })
-                .anyMatch(pedido -> pedido.getItens() != null && pedido.getItens().stream()
-                        .anyMatch(itemPedido -> itemPedido.getItemCardapio() != null &&
-                                itemPedido.getItemCardapio().getItemID().equals(idItemCardapio))
+                .anyMatch(pedido -> pedido.getItens().stream()
+                        .anyMatch(itemPedido -> itemPedido.getItemCardapio() != null
+                                && idItemCardapio.equals(itemPedido.getItemCardapio().getItemID()))
                 );
     }
 }

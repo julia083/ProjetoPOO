@@ -171,6 +171,7 @@ public class GerenciarCardapioController implements Validavel {
             precoField.setText(String.valueOf(itemEditado.getPreco()));
             categoriaDoItem.setValue(itemEditado.getCategoria());
             disponivelCheckBox.setSelected(itemEditado.isDisponivel());
+            pathImagem = itemEditado.getImagemPath();
 
             if (itemEditado.getImagemPath() != null) {
                 imagemPreview.setImage(ImagemUtil.carregar(itemEditado.getImagemPath()));
@@ -331,6 +332,19 @@ public class GerenciarCardapioController implements Validavel {
             return false;
         }
 
+        try {
+            double preco = Double.parseDouble(precoField.getText().trim());
+            if (preco <= 0) {
+                throw new PrecoInvalidoException("O preco do item deve ser maior que zero.");
+            }
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Erro", "Preco deve ser um numero valido.");
+            return false;
+        } catch (PrecoInvalidoException e) {
+            mostrarAlerta("Preco invalido", e.getMessage());
+            return false;
+        }
+
         return true;
     }
 
@@ -340,6 +354,8 @@ public class GerenciarCardapioController implements Validavel {
         descricaoArea.clear();
         categoriaDoItem.setValue(null);
         imagemPreview.setImage(null);
+        disponivelCheckBox.setSelected(false);
+        pathImagem = null;
         salvarButton.setText("Salvar");
     }
 }

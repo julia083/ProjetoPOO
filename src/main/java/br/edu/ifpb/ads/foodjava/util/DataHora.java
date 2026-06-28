@@ -15,8 +15,4 @@ public class DataHora {
     public LocalDateTime getLocalDateTime() {
         return dh;
     }
-
-    public String getDataHoraFormatada() {
-        return dh.format(fmt);
-    }
 }

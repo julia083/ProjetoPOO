@@ -5,7 +5,6 @@ import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.util.DocumentoUtil;
 import br.edu.ifpb.ads.foodjava.util.JsonUtil;
-
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -29,8 +28,15 @@ public class ClienteRepository implements Repositorio<Cliente> {
     }
 
     public Optional<Cliente> buscarPorEmail(String email) {
+        if (email == null || email.isBlank()) {
+            return Optional.empty();
+        }
+
+        String emailNormalizado = email.trim();
         return listarTodos().stream()
-                .filter(c -> c.getEmail().equalsIgnoreCase(email))
+                .filter(c -> c != null
+                        && c.getEmail() != null
+                        && c.getEmail().equalsIgnoreCase(emailNormalizado))
                 .findFirst();
     }
 
@@ -40,16 +46,27 @@ public class ClienteRepository implements Repositorio<Cliente> {
 
     public boolean existeCpf(String cpf) {
         String cpfLimpo = DocumentoUtil.limpar(cpf);
+        if (cpfLimpo.isBlank()) {
+            return false;
+        }
+
         return listarTodos().stream()
+                .filter(c -> c != null)
                 .anyMatch(c -> DocumentoUtil.limpar(c.getCpf()).equals(cpfLimpo));
     }
 
     public void cadastrar(Cliente cliente) throws UsuarioDuplicadoException {
+        if (cliente == null || !cliente.validar()) {
+            throw new IllegalArgumentException("Cliente invalido ou incompleto.");
+        }
+
+        DocumentoUtil.validarCpf(cliente.getCpf());
+
         if (existeEmail(cliente.getEmail())) {
-            throw new UsuarioDuplicadoException("E-mail já cadastrado: " + cliente.getEmail());
+            throw new UsuarioDuplicadoException("E-mail ja cadastrado: " + cliente.getEmail());
         }
         if (existeCpf(cliente.getCpf())) {
-            throw new UsuarioDuplicadoException("CPF já cadastrado: " + cliente.getCpf());
+            throw new UsuarioDuplicadoException("CPF ja cadastrado: " + cliente.getCpf());
         }
 
         List<Cliente> clientes = listarTodos();

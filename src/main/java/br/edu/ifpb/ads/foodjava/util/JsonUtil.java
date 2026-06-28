@@ -3,13 +3,16 @@ package br.edu.ifpb.ads.foodjava.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,6 +31,10 @@ public class JsonUtil {
 
                 @Override
                 public LocalDateTime read(JsonReader in) throws IOException {
+                    if (in.peek() == JsonToken.NULL) {
+                        in.nextNull();
+                        return null;
+                    }
                     return LocalDateTime.parse(in.nextString(), FORMATTER);
                 }
             })
@@ -63,11 +70,22 @@ public class JsonUtil {
      * Converte o objeto para JSON e grava no arquivo informado.
      * Cria a pasta automaticamente, se não existir.
      */
-    public static void escrever(String caminho, Object dados) {
+    public static synchronized void escrever(String caminho, Object dados) {
         try {
             Path path = Path.of(caminho);
-            Files.createDirectories(path.getParent());
-            Files.writeString(path, gson.toJson(dados));
+            Path parent = path.getParent();
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
+
+            Path temp = Files.createTempFile(parent != null ? parent : Path.of("."), path.getFileName().toString(), ".tmp");
+            Files.writeString(temp, gson.toJson(dados));
+
+            try {
+                Files.move(temp, path, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException e) {
+                Files.move(temp, path, StandardCopyOption.REPLACE_EXISTING);
+            }
 
         } catch (IOException e) {
             throw new RuntimeException("Erro ao salvar arquivo: " + caminho, e);

@@ -5,7 +5,6 @@ import br.edu.ifpb.ads.foodjava.exception.CategoriaInvalidaException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
-import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
 import br.edu.ifpb.ads.foodjava.util.JsonUtil;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,6 +25,10 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
     }
 
     public void salvar(ItemCardapio item) {
+        if (item == null || !item.validar()) {
+            throw new IllegalArgumentException("Item do cardapio invalido ou incompleto.");
+        }
+
         itens.add(item);
         salvarTodos(itens);
     }
@@ -36,8 +39,8 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
         Type tipoMapa = new TypeToken<Map<String, List<ItemCardapio>>>() {}.getType();
         Map<String, List<ItemCardapio>> dados = JsonUtil.ler(caminho, tipoMapa, null);
 
-        if (dados == null || !dados.containsKey("cardapio")) {
-            throw new ArquivoImportacaoException("Estrutura inválida: chave 'cardapio' não encontrada.");
+        if (dados == null || !dados.containsKey("cardapio") || dados.get("cardapio") == null) {
+            throw new ArquivoImportacaoException("Estrutura invalida: chave 'cardapio' nao encontrada.");
         }
 
         List<ItemCardapio> listaJson = dados.get("cardapio");
@@ -45,14 +48,7 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
 
         for (ItemCardapio itemNovo : listaJson) {
             try {
-                // 1. REQUISITO: Preço <= 0 deve lançar PrecoInvalidoException
-                if (itemNovo.getPreco() <= 0) {
-                    throw new PrecoInvalidoException("Preço inválido (" + itemNovo.getPreco() + ").");
-                }
-
-                if (itemNovo.getCategoria() == null) {
-                    throw new CategoriaInvalidaException("Categoria inválida ou não informada.");
-                }
+                validarItemImportado(itemNovo);
 
                 ItemCardapio existente = null;
                 if (itemNovo.getItemID() != null) {
@@ -64,14 +60,13 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
                 }
 
                 if (existente != null) {
-                    // Atualiza o item que já existe no sistema
+                    existente.setNome(itemNovo.getNome());
                     existente.setDescricao(itemNovo.getDescricao());
                     existente.setPreco(itemNovo.getPreco());
                     existente.setCategoria(itemNovo.getCategoria());
                     existente.setDisponivel(itemNovo.isDisponivel());
                     existente.setImagemPath(itemNovo.getImagemPath());
                 } else {
-                    // Instancia um novo objeto seguro com ID automático
                     ItemCardapio novoItemComId = new ItemCardapio();
 
                     novoItemComId.setNome(itemNovo.getNome());
@@ -84,50 +79,58 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
                     this.itens.add(novoItemComId);
                 }
 
-            } catch (PrecoInvalidoException | CategoriaInvalidaException e) {
-                String nomeItem = itemNovo.getNome() != null ? itemNovo.getNome() : "Item sem nome";
+            } catch (PrecoInvalidoException | CategoriaInvalidaException | IllegalArgumentException e) {
+                String nomeItem = itemNovo != null && itemNovo.getNome() != null ? itemNovo.getNome() : "Item sem nome";
                 relatorioErros.add("Linha " + linha + " (" + nomeItem + "): " + e.getMessage());
             }
             linha++;
         }
 
         salvarTodos(this.itens);
-        System.out.println(relatorioErros);
         return relatorioErros;
-
     }
 
-    // Busca um item pelo nome
     public ItemCardapio buscarPorNome(String nome) {
+        if (nome == null || nome.isBlank()) {
+            return null;
+        }
+
         return itens.stream()
-                .filter(item -> item.getNome().equalsIgnoreCase(nome))
+                .filter(item -> item != null
+                        && item.getNome() != null
+                        && item.getNome().equalsIgnoreCase(nome))
                 .findFirst()
                 .orElse(null);
     }
+
     public ItemCardapio buscarPorId(String id) {
-        if (id == null) return null;
+        if (id == null || id.isBlank()) {
+            return null;
+        }
+
         return itens.stream()
-                .filter(item -> id.equals(item.getItemID()))
+                .filter(item -> item != null && id.equals(item.getItemID()))
                 .findFirst()
                 .orElse(null);
     }
 
     public void deletar(String id) {
-        if (id != null) {
-            itens.removeIf(item -> id.equals(item.getItemID()));
+        if (id != null && !id.isBlank()) {
+            itens.removeIf(item -> item != null && id.equals(item.getItemID()));
             salvarTodos(itens);
         }
     }
 
-    // Retorna apenas itens disponíveis
     public List<ItemCardapio> buscarSomenteDisponiveis() {
         return itens.stream()
-                .filter(ItemCardapio::isDisponivel)
+                .filter(item -> item != null && item.isDisponivel())
                 .collect(Collectors.toList());
     }
 
     public void atualizar(ItemCardapio itemAtualizado) {
-        if (itemAtualizado == null) return;
+        if (itemAtualizado == null || !itemAtualizado.validar()) {
+            throw new IllegalArgumentException("Item do cardapio invalido ou incompleto.");
+        }
 
         ItemCardapio itemNaLista = buscarPorId(itemAtualizado.getItemID());
 
@@ -146,19 +149,27 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
 
     @Override
     public List<ItemCardapio> listarTodos() {
-
-        Type tipoLista = new TypeToken<ArrayList<ItemCardapio>>() {
-        }.getType();
-
-        return JsonUtil.ler(
-                CAMINHO_ARQUIVO,
-                tipoLista,
-                new ArrayList<>()
-        );
+        Type tipoLista = new TypeToken<ArrayList<ItemCardapio>>() {}.getType();
+        return JsonUtil.ler(CAMINHO_ARQUIVO, tipoLista, new ArrayList<>());
     }
 
     @Override
     public void salvarTodos(List<ItemCardapio> lista) {
         JsonUtil.escrever(CAMINHO_ARQUIVO, lista);
+    }
+
+    private void validarItemImportado(ItemCardapio item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item vazio.");
+        }
+        if (item.getNome() == null || item.getNome().isBlank()) {
+            throw new IllegalArgumentException("Nome nao informado.");
+        }
+        if (item.getPreco() <= 0) {
+            throw new PrecoInvalidoException("Preco invalido (" + item.getPreco() + ").");
+        }
+        if (item.getCategoria() == null) {
+            throw new CategoriaInvalidaException("Categoria invalida ou nao informada.");
+        }
     }
 }

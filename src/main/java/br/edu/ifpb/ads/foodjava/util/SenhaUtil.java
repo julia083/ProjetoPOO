@@ -4,6 +4,7 @@ import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets;
 
 public class SenhaUtil {
 
@@ -12,9 +13,12 @@ public class SenhaUtil {
      * Nunca armazene a senha original — sempre use o hash.
      */
     public static String hash(String senha) {
+        if (senha == null) {
+            throw new IllegalArgumentException("Senha nao pode ser nula.");
+        }
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = md.digest(senha.getBytes());
+            byte[] bytes = md.digest(senha.getBytes(StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             for (byte b : bytes) {
                 sb.append(String.format("%02x", b));
@@ -30,6 +34,9 @@ public class SenhaUtil {
      * Usada no login.
      */
     public static boolean verificarSenha(String senhaDigitada, String hashSalvo) {
+        if (senhaDigitada == null || hashSalvo == null || hashSalvo.isBlank()) {
+            return false;
+        }
         return hash(senhaDigitada).equals(hashSalvo);
     }
 

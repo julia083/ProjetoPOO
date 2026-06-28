@@ -28,7 +28,10 @@ public abstract class Usuario implements Autenticavel, Validavel {
 
     @Override
     public boolean autenticar(String email, String senha) {
-        return this.email.equals(email) && SenhaUtil.verificarSenha(senha, this.senha);
+        return this.email != null
+                && email != null
+                && this.email.equalsIgnoreCase(email)
+                && SenhaUtil.verificarSenha(senha, this.senha);
     }
 
     @Override

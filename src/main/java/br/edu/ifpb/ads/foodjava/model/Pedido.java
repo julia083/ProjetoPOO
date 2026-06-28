@@ -27,9 +27,7 @@ public class Pedido implements Validavel {
     public Pedido(String id, Cliente cliente) {
         this();
         this.id = id;
-        this.clienteId = cliente.getId();
-        this.clienteNome = cliente.getNome();
-        this.clienteEndereco = cliente.getEndereco();
+        setCliente(cliente);
     }
 
     @Override
@@ -99,6 +97,13 @@ public class Pedido implements Validavel {
     }
 
     public void setCliente(Cliente cliente) {
+        if (cliente == null) {
+            this.clienteId = null;
+            this.clienteNome = null;
+            this.clienteEndereco = null;
+            return;
+        }
+
         this.clienteId = cliente.getId();
         this.clienteNome = cliente.getNome();
         this.clienteEndereco = cliente.getEndereco();
@@ -117,6 +122,11 @@ public class Pedido implements Validavel {
     }
 
     public void setItens(List<ItemPedido> itens) {
+        if (itens == null) {
+            this.itens = new ArrayList<>();
+            return;
+        }
+
         this.itens = new ArrayList<>(itens);
     }
 
