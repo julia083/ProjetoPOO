@@ -84,7 +84,7 @@ public class ConfiguracaoRestauranteController {
         File arquivo = fileChooser.showOpenDialog(null);
 
         if (arquivo != null) {
-            logoPath = ImagemUtil.salvar(arquivo);
+            this.logoPath = ImagemUtil.salvar(arquivo);
         }
     }
 

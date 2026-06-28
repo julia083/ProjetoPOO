@@ -5,6 +5,7 @@ import br.edu.ifpb.ads.foodjava.model.ItemPedido;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.repository.CardapioRepository;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
 import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
 import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import javafx.event.ActionEvent;
@@ -30,11 +31,17 @@ public class CardapioController {
 
     @FXML private Button carrinhoButton;
     @FXML private GridPane entradaGrid, principalGrid, sobremesaGrid, bebidasGrid;
+    @FXML private ImageView logoTipoView;
 
     private Restaurante restaurante;
     private static Cliente clienteLogado;
     private static List<ItemPedido> carrinho = new ArrayList<>();
     private AtualizadorAutomatico atualizador;
+
+    @FXML
+    public void initialize() {
+        ImagemUtil.carregarLogoDoJson(logoTipoView, RestauranteRepository.getCaminhoArquivo());
+    }
 
     // ===== SETTERS E GETTERS =====
 

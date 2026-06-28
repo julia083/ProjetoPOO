@@ -5,6 +5,7 @@ import br.edu.ifpb.ads.foodjava.exception.ItemVinculadoException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
 import br.edu.ifpb.ads.foodjava.model.enums.Categoria;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -68,6 +69,8 @@ public class GerenciarCardapioController implements Validavel {
     @FXML
     private Button excluirButton;
 
+    @FXML private ImageView logoTipoView;
+
     @FXML
     private ImageView imagemPreview;
 
@@ -96,6 +99,7 @@ public class GerenciarCardapioController implements Validavel {
     void initialize() {
         configurarCampos();
         configurarTabela();
+        ImagemUtil.carregarLogoDoJson(logoTipoView, RestauranteRepository.getCaminhoArquivo());
         atualizarTabelaCardapio();
     }
 

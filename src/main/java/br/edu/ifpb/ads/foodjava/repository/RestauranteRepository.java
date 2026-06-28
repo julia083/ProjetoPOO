@@ -33,6 +33,9 @@ public class RestauranteRepository {
         return buscar() != null;
     }
 
+    public static String getCaminhoArquivo(){
+        return CAMINHO_ARQUIVO;
+    }
     /**
      * Atualiza os dados do restaurante.
      */

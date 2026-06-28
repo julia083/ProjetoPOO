@@ -5,7 +5,9 @@ import br.edu.ifpb.ads.foodjava.exception.StatusInvalidoException;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.model.enums.StatusPedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
 import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
+import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -60,6 +63,8 @@ public class PainelGerenteController {
     @FXML
     private TableColumn<Pedido, String> colTotal;
 
+    @FXML private ImageView logoTipoView;
+
     @FXML
     private Label txtTotalPedidos;
 
@@ -83,6 +88,7 @@ public class PainelGerenteController {
 
     @FXML
     void initialize() {
+        ImagemUtil.carregarLogoDoJson(logoTipoView, RestauranteRepository.getCaminhoArquivo());
         configurarGridPane();
         configurarTabela();
         atualizarTabelaPedidos();

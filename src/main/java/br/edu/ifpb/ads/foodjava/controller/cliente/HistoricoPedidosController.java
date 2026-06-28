@@ -5,7 +5,9 @@ import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.ItemPedido;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
 import br.edu.ifpb.ads.foodjava.util.AtualizadorAutomatico;
+import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,13 +38,15 @@ public class HistoricoPedidosController {
     @FXML
     private ListView<String> listaPedidos;
 
+    @FXML private ImageView logoTipoView;
+
     @FXML
     private Label mensagemVazia;
 
     @FXML
     public void initialize() {
         carregarPedidos();
-
+        ImagemUtil.carregarLogoDoJson(logoTipoView, RestauranteRepository.getCaminhoArquivo());
         atualizador = new AtualizadorAutomatico(1, this::carregarPedidos);
         atualizador.iniciar();
 

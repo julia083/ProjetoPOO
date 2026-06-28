@@ -6,7 +6,9 @@ import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.model.ItemPedido;
 import br.edu.ifpb.ads.foodjava.model.Pedido;
 import br.edu.ifpb.ads.foodjava.repository.PedidoRepository;
+import br.edu.ifpb.ads.foodjava.repository.RestauranteRepository;
 import br.edu.ifpb.ads.foodjava.util.GeradorID;
+import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import br.edu.ifpb.ads.foodjava.util.Mensagem;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -21,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,6 +38,8 @@ public class CarrinhoController {
 
     private final ObservableList<ItemPedido> itensCarrinho = FXCollections.observableArrayList();
     private Cliente cliente;
+
+    @FXML private ImageView logoTipoView;
 
     @FXML
     private ListView<ItemPedido> listaCarrinho;
@@ -54,6 +59,7 @@ public class CarrinhoController {
     @FXML
     void initialize() {
         configurarLista();
+        ImagemUtil.carregarLogoDoJson(logoTipoView, RestauranteRepository.getCaminhoArquivo());
         atualizarCarrinho();
 
         // Habilita/desabilita o botão "Remover Item" conforme seleção

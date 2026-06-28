@@ -6,36 +6,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0"
-            style="-fx-background-color: #D1FAE5;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.HistoricoPedidosController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.HistoricoPedidosController">
 
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="18.0"
-              style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="18.0" style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
             <padding>
-                <Insets left="38.0" right="38.0"/>
+                <Insets left="38.0" right="38.0" />
             </padding>
             <children>
                 <Label text="FoodJava" textFill="WHITE">
                     <font>
-                        <Font name="Times New Roman Bold" size="30.0"/>
+                        <Font name="Times New Roman Bold" size="30.0" />
                     </font>
                 </Label>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button fx:id="voltarButton" onAction="#voltarCardapio"
-                        style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;"
-                        text="← Voltar">
+            <ImageView fx:id="logoTipoView" fitHeight="81.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="voltarButton" onAction="#voltarCardapio" style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;" text="← Voltar">
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
             </children>
@@ -45,24 +40,23 @@
     <center>
         <VBox spacing="15.0" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </padding>
             <children>
                 <Label alignment="CENTER" text="📋 MEUS PEDIDOS" textFill="#962828">
                     <font>
-                        <Font name="Times New Roman Bold" size="28.0"/>
+                        <Font name="Times New Roman Bold" size="28.0" />
                     </font>
                 </Label>
 
-                <Separator/>
+                <Separator />
 
-                <ListView fx:id="listaPedidos" prefHeight="400.0"/>
+                <ListView fx:id="listaPedidos" prefHeight="400.0" />
 
                 <!-- Mensagem quando não há pedidos (será exibida via CSS) -->
-                <Label fx:id="mensagemVazia" text="Nenhum pedido encontrado."
-                       textFill="#4B5563" alignment="CENTER" visible="false">
+                <Label fx:id="mensagemVazia" alignment="CENTER" text="Nenhum pedido encontrado." textFill="#4B5563" visible="false">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </Label>
             </children>

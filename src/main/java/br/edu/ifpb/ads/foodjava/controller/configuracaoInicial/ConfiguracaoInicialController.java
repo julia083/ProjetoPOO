@@ -39,30 +39,29 @@ public class ConfiguracaoInicialController {
         File arquivo = fileChooser.showOpenDialog(null);
 
         if (arquivo != null) {
-            logoPath = ImagemUtil.salvar(arquivo);
+            this.logoPath = ImagemUtil.salvar(arquivo);
         }
-        ConfiguracaoRestauranteController repo = new ConfiguracaoRestauranteController();
-        repo.setLogo(logoPath);
     }
 
     @FXML
     void configurarORestaurante(ActionEvent event) throws IOException {
-
         try {
-            // 1. Carrega o FXML da tela de cadastro
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/configuracao-restaurante.fxml"));
             Parent root = loader.load();
 
-            // 2. Pega a janela (Stage) atual a partir do botão que foi clicado
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // Resgata o controller real criado pelo JavaFX
+            ConfiguracaoRestauranteController proximoController = loader.getController();
 
-            // 3. Define a nova cena na mesma janela
+            // Passa o logoPath (que pode ser o caminho do arquivo ou null)
+            proximoController.setLogo(this.logoPath);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
-            mostrarAlerta("Erro", e.getMessage());
+            mostrarAlerta("Erro", "Erro ao abrir a tela de configurações: " + e.getMessage());
             e.printStackTrace();
         }
     }

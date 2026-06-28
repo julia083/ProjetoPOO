@@ -18,17 +18,18 @@
 
 <BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.GerenciarCardapioController">
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="80.0" style="-fx-background-color: #34D399;">
+        <HBox alignment="CENTER_LEFT" prefHeight="83.0" prefWidth="900.0" style="-fx-background-color: #34D399;">
 
             <padding>
                 <Insets bottom="15" left="25" right="25" top="15" />
             </padding>
 
-            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="FoodJava">
+            <Label prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="FoodJava">
                 <font>
                     <Font size="28" />
                 </font>
             </Label>
+         <ImageView fx:id="logoTipoView" fitHeight="77.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" />
 
             <Region HBox.hgrow="ALWAYS" />
 

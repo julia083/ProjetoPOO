@@ -8,60 +8,49 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0"
-            style="-fx-background-color: #D1FAE5;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.CardapioController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.CardapioController">
 
     <!-- TOPO: cabeçalho -->
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="18.0"
-              style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER_LEFT" prefHeight="70.0" spacing="18.0" style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
             <padding>
-                <Insets left="38.0" right="38.0"/>
+                <Insets left="38.0" right="38.0" />
             </padding>
             <children>
                 <Label text="FoodJava" textFill="WHITE">
                     <font>
-                        <Font name="Times New Roman Bold" size="30.0"/>
+                        <Font name="Times New Roman Bold" size="30.0" />
                     </font>
                 </Label>
-                <Region HBox.hgrow="ALWAYS"/>
+            <ImageView fx:id="logoTipoView" fitHeight="87.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true" />
+                <Region HBox.hgrow="ALWAYS" />
 
                 <!-- Botão do Carrinho -->
-                <Button fx:id="carrinhoButton" mnemonicParsing="false" onAction="#abrirCarrinho"
-                        style="-fx-background-color: #064E3B; -fx-text-fill: WHITE; -fx-font-weight: bold;"
-                        text="🛒 Carrinho">
+                <Button fx:id="carrinhoButton" mnemonicParsing="false" onAction="#abrirCarrinho" style="-fx-background-color: #064E3B; -fx-text-fill: WHITE; -fx-font-weight: bold;" text="🛒 Carrinho">
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
 
                 <!-- Botão Histórico -->
-                <Button fx:id="historicoButton" mnemonicParsing="false" onAction="#abrirHistorico"
-                        style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;"
-                        text="Meus Pedidos">
+                <Button fx:id="historicoButton" mnemonicParsing="false" onAction="#abrirHistorico" style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;" text="Meus Pedidos">
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
 
                 <!-- Botão Sair -->
-                <Button fx:id="sairButton" mnemonicParsing="false" onAction="#sair"
-                        style="-fx-background-color: transparent; -fx-border-color: #8B0000; -fx-text-fill: #8B0000;"
-                        text="Sair">
+                <Button fx:id="sairButton" mnemonicParsing="false" onAction="#sair" style="-fx-background-color: transparent; -fx-border-color: #8B0000; -fx-text-fill: #8B0000;" text="Sair">
                     <cursor>
-                        <Cursor fx:constant="HAND"/>
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
             </children>
@@ -72,28 +61,28 @@
     <center>
         <VBox spacing="15.0" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
                 <!-- Título -->
-                <Label text="🍽️ CARDÁPIO" textFill="#962828" alignment="CENTER">
+                <Label alignment="CENTER" text="🍽️ CARDÁPIO" textFill="#962828">
                     <font>
-                        <Font name="Times New Roman Bold" size="28.0"/>
+                        <Font name="Times New Roman Bold" size="28.0" />
                     </font>
                 </Label>
 
-                <Separator prefWidth="200.0"/>
+                <Separator prefWidth="200.0" />
 
                 <!-- Abas por categoria -->
-                <TabPane fx:id="categoriaTabPane" tabClosingPolicy="UNAVAILABLE" prefHeight="460.0">
+                <TabPane fx:id="categoriaTabPane" prefHeight="460.0" tabClosingPolicy="UNAVAILABLE">
                     <!-- Aba: ENTRADA -->
                     <Tab text="ENTRADA">
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
-                                    <GridPane fx:id="entradaGrid" hgap="15.0" vgap="15.0" style="-fx-background-color: transparent;">
+                                    <GridPane fx:id="entradaGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
-                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                         </padding>
                                     </GridPane>
                                 </content>
@@ -106,9 +95,9 @@
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
-                                    <GridPane fx:id="principalGrid" hgap="15.0" vgap="15.0" style="-fx-background-color: transparent;">
+                                    <GridPane fx:id="principalGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
-                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                         </padding>
                                     </GridPane>
                                 </content>
@@ -121,9 +110,9 @@
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
-                                    <GridPane fx:id="sobremesaGrid" hgap="15.0" vgap="15.0" style="-fx-background-color: transparent;">
+                                    <GridPane fx:id="sobremesaGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
-                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                         </padding>
                                     </GridPane>
                                 </content>
@@ -136,9 +125,9 @@
                         <content>
                             <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
-                                    <GridPane fx:id="bebidasGrid" hgap="15.0" vgap="15.0" style="-fx-background-color: transparent;">
+                                    <GridPane fx:id="bebidasGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
-                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                         </padding>
                                     </GridPane>
                                 </content>
