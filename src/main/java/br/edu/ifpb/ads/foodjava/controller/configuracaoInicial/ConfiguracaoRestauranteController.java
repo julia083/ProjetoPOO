@@ -100,6 +100,7 @@ public class ConfiguracaoRestauranteController {
             String senha = senhaGerente.getText();
             String endereco = enderecoRestaurante.getText();
             String telefone = telefoneRestaurante.getText();
+            String cnpj = cnpjRestaurante.getText();
 
             // --- 2. VALIDAÇÃO DE CAMPOS VAZIOS ---
             if (nome == null || nome.isBlank()) {
@@ -108,6 +109,10 @@ public class ConfiguracaoRestauranteController {
             }
             if (cpf == null || cpf.isBlank()) {
                 mostrarAlerta("Erro de Validação", "O campo CPF é obrigatório.");
+                return;
+            }
+            if (cnpj == null || cnpj.isBlank()) {
+                mostrarAlerta("Erro de Validação", "O campo CNPJ é obrigatório.");
                 return;
             }
             if (email == null || email.isBlank()) {
