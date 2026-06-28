@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -15,7 +14,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
-import static br.edu.ifpb.ads.foodjava.util.Mensagem.exibirAlerta;
 import static br.edu.ifpb.ads.foodjava.util.Mensagem.mostrarAlerta;
 
 public class ConfiguracaoInicialController {

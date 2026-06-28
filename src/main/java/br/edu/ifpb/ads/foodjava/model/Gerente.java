@@ -25,11 +25,6 @@ public class Gerente extends Usuario {
     }
 
     @Override
-    public String getTipoUsuario() {
-        return "GERENTE";
-    }
-
-    @Override
     public boolean validar() {
         return super.validar()
                 && textoPreenchido(cpf);
@@ -38,5 +33,4 @@ public class Gerente extends Usuario {
     public String getCpf() {
         return cpf;
     }
-
 }

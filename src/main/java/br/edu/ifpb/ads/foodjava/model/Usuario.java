@@ -24,8 +24,6 @@ public abstract class Usuario implements Autenticavel, Validavel {
         this.telefone = telefone;
     }
 
-    public abstract String getTipoUsuario();
-
     @Override
     public boolean autenticar(String email, String senha) {
         return this.email != null
@@ -56,8 +54,4 @@ public abstract class Usuario implements Autenticavel, Validavel {
 
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
-
-    public String getTelefone() { return telefone; }
-    public void setTelefone(String telefone) { this.telefone = telefone; }
 }
-

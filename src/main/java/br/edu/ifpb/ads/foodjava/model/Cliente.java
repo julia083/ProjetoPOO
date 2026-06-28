@@ -17,10 +17,6 @@ public class Cliente extends Usuario {
         this.endereco = endereco;
     }
 
-    public String getTipoUsuario(){
-        return "Cliente";
-    }
-
     @Override
     public boolean validar() {
         return super.validar()
@@ -34,9 +30,5 @@ public class Cliente extends Usuario {
 
     public String getEndereco() {
         return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 }

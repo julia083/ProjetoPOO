@@ -26,21 +26,8 @@ public class RestauranteRepository {
         );
     }
 
-    /**
-     * Verifica se existe um restaurante cadastrado.
-     */
-    public boolean existeRestauranteCadastrado() {
-        return buscar() != null;
-    }
-
     public static String getCaminhoArquivo(){
         return CAMINHO_ARQUIVO;
-    }
-    /**
-     * Atualiza os dados do restaurante.
-     */
-    public void atualizar(Restaurante restaurante) {
-        salvar(restaurante);
     }
 
 }
