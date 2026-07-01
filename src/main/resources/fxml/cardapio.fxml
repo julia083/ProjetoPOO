@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.CardapioController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.cliente.CardapioController">
 
     <!-- TOPO: cabeçalho -->
     <top>
@@ -74,11 +74,11 @@
                 <Separator prefWidth="200.0" />
 
                 <!-- Abas por categoria -->
-                <TabPane fx:id="categoriaTabPane" prefHeight="460.0" tabClosingPolicy="UNAVAILABLE">
+                <TabPane fx:id="categoriaTabPane" maxHeight="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                     <!-- Aba: ENTRADA -->
                     <Tab text="ENTRADA">
                         <content>
-                            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
                                     <GridPane fx:id="entradaGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
@@ -93,7 +93,7 @@
                     <!-- Aba: PRATO PRINCIPAL -->
                     <Tab text="PRATO PRINCIPAL">
                         <content>
-                            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
                                     <GridPane fx:id="principalGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
@@ -108,7 +108,7 @@
                     <!-- Aba: SOBREMESA -->
                     <Tab text="SOBREMESA">
                         <content>
-                            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
                                     <GridPane fx:id="sobremesaGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
@@ -123,7 +123,7 @@
                     <!-- Aba: BEBIDAS -->
                     <Tab text="BEBIDAS">
                         <content>
-                            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
                                 <content>
                                     <GridPane fx:id="bebidasGrid" hgap="15.0" style="-fx-background-color: transparent;" vgap="15.0">
                                         <padding>
