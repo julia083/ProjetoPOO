@@ -1,5 +1,8 @@
 package br.edu.ifpb.ads.foodjava.controller.configuracaoInicial;
 
+import br.edu.ifpb.ads.foodjava.exception.DocumentoInvalidoException;
+import br.edu.ifpb.ads.foodjava.model.enums.CategoriaCulinaria;
+import br.edu.ifpb.ads.foodjava.util.DocumentoUtil;
 import br.edu.ifpb.ads.foodjava.util.ImagemUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -24,10 +29,30 @@ public class ConfiguracaoInicialController {
     @FXML
     private Button configurarRestauranteBotton;
 
+    @FXML
+    private TextField nomeFantasiaField;
+
+    @FXML
+    private TextField cnpjField;
+
+    @FXML
+    private TextField telefoneField;
+
+    @FXML
+    private TextField localizacaoField;
+
+    @FXML
+    private ComboBox<CategoriaCulinaria> categoriaComboBox;
+
     private String logoPath;
 
     @FXML
-    void selecioneLogotipo(ActionEvent event){
+    public void initialize() {
+        categoriaComboBox.getItems().setAll(CategoriaCulinaria.values());
+    }
+
+    @FXML
+    void selecioneLogotipo(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Selecionar Logotipo");
         fileChooser.getExtensionFilters().add(
@@ -42,16 +67,54 @@ public class ConfiguracaoInicialController {
     }
 
     @FXML
-    void configurarORestaurante(ActionEvent event) throws IOException {
+    void configurarORestaurante(ActionEvent event) {
+        String nomeFantasia = nomeFantasiaField.getText();
+        String cnpj = cnpjField.getText();
+        String telefone = telefoneField.getText();
+        String localizacao = localizacaoField.getText();
+        CategoriaCulinaria categoria = categoriaComboBox.getValue();
+
+        if (campoVazio(nomeFantasia)) {
+            mostrarAlerta("Erro de Validação", "O campo Nome Fantasia é obrigatório.");
+            return;
+        }
+        if (campoVazio(cnpj)) {
+            mostrarAlerta("Erro de Validação", "O campo CNPJ é obrigatório.");
+            return;
+        }
+        if (campoVazio(telefone)) {
+            mostrarAlerta("Erro de Validação", "O campo Telefone é obrigatório.");
+            return;
+        }
+        if (campoVazio(localizacao)) {
+            mostrarAlerta("Erro de Validação", "O campo Localização completa é obrigatório.");
+            return;
+        }
+        if (categoria == null) {
+            mostrarAlerta("Erro de Validação", "O campo Categoria é obrigatório.");
+            return;
+        }
+
+        try {
+            DocumentoUtil.validarCnpj(cnpj);
+        } catch (DocumentoInvalidoException e) {
+            mostrarAlerta("CNPJ Inválido", e.getMessage());
+            return;
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/configuracao-restaurante.fxml"));
             Parent root = loader.load();
 
-            // Resgata o controller real criado pelo JavaFX
             ConfiguracaoRestauranteController proximoController = loader.getController();
-
-            // Passa o logoPath (que pode ser o caminho do arquivo ou null)
-            proximoController.setLogo(this.logoPath);
+            proximoController.setDadosRestaurante(
+                    nomeFantasia.trim(),
+                    cnpj.trim(),
+                    telefone.trim(),
+                    localizacao.trim(),
+                    categoria,
+                    this.logoPath
+            );
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -59,8 +122,12 @@ public class ConfiguracaoInicialController {
             stage.show();
 
         } catch (IOException e) {
-            mostrarAlerta("Erro", "Erro ao abrir a tela de configurações: " + e.getMessage());
+            mostrarAlerta("Erro", "Erro ao abrir a tela de cadastro do gerente: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private boolean campoVazio(String valor) {
+        return valor == null || valor.isBlank();
     }
 }

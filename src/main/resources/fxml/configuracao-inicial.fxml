@@ -3,9 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -34,9 +37,9 @@
    </left>
 
    <center>
-      <VBox alignment="CENTER" spacing="16.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="14.0" BorderPane.alignment="CENTER">
          <padding>
-            <Insets bottom="56.0" left="90.0" right="90.0" top="56.0" />
+            <Insets bottom="36.0" left="80.0" right="80.0" top="36.0" />
          </padding>
          <children>
             <Label text="Configuração Inicial" textFill="#962828">
@@ -45,22 +48,49 @@
                </font>
             </Label>
 
-            <Region prefHeight="12.0" />
-
-            <Label text="Nenhum restaurante configurado." textFill="#810b0b">
+            <Label alignment="CENTER" text="Nenhum restaurante foi cadastrado anteriormente." textFill="#810b0b" wrapText="true">
                <font>
-                  <Font name="Times New Roman" size="20.0" />
+                  <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
 
-            <Label text="Pronto para configurar um novo restaurante?" textFill="#4B5563">
+            <Label text="Informe os dados do restaurante para continuar." textFill="#4B5563">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
 
-            <Region prefHeight="12.0" />
-            <Button fx:id="logoObrigatoria" mnemonicParsing="false" onAction="#selecioneLogotipo" prefHeight="44.0" prefWidth="363.0" style="-fx-background-color: #A3B2C1;" text="Selecionar uma Logo" textFill="#185125">
+            <Region prefHeight="4.0" />
+
+            <VBox spacing="5.0">
+               <Label text="Nome Fantasia" />
+               <TextField fx:id="nomeFantasiaField" prefWidth="430.0" promptText="Nome do restaurante" />
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="16.0">
+               <VBox spacing="5.0">
+                  <Label text="CNPJ" />
+                  <TextField fx:id="cnpjField" prefWidth="207.0" promptText="00.000.000/0000-00" />
+               </VBox>
+               <VBox spacing="5.0">
+                  <Label text="Telefone" />
+                  <TextField fx:id="telefoneField" prefWidth="207.0" promptText="(00) 00000-0000" />
+               </VBox>
+            </HBox>
+
+            <VBox spacing="5.0">
+               <Label text="Localização completa" />
+               <TextField fx:id="localizacaoField" prefWidth="430.0" promptText="Rua, número, bairro e cidade" />
+            </VBox>
+
+            <VBox spacing="5.0">
+               <Label text="Categoria culinária" />
+               <ComboBox fx:id="categoriaComboBox" prefWidth="430.0" promptText="Selecione uma categoria" />
+            </VBox>
+
+            <Region prefHeight="6.0" />
+
+            <Button fx:id="logoObrigatoria" mnemonicParsing="false" onAction="#selecioneLogotipo" prefHeight="44.0" prefWidth="430.0" style="-fx-background-color: #A3B2C1;" text="Selecionar Logotipo" textFill="#185125">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -68,7 +98,7 @@
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button fx:id="configurarRestauranteBotton" mnemonicParsing="false" onAction="#configurarORestaurante" prefHeight="44.0" prefWidth="363.0" style="-fx-background-color: #A3A8D8;" text="Configurar Restaurante" textFill="#185125">
+            <Button fx:id="configurarRestauranteBotton" mnemonicParsing="false" onAction="#configurarORestaurante" prefHeight="44.0" prefWidth="430.0" style="-fx-background-color: #A3A8D8;" text="Cadastrar Gerente" textFill="#185125">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
