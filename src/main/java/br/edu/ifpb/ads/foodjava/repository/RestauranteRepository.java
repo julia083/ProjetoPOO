@@ -19,11 +19,17 @@ public class RestauranteRepository {
      * Retorna null caso não exista.
      */
     public Restaurante buscar() {
-        return JsonUtil.ler(
+        Restaurante restaurante = JsonUtil.ler(
                 CAMINHO_ARQUIVO,
                 Restaurante.class,
                 null
         );
+
+        if (restaurante != null) {
+            restaurante.setCardapio(restaurante.getCardapio());
+        }
+
+        return restaurante;
     }
 
     public static String getCaminhoArquivo(){

@@ -5,6 +5,7 @@ import br.edu.ifpb.ads.foodjava.exception.CategoriaInvalidaException;
 import br.edu.ifpb.ads.foodjava.exception.PrecoInvalidoException;
 import br.edu.ifpb.ads.foodjava.interfaces.Repositorio;
 import br.edu.ifpb.ads.foodjava.model.ItemCardapio;
+import br.edu.ifpb.ads.foodjava.model.Restaurante;
 import br.edu.ifpb.ads.foodjava.util.JsonUtil;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,11 +17,11 @@ import java.util.stream.Collectors;
 
 public class CardapioRepository implements Repositorio<ItemCardapio> {
 
-    private static final String CAMINHO_ARQUIVO = "data/cardapio.json";
-
+    private final RestauranteRepository restauranteRepository;
     private List<ItemCardapio> itens;
 
     public CardapioRepository() {
+        this.restauranteRepository = new RestauranteRepository();
         this.itens = listarTodos();
     }
 
@@ -149,13 +150,28 @@ public class CardapioRepository implements Repositorio<ItemCardapio> {
 
     @Override
     public List<ItemCardapio> listarTodos() {
-        Type tipoLista = new TypeToken<ArrayList<ItemCardapio>>() {}.getType();
-        return JsonUtil.ler(CAMINHO_ARQUIVO, tipoLista, new ArrayList<>());
+        Restaurante restaurante = restauranteRepository.buscar();
+
+        if (restaurante == null) {
+            this.itens = new ArrayList<>();
+            return new ArrayList<>();
+        }
+
+        this.itens = new ArrayList<>(restaurante.getCardapio());
+        return new ArrayList<>(this.itens);
     }
 
     @Override
     public void salvarTodos(List<ItemCardapio> lista) {
-        JsonUtil.escrever(CAMINHO_ARQUIVO, lista);
+        Restaurante restaurante = restauranteRepository.buscar();
+
+        if (restaurante == null) {
+            throw new IllegalStateException("Restaurante nao configurado.");
+        }
+
+        this.itens = lista == null ? new ArrayList<>() : new ArrayList<>(lista);
+        restaurante.setCardapio(this.itens);
+        restauranteRepository.salvar(restaurante);
     }
 
     private void validarItemImportado(ItemCardapio item) {

@@ -54,7 +54,14 @@ public class Restaurante implements Validavel {
     }
 
     public List<ItemCardapio> getCardapio() {
+        if (cardapio == null) {
+            cardapio = new ArrayList<>();
+        }
         return Collections.unmodifiableList(cardapio);
+    }
+
+    public void setCardapio(List<ItemCardapio> cardapio) {
+        this.cardapio = cardapio == null ? new ArrayList<>() : new ArrayList<>(cardapio);
     }
 
     public String getLogotipoPath(){
