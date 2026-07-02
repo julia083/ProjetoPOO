@@ -107,7 +107,7 @@ cd FoodJava
 ### Executar a aplicação
 
 ```bash
-./mvnw javafx:run
+#./mvnw javafx:run
 ```
 
 ou

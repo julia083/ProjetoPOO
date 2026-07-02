@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.EditarRestauranteController">
+
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="16.0" style="-fx-background-color: #34D399;">
+         <padding>
+            <Insets bottom="15" left="25" right="25" top="15" />
+         </padding>
+         <children>
+            <Label text="FoodJava" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="voltarButton" mnemonicParsing="false" onAction="#voltarPainel"
+                    style="-fx-background-color: transparent; -fx-border-color: #0F5132; -fx-text-fill: #0F5132;"
+                    text="Voltar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+
+   <center>
+      <VBox alignment="TOP_CENTER" fillWidth="false" maxWidth="860.0" spacing="18.0" style="-fx-background-color: #F7F4EE;">
+         <padding>
+            <Insets bottom="30" left="40" right="40" top="30" />
+         </padding>
+
+         <children>
+            <Label text="Editar Restaurante" textFill="#8B1E1E">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Label>
+
+            <Label alignment="CENTER" maxWidth="860.0" text="Os dados ja estao carregados. Altere o que precisar e salve." textFill="#666666" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+
+            <HBox alignment="TOP_CENTER" maxWidth="820.0" spacing="24.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" maxWidth="240.0" minWidth="220.0" prefWidth="240.0" spacing="10.0">
+                     <children>
+                        <Label text="Logo atual" />
+                        <ImageView fx:id="logoPreview" fitHeight="140.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="editarLogoButton" mnemonicParsing="false" onAction="#editarLogo"
+                                maxWidth="160.0" prefWidth="160.0"
+                                style="-fx-background-color: #E5E7EB; -fx-font-weight: bold;"
+                                text="Editar Logo">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </VBox>
+
+                  <GridPane hgap="18.0" maxWidth="540.0" minWidth="440.0" prefWidth="540.0" vgap="12.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="62.0" />
+                        <RowConstraints minHeight="62.0" />
+                        <RowConstraints minHeight="62.0" />
+                     </rowConstraints>
+                     <children>
+                        <VBox spacing="5.0" GridPane.columnSpan="2">
+                           <children>
+                              <Label text="Nome fantasia" />
+                              <TextField fx:id="nomeFantasiaField" maxWidth="540.0" prefWidth="540.0" promptText="Nome fantasia" />
+                           </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.rowIndex="1">
+                           <children>
+                              <Label text="CNPJ" />
+                              <TextField fx:id="cnpjField" maxWidth="261.0" prefWidth="261.0" promptText="00.000.000/0001-00" />
+                           </children>
+                        </VBox>
+
+                       <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label text="Telefone" />
+                              <TextField fx:id="telefoneField" maxWidth="261.0" prefWidth="261.0" promptText="(00) 00000-0000" />
+                              <Label fx:id="telefoneAvisoLabel" text="Informe pelo menos 10 digitos." textFill="#B91C1C" visible="false" wrapText="true" />
+                           </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.rowIndex="2">
+                           <children>
+                              <Label text="Endereco" />
+                              <TextField fx:id="localizacaoField" maxWidth="261.0" prefWidth="261.0" promptText="Rua, numero, bairro" />
+                           </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label text="Categoria culinaria" />
+                              <ComboBox fx:id="categoriaComboBox" maxWidth="261.0" prefWidth="261.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+
+            <HBox alignment="CENTER_RIGHT" maxWidth="820.0" spacing="12.0">
+               <children>
+                  <Button fx:id="cancelarButton" mnemonicParsing="false" onAction="#voltarPainel"
+                          prefHeight="38.0" prefWidth="120.0"
+                          style="-fx-background-color: #E5E7EB; -fx-font-weight: bold;"
+                          text="Cancelar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="salvarButton" mnemonicParsing="false" onAction="#salvarEdicao"
+                          prefHeight="40.0" prefWidth="150.0"
+                          style="-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;"
+                          text="Salvar Alteracoes">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

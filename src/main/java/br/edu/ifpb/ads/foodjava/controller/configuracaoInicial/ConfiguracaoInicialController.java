@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -23,32 +24,21 @@ import static br.edu.ifpb.ads.foodjava.util.Mensagem.mostrarAlerta;
 
 public class ConfiguracaoInicialController {
 
-    @FXML
-    private Button logoObrigatoria;
-
-    @FXML
-    private Button configurarRestauranteBotton;
-
-    @FXML
-    private TextField nomeFantasiaField;
-
-    @FXML
-    private TextField cnpjField;
-
-    @FXML
-    private TextField telefoneField;
-
-    @FXML
-    private TextField localizacaoField;
-
-    @FXML
-    private ComboBox<CategoriaCulinaria> categoriaComboBox;
+    @FXML private Button logoObrigatoria;
+    @FXML private Button configurarRestauranteBotton;
+    @FXML private TextField nomeFantasiaField;
+    @FXML private TextField cnpjField;
+    @FXML private TextField telefoneField;
+    @FXML private Label telefoneAvisoLabel;
+    @FXML private TextField localizacaoField;
+    @FXML private ComboBox<CategoriaCulinaria> categoriaComboBox;
 
     private String logoPath;
 
     @FXML
     public void initialize() {
         categoriaComboBox.getItems().setAll(CategoriaCulinaria.values());
+        telefoneAvisoLabel.setVisible(false);
     }
 
     @FXML
@@ -60,7 +50,6 @@ public class ConfiguracaoInicialController {
         );
 
         File arquivo = fileChooser.showOpenDialog(null);
-
         if (arquivo != null) {
             this.logoPath = ImagemUtil.salvar(arquivo);
         }
@@ -74,31 +63,38 @@ public class ConfiguracaoInicialController {
         String localizacao = localizacaoField.getText();
         CategoriaCulinaria categoria = categoriaComboBox.getValue();
 
+        telefoneAvisoLabel.setVisible(false);
+
         if (campoVazio(nomeFantasia)) {
-            mostrarAlerta("Erro de Validação", "O campo Nome Fantasia é obrigatório.");
+            mostrarAlerta("Erro de Validacao", "O campo Nome Fantasia e obrigatorio.");
             return;
         }
         if (campoVazio(cnpj)) {
-            mostrarAlerta("Erro de Validação", "O campo CNPJ é obrigatório.");
+            mostrarAlerta("Erro de Validacao", "O campo CNPJ e obrigatorio.");
             return;
         }
         if (campoVazio(telefone)) {
-            mostrarAlerta("Erro de Validação", "O campo Telefone é obrigatório.");
+            mostrarAlerta("Erro de Validacao", "O campo Telefone e obrigatorio.");
+            return;
+        }
+        if (!telefoneValido(telefone)) {
+            telefoneAvisoLabel.setText("Informe pelo menos 10 digitos.");
+            telefoneAvisoLabel.setVisible(true);
             return;
         }
         if (campoVazio(localizacao)) {
-            mostrarAlerta("Erro de Validação", "O campo Localização completa é obrigatório.");
+            mostrarAlerta("Erro de Validacao", "O campo Localizacao completa e obrigatorio.");
             return;
         }
         if (categoria == null) {
-            mostrarAlerta("Erro de Validação", "O campo Categoria é obrigatório.");
+            mostrarAlerta("Erro de Validacao", "O campo Categoria e obrigatorio.");
             return;
         }
 
         try {
             DocumentoUtil.validarCnpj(cnpj);
         } catch (DocumentoInvalidoException e) {
-            mostrarAlerta("CNPJ Inválido", e.getMessage());
+            mostrarAlerta("CNPJ Invalido", e.getMessage());
             return;
         }
 
@@ -117,10 +113,8 @@ public class ConfiguracaoInicialController {
             );
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.show();
-
         } catch (IOException e) {
             mostrarAlerta("Erro", "Erro ao abrir a tela de cadastro do gerente: " + e.getMessage());
             e.printStackTrace();
@@ -129,5 +123,10 @@ public class ConfiguracaoInicialController {
 
     private boolean campoVazio(String valor) {
         return valor == null || valor.isBlank();
+    }
+
+    private boolean telefoneValido(String telefone) {
+        String somenteDigitos = telefone == null ? "" : telefone.replaceAll("\\D", "");
+        return somenteDigitos.length() >= 10;
     }
 }

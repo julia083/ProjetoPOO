@@ -13,10 +13,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoInicialController">
 
    <left>
-      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="330.0" spacing="18.0" style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefWidth="330.0" spacing="18.0" style="-fx-background-color: #34D399;" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="36.0" left="38.0" right="38.0" top="36.0" />
          </padding>
@@ -37,18 +39,18 @@
    </left>
 
    <center>
-      <VBox alignment="CENTER" spacing="14.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" fillWidth="false" maxWidth="760.0" spacing="14.0" BorderPane.alignment="CENTER">
          <padding>
-            <Insets bottom="36.0" left="80.0" right="80.0" top="36.0" />
+            <Insets bottom="36.0" left="56.0" right="56.0" top="36.0" />
          </padding>
          <children>
-            <Label text="Configuração Inicial" textFill="#962828">
+            <Label text="Configuracao Inicial" textFill="#962828">
                <font>
                   <Font name="Times New Roman Bold" size="34.0" />
                </font>
             </Label>
 
-            <Label alignment="CENTER" text="Nenhum restaurante foi cadastrado anteriormente." textFill="#810b0b" wrapText="true">
+            <Label alignment="CENTER" maxWidth="760.0" text="Nenhum restaurante foi cadastrado anteriormente." textFill="#810b0b" wrapText="true">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
@@ -60,37 +62,50 @@
                </font>
             </Label>
 
-            <Region prefHeight="4.0" />
+            <Region prefHeight="6.0" />
 
-            <VBox spacing="5.0">
-               <Label text="Nome Fantasia" />
-               <TextField fx:id="nomeFantasiaField" prefWidth="430.0" promptText="Nome do restaurante" />
+            <VBox alignment="CENTER_LEFT" maxWidth="760.0" spacing="5.0">
+               <children>
+                  <Label text="Nome Fantasia" />
+                  <TextField fx:id="nomeFantasiaField" maxWidth="760.0" prefWidth="430.0" promptText="Nome do restaurante" />
+               </children>
             </VBox>
 
-            <HBox alignment="CENTER" spacing="16.0">
-               <VBox spacing="5.0">
-                  <Label text="CNPJ" />
-                  <TextField fx:id="cnpjField" prefWidth="207.0" promptText="00.000.000/0000-00" />
-               </VBox>
-               <VBox spacing="5.0">
-                  <Label text="Telefone" />
-                  <TextField fx:id="telefoneField" prefWidth="207.0" promptText="(00) 00000-0000" />
-               </VBox>
+            <HBox alignment="CENTER" maxWidth="760.0" spacing="16.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" maxWidth="372.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="CNPJ" />
+                        <TextField fx:id="cnpjField" maxWidth="372.0" prefWidth="207.0" promptText="00.000.000/0000-00" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" maxWidth="372.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Telefone" />
+                        <TextField fx:id="telefoneField" maxWidth="372.0" prefWidth="207.0" promptText="(00) 00000-0000" />
+                        <Label fx:id="telefoneAvisoLabel" text="Informe pelo menos 10 digitos." textFill="#B91C1C" visible="false" wrapText="true" />
+                     </children>
+                  </VBox>
+               </children>
             </HBox>
 
-            <VBox spacing="5.0">
-               <Label text="Localização completa" />
-               <TextField fx:id="localizacaoField" prefWidth="430.0" promptText="Rua, número, bairro e cidade" />
+            <VBox alignment="CENTER_LEFT" maxWidth="760.0" spacing="5.0">
+               <children>
+                  <Label text="Localizacao completa" />
+                  <TextField fx:id="localizacaoField" maxWidth="760.0" prefWidth="430.0" promptText="Rua, numero, bairro e cidade" />
+               </children>
             </VBox>
 
-            <VBox spacing="5.0">
-               <Label text="Categoria culinária" />
-               <ComboBox fx:id="categoriaComboBox" prefWidth="430.0" promptText="Selecione uma categoria" />
+            <VBox alignment="CENTER_LEFT" maxWidth="760.0" spacing="5.0">
+               <children>
+                  <Label text="Categoria culinaria" />
+                  <ComboBox fx:id="categoriaComboBox" maxWidth="760.0" prefWidth="430.0" promptText="Selecione uma categoria" />
+               </children>
             </VBox>
 
             <Region prefHeight="6.0" />
 
-            <Button fx:id="logoObrigatoria" mnemonicParsing="false" onAction="#selecioneLogotipo" prefHeight="44.0" prefWidth="430.0" style="-fx-background-color: #A3B2C1;" text="Selecionar Logotipo" textFill="#185125">
+            <Button fx:id="logoObrigatoria" mnemonicParsing="false" onAction="#selecioneLogotipo" maxWidth="430.0" prefHeight="44.0" prefWidth="430.0" style="-fx-background-color: #A3B2C1;" text="Selecionar Logotipo" textFill="#185125">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -98,7 +113,7 @@
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
             </Button>
-            <Button fx:id="configurarRestauranteBotton" mnemonicParsing="false" onAction="#configurarORestaurante" prefHeight="44.0" prefWidth="430.0" style="-fx-background-color: #A3A8D8;" text="Cadastrar Gerente" textFill="#185125">
+            <Button fx:id="configurarRestauranteBotton" mnemonicParsing="false" onAction="#configurarORestaurante" maxWidth="430.0" prefHeight="44.0" prefWidth="430.0" style="-fx-background-color: #A3A8D8;" text="Cadastrar Restaurante" textFill="#185125">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

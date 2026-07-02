@@ -97,6 +97,7 @@
                      <children>
                         <Label text="Telefone" />
                         <TextField fx:id="telefoneField" prefHeight="34.0" promptText="(00) 00000-0000" />
+                        <Label fx:id="telefoneAvisoLabel" text="Informe pelo menos 10 digitos." textFill="#B91C1C" visible="false" wrapText="true" />
                      </children>
                   </VBox>
                   <VBox spacing="7.0" GridPane.rowIndex="2">

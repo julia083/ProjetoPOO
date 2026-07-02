@@ -5,8 +5,9 @@ import br.edu.ifpb.ads.foodjava.exception.SenhaInvalidaException;
 import br.edu.ifpb.ads.foodjava.exception.UsuarioDuplicadoException;
 import br.edu.ifpb.ads.foodjava.model.Cliente;
 import br.edu.ifpb.ads.foodjava.repository.ClienteRepository;
-import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
 import br.edu.ifpb.ads.foodjava.util.DocumentoUtil;
+import br.edu.ifpb.ads.foodjava.util.Mensagem;
+import br.edu.ifpb.ads.foodjava.util.SenhaUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,88 +15,49 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import br.edu.ifpb.ads.foodjava.util.Mensagem;
-
 
 public class CadastroClienteController {
 
-    /**
-     * Controlador da tela de Cadastro de Cliente
-     * Responsável por validar dados e criar novo cliente
-     */
+    @FXML private TextField nomeField;
+    @FXML private TextField cpfField;
+    @FXML private TextField emailField;
+    @FXML private TextField telefoneField;
+    @FXML private Label telefoneAvisoLabel;
+    @FXML private PasswordField senhaField;
+    @FXML private TextField enderecoField;
+    @FXML private Button voltarLoginButton;
+    @FXML private Button limparFormularioButton;
+    @FXML private Button cadastrarClienteButton;
 
-    // ===== Componentes da tela (ligados ao FXML) =====
-    @FXML
-    private TextField nomeField;           // nome completo
-
-    @FXML
-    private TextField cpfField;             // CPF
-
-    @FXML
-    private TextField emailField;           // email
-
-    @FXML
-    private TextField telefoneField;        // telefone
-
-    @FXML
-    private PasswordField senhaField;       // senha
-
-    @FXML
-    private TextField enderecoField;        // endereço
-
-    @FXML
-    private Button voltarLoginButton;       // botão voltar
-
-    @FXML
-    private Button limparFormularioButton;  // botão limpar
-
-    @FXML
-    private Button cadastrarClienteButton;  // botão cadastrar
-
-    // ===== Persistência =====
     private final ClienteRepository clienteRepository = new ClienteRepository();
 
-    /**
-     * Método chamado automaticamente quando a tela é carregada
-     */
     @FXML
     public void initialize() {
-        System.out.println("Tela de cadastro de cliente carregada.");
+        telefoneAvisoLabel.setVisible(false);
     }
 
-    /**
-     * Ação do botão "Voltar"
-     * Retorna para a tela de login
-     */
     @FXML
     void voltarLogin(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/fxml/login.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.setTitle("FoodJava - Login");
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
-            Mensagem.mostrarAlerta("Erro", "Não foi possível voltar para o login.");
+            Mensagem.mostrarAlerta("Erro", "Nao foi possivel voltar para o login.");
         }
     }
 
-    /**
-     * Ação do botão "Limpar"
-     * Limpa todos os campos do formulário
-     */
     @FXML
     void limparFormulario(ActionEvent event) {
         nomeField.clear();
@@ -104,16 +66,12 @@ public class CadastroClienteController {
         telefoneField.clear();
         senhaField.clear();
         enderecoField.clear();
+        telefoneAvisoLabel.setVisible(false);
     }
 
-    /**
-     * Ação do botão "Cadastrar"
-     * Valida os dados e cria um novo cliente
-     */
     @FXML
     void cadastrarCliente(ActionEvent event) {
         try {
-            // --- 1. PEGAR OS VALORES DOS CAMPOS ---
             String nome = nomeField.getText();
             String cpf = cpfField.getText();
             String email = emailField.getText();
@@ -121,59 +79,67 @@ public class CadastroClienteController {
             String senha = senhaField.getText();
             String endereco = enderecoField.getText();
 
-            // --- 2. VALIDAÇÃO DE CAMPOS VAZIOS ---
+            telefoneAvisoLabel.setVisible(false);
+
             if (nome == null || nome.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Nome é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validacao", "O campo Nome e obrigatorio.");
                 return;
             }
             if (cpf == null || cpf.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo CPF é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validacao", "O campo CPF e obrigatorio.");
                 return;
             }
             if (email == null || email.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Email é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validacao", "O campo Email e obrigatorio.");
                 return;
             }
             if (telefone == null || telefone.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Telefone é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validacao", "O campo Telefone e obrigatorio.");
+                return;
+            }
+            if (!telefoneValido(telefone)) {
+                telefoneAvisoLabel.setText("Informe pelo menos 10 digitos.");
+                telefoneAvisoLabel.setVisible(true);
                 return;
             }
             if (senha == null || senha.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Senha é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validacao", "O campo Senha e obrigatorio.");
                 return;
             }
             if (endereco == null || endereco.isBlank()) {
-                Mensagem.mostrarAlerta("Erro de Validação", "O campo Endereço é obrigatório.");
+                Mensagem.mostrarAlerta("Erro de Validacao", "O campo Endereco e obrigatorio.");
                 return;
             }
 
             try {
                 DocumentoUtil.validarCpf(cpf);
             } catch (DocumentoInvalidoException e) {
-                Mensagem.mostrarAlerta("CPF Inválido", e.getMessage());
+                Mensagem.mostrarAlerta("CPF Invalido", e.getMessage());
                 return;
             }
 
             try {
                 SenhaUtil.senhaValida(senha);
             } catch (SenhaInvalidaException e) {
-                Mensagem.mostrarAlerta("Senha inválida", e.getMessage());
+                Mensagem.mostrarAlerta("Senha invalida", e.getMessage());
                 return;
             }
 
-            // A checagem de e-mail e CPF duplicados é feita dentro do Repository
             Cliente novoCliente = new Cliente(nome, email, SenhaUtil.hash(senha), telefone, cpf, endereco);
             clienteRepository.cadastrar(novoCliente);
 
-            Mensagem.mostrarAlerta("Cadastro Realizado", "Cliente cadastrado com sucesso! Faça login para continuar.");
-
+            Mensagem.mostrarAlerta("Cadastro Realizado", "Cliente cadastrado com sucesso! Faca login para continuar.");
             voltarLogin(event);
-
         } catch (UsuarioDuplicadoException e) {
             Mensagem.mostrarAlerta("Cadastro Duplicado", e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             Mensagem.mostrarAlerta("Erro", "Ocorreu um erro inesperado: " + e.getMessage());
         }
+    }
+
+    private boolean telefoneValido(String telefone) {
+        String somenteDigitos = telefone == null ? "" : telefone.replaceAll("\\D", "");
+        return somenteDigitos.length() >= 10;
     }
 }

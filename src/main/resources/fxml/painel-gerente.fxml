@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.gerente.PainelGerenteController">
 
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="80.0" style="-fx-background-color: #34D399;">
@@ -99,6 +88,7 @@
 
     <bottom>
         <HBox alignment="CENTER" prefHeight="70" spacing="20" style="-fx-background-color: white; -fx-border-color: #E5E7EB;">
+            <Button fx:id="buttonEditarRestaurante" mnemonicParsing="false" onAction="#editarRestaurante" prefHeight="40" prefWidth="150" style="-fx-background-color: #A7F3D0; -fx-font-weight: bold;" text="Editar Restaurante" />
             <Button fx:id="buttonGerenciarCardapio" mnemonicParsing="false" onAction="#gerenciarCardapio" prefHeight="40" prefWidth="130" style="-fx-background-color: #D3B4C4; -fx-font-weight: bold;" text="Gerenciar Cardapio" />
             <Button fx:id="cancelarPedidoBottom" mnemonicParsing="false" onAction="#cancelarPedido" prefHeight="40" prefWidth="150" style="-fx-background-color: #EF4444; -fx-text-fill: white; -fx-font-weight: bold;" text="Cancelar Pedido" />
             <Button fx:id="avancarStatusBottom" mnemonicParsing="false" onAction="#avancarStatus" prefHeight="40" prefWidth="150" style="-fx-background-color: #3B82F6; -fx-text-fill: white; -fx-font-weight: bold;" text="Avançar Status" />

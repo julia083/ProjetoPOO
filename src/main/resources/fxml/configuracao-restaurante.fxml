@@ -1,83 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoRestauranteController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #D1FAE5;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifpb.ads.foodjava.controller.configuracaoInicial.ConfiguracaoRestauranteController">
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="10" style="-fx-background-color: #34D399;">
+      <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="10.0" style="-fx-background-color: #34D399;">
          <padding>
             <Insets bottom="15" left="25" right="25" top="15" />
          </padding>
 
-         <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="FoodJava">
-            <font>
-               <Font size="28" />
-            </font>
-         </Label>
-
-         <Region HBox.hgrow="ALWAYS" />
+         <children>
+            <Label text="FoodJava" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
       </HBox>
    </top>
 
    <center>
-      <VBox alignment="TOP_CENTER" spacing="18" style="-fx-background-color: #F7F4EE;">
+      <VBox alignment="TOP_CENTER" fillWidth="false" maxWidth="760.0" spacing="18.0" style="-fx-background-color: #F7F4EE;">
          <padding>
-            <Insets bottom="30" left="40" right="40" top="50" />
+            <Insets bottom="30" left="40" right="40" top="44" />
          </padding>
 
-         <Label style="-fx-text-fill: #8B1E1E; -fx-font-weight: bold;" text="Cadastro do Gerente">
-            <font>
-               <Font size="26" />
-            </font>
-         </Label>
-
-         <Label style="-fx-text-fill: #666666;" text="Preencha os dados do gerente responsável pelo restaurante.">
-            <font>
-               <Font size="15" />
-            </font>
-         </Label>
-
-         <VBox spacing="5">
-            <Label text="Nome do gerente" />
-            <TextField fx:id="nomeGerente" prefWidth="720" promptText="Nome completo do gerente" />
-         </VBox>
-
-         <HBox spacing="20">
-            <VBox spacing="5">
-               <Label text="Email do gerente" />
-               <TextField fx:id="emailGerente" prefWidth="350" promptText="email@exemplo.com" />
-            </VBox>
-
-            <VBox spacing="5">
-               <Label text="Senha do gerente" />
-               <PasswordField fx:id="senhaGerente" prefWidth="350" promptText="Mínimo 8 caracteres" />
-            </VBox>
-         </HBox>
-
-         <VBox spacing="5">
-            <Label text="CPF do gerente" />
-            <TextField fx:id="cpfGerente" prefWidth="720" promptText="000.000.000-00" />
-         </VBox>
-
-         <HBox alignment="CENTER_RIGHT" prefWidth="720" spacing="20">
-            <Button fx:id="selecionarLogoTipo" mnemonicParsing="false" onAction="#selecionarLogo" prefHeight="31.0" prefWidth="132.0" text="Selecionar Logo" textFill="#892214">
+         <children>
+            <Label text="Cadastro do Gerente" textFill="#8B1E1E">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font size="26.0" />
                </font>
-            </Button>
+            </Label>
 
-            <Button fx:id="salvarRestaurante" onAction="#salvarORestaurante" prefHeight="40" prefWidth="140" style="-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;" text="Salvar" />
-         </HBox>
+            <Label alignment="CENTER" maxWidth="760.0" text="Preencha os dados do gerente responsavel pelo restaurante." textFill="#666666" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+
+            <GridPane hgap="20.0" maxWidth="760.0" vgap="14.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                  <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+               </columnConstraints>
+               <children>
+                  <VBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <Label text="Nome do gerente" />
+                        <TextField fx:id="nomeGerente" maxWidth="360.0" promptText="Nome completo do gerente" />
+                     </children>
+                  </VBox>
+
+                  <VBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="CPF do gerente" />
+                        <TextField fx:id="cpfGerente" maxWidth="360.0" promptText="000.000.000-00" />
+                     </children>
+                  </VBox>
+
+                  <VBox alignment="CENTER_LEFT" spacing="5.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Email do gerente" />
+                        <TextField fx:id="emailGerente" maxWidth="360.0" promptText="email@exemplo.com" />
+                     </children>
+                  </VBox>
+
+                  <VBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Senha do gerente" />
+                        <PasswordField fx:id="senhaGerente" maxWidth="360.0" promptText="Minimo 8 caracteres" />
+                     </children>
+                  </VBox>
+               </children>
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT" maxWidth="760.0" spacing="20.0">
+               <children>
+                  <Button fx:id="salvarRestaurante" onAction="#salvarORestaurante" prefHeight="40" prefWidth="140" style="-fx-background-color: #34D399; -fx-text-fill: white; -fx-font-weight: bold;" text="Salvar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
       </VBox>
    </center>
 </BorderPane>

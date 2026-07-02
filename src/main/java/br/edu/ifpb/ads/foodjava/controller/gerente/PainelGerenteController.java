@@ -52,6 +52,9 @@ public class PainelGerenteController {
     private Button buttonGerenciarCardapio;
 
     @FXML
+    private Button buttonEditarRestaurante;
+
+    @FXML
     private Button cancelarPedidoBottom;
 
     @FXML
@@ -199,6 +202,23 @@ public class PainelGerenteController {
         pararAtualizador();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/gerenciar-cardapio.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void editarRestaurante(ActionEvent event) {
+        pararAtualizador();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/editar-restaurante.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
